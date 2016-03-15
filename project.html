@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	window.onload = function(){
+      		var pro_title = document.getElementsByClassName("pro_title")[0].getElementsByTagName("li");
+      		var pro_content = document.getElementsByClassName("pro_content")[0].getElementsByTagName("li");
+      		
+      		proEvent();
+      		function proEvent(){
+      			for(var i=0;i<pro_title.length;i++){
+      				proChange(i);
+      			}
+      		}
+      		function proChange(num){
+      			pro_title[num].addEventListener("tap",function(){
+      				for(var i=0;i<pro_title.length;i++){
+      					pro_title[i].className="";
+      					pro_content[i].className="";
+      				}
+      				pro_title[num].className="selected";
+      				pro_content[num].className="selected";
+      			})
+      		}
+      		document.getElementsByClassName("foot")[0].addEventListener("tap",function(){
+      			mui.openWindow({
+      				url:"projectPay.html",
+      				id:"projectPay"
+      			})
+      		})
+      	}
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
+    	body{width: 100%;background: #fff;}
+    	.mui-bar{background: #dd524d;height: 50px;}
+    	.mui-bar a{color: #fff;}
+    	.mui-bar h1{color: #fff;}
+    	.projectInfo{top: 51px;height: 180px;}
+    	.projectInfo h1{font-size: 12px;width: 90%;margin-left: 5%;float: left;line-height: 14px;white-space:nowrap; text-overflow:ellipsis;
+    					 -o-text-overflow:ellipsis; overflow: hidden;}
+    	.projectInfo .font_group{width: 49%;float: left;height: 60px;border-right: 1px #fff solid;}
+    	.projectInfo .font_group2{border: none}
+    	.projectInfo .font_group h2{width: 60%;float: left;text-align: right;color: #fff;font-size: 22px;}
+    	.projectInfo .font_group h3{width: 40%;float: left;text-align: left;color: #fff;font-size: 12px;margin-top: 13px;}
+    	.projectInfo .font_group2 h2{width: 50%;}
+    	.projectInfo .font_group2 h3{width: 50%;}
+    	.projectInfo .font_group h4{width: 100%;float: left;text-align: center;color: #fff;font-size: 12px;}
+    	.projectInfo .pro{width: 80%;float: left;height: 5px;background: #b31c45;border-radius: 3px;overflow: hidden;margin-top: 10px;}
+    	.projectInfo .pro p{width: 90%;background: #fff;height: 5px;}
+    	.projectInfo h5{width: 20%;float: left;color: #fff;font-size: 12px;text-align: center;}
+    	.projectInfo h6{width: 60%;color: #fff;font-size: 12px;float: left;}
+    	.projectInfo p{width: 25%;color: #fff;font-size: 12px;float: left;text-align: right;}
+    	.projectInfo span{width: 15%;color: #fff;font-size: 12px;float: left;text-align: left;}
+    	.projectInfo ul{float: left;width: 100%;height: 30px;border-top: 1px #fff solid;padding-top: 10px;}
+    	.projectInfo ul li{width: 33%;float: left;position: relative;}
+    	.projectInfo ul li p{font-size: 12px;float: left;width: 100%;float: left;text-align: center;}
+    	
+    	.projectProgaress{top: 231px;background: #fff;width: 100%;position: fixed;}
+    	.projectProgaress h1{width: 100%;float: left;font-size: 14px;line-height: 25px;padding-left: 2%;color: #333;border-bottom: 1px #ccc solid;height: 30px;}
+    	.projectProgaress p{position: absolute;top: 0;right: 10px;font-size: 10px;border: 1px #dd524d solid;color: #dd524d;padding:0 5px ;margin-top: 5px;}
+    	.projectProgaress .pro_title{width: 90%;float: left;border: 1px solid #DD524D;border-radius: 3px;margin-left: 5%;overflow: hidden;}
+    	.projectProgaress .pro_title li{width: 25%;float: left;border-left:1px #DD524D solid ;}
+    	.projectProgaress .pro_title li:first-child{border: none;}
+    	.projectProgaress .pro_title li h2{font-size: 14px;float: left;text-align: center;width: 100%;color: #DD524D;line-height: 20px;}
+    	.projectProgaress ul .selected{background: #DD524D;}
+    	.projectProgaress ul .selected h2{color: #fff;}
+    	.pro_content{width: 90%;float: left;margin-top: 310px;margin-left: 5%;padding-bottom:45px;}
+    	.pro_content li{width: 100%;float: left;display: none;}
+    	.pro_content li p{width: 100%;float: left;font-size: 12px;line-height: 14px;color: #333;margin: 0;}
+    	.pro_content li .table{width: 100%;float: left;border-bottom: 1px #ccc solid;}
+    	.pro_content li .table h1{float: left;font-size: 12px;width: 30%;text-align: center;}
+    	.pro_content li .table h2{float: right;font-size: 12px;width: 60%;text-align: center;margin-left: 10%;}
+    	.pro_content .selected{display: block;}
+    	
+    	.foot{width: 100%;background: #DD524D;bottom: 0;height: 40px;}
+    	.foot h1{width: 100%;float: left;text-align: center;line-height: 30px;font-size: 16px;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">项目详情</h1>
+	</header>
+	<div class="mui-bar projectInfo">
+		<h1>中小企业短期资金周转（债券编号：FM456213687915）</h1>
+		<div class="font_group">
+			<h2>17.76</h2><h3>%</h3><h4>年化利率</h4>
+		</div>
+		<div class="font_group font_group2">
+			<h2>6</h2><h3>个月</h3><h4>还款期限</h4>
+		</div>
+		<div class="pro"><p></p></div>
+		<h5>90.00%</h5>
+		<h6>可投金额/借款金额</h6>
+		<p>￥0.00/</p><span>30.00万</span>
+		<ul>
+			<li><p>AAA</p></li>
+			<li><p>本息保障</p></li>
+			<li><p>按月等额本息</p></li>
+		</ul>
+	</div>
+	<div class="projectProgaress">
+		<h1>担保信息</h1><p>合作机构</p>
+		<ul class="pro_title">
+			<li class="selected"><h2>基本资料</h2></li>
+			<li><h2>投资记录</h2></li>
+			<li><h2>合规资料</h2></li>
+			<li><h2>风控措施</h2></li>
+		</ul>
+	</div>
+	<ul class="pro_content">
+		<li class="selected">
+			<p>一.借贷基本情况</p>
+			<p>1.接待用途</p>
+			<p>借款人本次所借资金主要用于其水暖公司短期资金周转。</p>
+			<p>2.还款来源</p>
+			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
+			<p>一.借贷基本情况</p>
+			<p>1.接待用途</p>
+			<p>借款人本次所借资金主要用于其水暖公司短期资金周转。</p>
+			<p>2.还款来源</p>
+			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
+		</li>
+		<li>
+			<div class="table"><h1>投资人</h1><h2>投标时间</h2></div>
+			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+		</li>
+		<li>
+			<div class="table"><h1>投资项目</h1><h2>审核时间</h2></div>
+			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
+			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
+			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
+			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
+			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
+		</li>
+		<li>
+			<p>抵押货物名称</p>
+			<p>FM15485461</p>
+			<p>抵押物信息</p>
+			<p>抵押物为北京住宅房产一套，建筑面积159.92平方米</p>
+			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
+			<p>一.借贷基本情况</p>
+			<p>1.接待用途</p>
+			<p>借款人本次所借资金主要用于其水暖公司短期资金周转。</p>
+			<p>2.还款来源</p>
+			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
+		</li>
+	</ul>
+	<div class="mui-bar foot">
+		<h1>立即投资</h1>
+	</div>
+</body>
+</html>

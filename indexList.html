@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	window.onload = function(){
+      		var project = document.getElementsByClassName("slider_info")[0].getElementsByTagName("li");
+      		var num = 0;
+      		projectEvent(num);
+      		function projectEvent(num){
+      			for(var i=0;i<project.length;i++){
+      				project[i].className="";
+      			}
+      			project[num].className="selected";
+      		}
+      		function openProject(num){
+      			alert("抢购第"+num+"个");
+      			mui.openWindow({
+      				url:"project.html",
+      				id:"project"
+      			})
+      		}
+      		
+      		document.getElementsByClassName("content")[0].getElementsByTagName("span")[0].addEventListener("tap",function(){
+      			num--;
+      			num<0?num=project.length-1:num=num;
+      			projectEvent(num);
+      		});
+      		document.getElementsByClassName("content")[0].getElementsByTagName("span")[1].addEventListener("tap",function(){
+      			num++;
+      			num>project.length-1?num=0:num=num;
+      			projectEvent(num);
+      		})
+      		document.getElementById("content_btn").addEventListener("tap",function(){
+      			openProject(num);
+      		})
+      		document.getElementsByClassName("slider_info")[0].addEventListener("tap",function(){
+      			openProject(num);
+      		})
+      	}
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
+    	body{width: 100%;background: #fff;}
+    	.mui-bar{background: #fff;}
+    	
+    	.mui-content{background: #fff;width: 100%;float: left;overflow: hidden;}
+    	.mui-content h1{width: 100%;float: left;font-size: 14px;text-align: center;line-height: 30px;}
+    	.mui-content span{width: 7%;float: left;text-align: center;line-height: 150px;height: 150px;color: #A2A2A2;}
+    	.mui-content .slider_info{width: 86%;float: left;height: 150px;float: left;position: relative;overflow: hidden;}
+    	.mui-content .slider_info ul{float: left;position: absolute;width: 100%;}
+    	.mui-content .slider_info ul li{float: left;width: 100%;position: relative;display: none;}
+    	.mui-content .slider_info ul .selected{display: block;}
+    	.mui-content .slider_info ul li h1{font-size: 60px;color: #dd524d;width: 48%;text-align: right;float: left;line-height: 50px;margin-right: 2%;}
+    	.mui-content .content .slider_info ul li h2{width: 50%;float: left;font-size: 30px;line-height: 20px;color: #dd524d;text-align: left;}
+    	.mui-content .content .slider_info ul li h3{width: 50%;float: left;font-size: 16px;line-height: 20px;padding-left: 8px;text-align: left;}
+    	
+    	.mui-content .slider_info ul li button{width: auto;height: 30px;line-height: 15px;font-size: 12px;float: right;margin-top: 20px;margin-right: 3%;}
+    	.mui-content .slider_info ul li .time{float: right;width: 50%;height: 75px;margin-top: 15px;}
+    	.mui-content .slider_info ul li h4{float: left;color: #f0ad4e;width: 15%;text-align: right;font-size: 30px;}
+    	.mui-content .slider_info ul li h5{float: left;color: #f0ad4e;width: 75%;font-size: 14px;line-height: 0px;}
+    	.mui-content .slider_info ul li h6{float: left;width: 75%;font-size: 12px;line-height: 12px;}
+    	.mui-content .slider_info ul li .pro{width: 200px;float: left;height: 4px;background: #ccc;position: absolute;bottom: 10px;margin-left: 50%;
+    										left: -100px;border-radius: 3px;overflow: hidden;}
+    	.mui-content .slider_info ul li .pro p{float: left;width: 50%;background: #dd524d;height: 4px;}
+    	.mui-content .content button{width: 80%;float: left;margin-left: 10%;border-radius: 20px;margin-top: 10px;}
+    	.mui-content .content h2{width: 100%;float: left;text-align: center;font-size: 12px;line-height: 20px;margin-top: 5px;}
+    	.mui-content .content h3{width: 100%;float: left;text-align: center;font-size: 20px;color: #dd524d;}
+
+    	
+    </style>
+</head>
+<body>
+	<div class="mui-content">
+	    <div id="slider" class="mui-slider" >
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="images/banner.jpg">
+					</a>
+				</div>
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/idnexbg1.jpg">
+					</a>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/idnexbg2.jpg">
+					</a>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/idnexbg1.jpg">
+					</a>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/idnexbg2.jpg">
+					</a>
+				</div>
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="images/banner.jpg">
+					</a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<div class="content">
+			<h1>e起购</h1>
+			<span class="mui-icon mui-icon-arrowleft"></span>
+			<div class="slider_info">
+				<ul>
+					<li class="selected">
+						<h1>10</h1><h3>年化利率</h3><h2>.15%</h2>
+						<div class="time"><h4>1</h4><h6>还款期限</h6><h5>个月</h5></div>
+						<button type="button" class="mui-btn mui-btn-danger">e起购eee</button>
+						<div class="pro"><p></p></div>
+					</li>
+					<li>
+						<h1>21</h1><h3>年化利率</h3><h2>.52%</h2>
+						<div class="time"><h4>2</h4><h6>还款期限</h6><h5>个月</h5></div>
+						<button type="button" class="mui-btn mui-btn-danger">a起购aaa</button>
+						<div class="pro"><p></p></div>
+					</li>
+					<li>
+						<h1>32</h1><h3>年化利率</h3><h2>.83%</h2>
+						<div class="time"><h4>3</h4><h6>还款期限</h6><h5>个月</h5></div>
+						<button type="button" class="mui-btn mui-btn-danger">b起购bbb</button>
+						<div class="pro"><p></p></div>
+					</li>
+				</ul>
+			</div>
+			<span class="mui-icon mui-icon-arrowright"></span>
+			<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" id="content_btn">点击抢购</button>
+			<h2>易通贷平台已作何借贷</h2>
+			<h3>57亿400万9000元</h3>
+
+		</div>
+	</div>
+</body>
+</html>

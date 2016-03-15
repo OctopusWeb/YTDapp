@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init({
+      		subpages: [{
+					id: 'indexList',
+					url: 'indexList.html',
+					styles: {
+						top: '50px',
+						bottom: "40px",
+						bounce: 'vertical',
+						bounceBackground:"#ffffff"
+					}
+				}]
+      	});
+      	window.onload = function(){
+      		var navPage = ["index","projectList","mine","more"]
+      		var nav = document.getElementById("foot").getElementsByTagName("li");
+      		for(var i=0;i<nav.length;i++){
+      			addEvent(i);
+      		}
+      		function addEvent(i){
+      			nav[i].addEventListener("tap",function(){
+      				mui.openWindow({
+      					url:navPage[i]+".html",
+      					id:navPage[i]
+      				})
+      			})
+      		}
+      	}
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
+    	body{width: 100%;background: #fff;}
+    	.mui-bar{background: #fff;border-bottom: 1px #ccc solid;height: 50px;box-shadow: none;}
+    	#foot{bottom:0;border-top: 1px #ccc solid;height:40px}
+    	#foot ul{width: 100%;float: left;}
+    	#foot ul li{width:25%;float: left;}
+    	#foot ul li span{font-size:20px;text-align: center;width: 100%;float: left;height: 15px;line-height: 5px;color: #a2a2a2;}
+    	#foot ul li p{font-size: 10px;width: 100%;float: left;text-align: center;color: #a2a2a2;}
+    	#foot ul .selected span{color: #dd524d;font-weight: 600;}
+    	#foot ul .selected p{color: #dd524d;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <h1 class="mui-title">e通贷</h1>
+	</header>
+	<div class="mui-bar" id="foot">
+		<ul>
+			<li class="selected"><span class="mui-icon mui-icon-home"></span><p>首页</p></li>
+			<li><span class="mui-icon mui-icon-bars"></span><p>项目列表</p></li>
+			<li><span class="mui-icon mui-icon-person"></span><p>我的账户</p></li>
+			<li><span class="mui-icon mui-icon-more"></span><p>更多</p></li>
+		</ul>
+	</div>
+</body>
+</html>

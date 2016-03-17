@@ -9,8 +9,8 @@
     <script type="text/javascript" charset="UTF-8">
       	mui.init({
       		subpages: [{
-					id: 'indexList',
-					url: 'indexList.html',
+					id: 'mineList',
+					url: 'mineList.html',
 					styles: {
 						top: '50px',
 						bottom: "40px",
@@ -20,7 +20,7 @@
 				}]
       	});
       	window.onload = function(){
-      		var navPage = ["index","projectList","mine","more"]
+      		var navPage = ["index","projectList","reg","more"]
       		var nav = document.getElementById("foot").getElementsByTagName("li");
       		for(var i=0;i<nav.length;i++){
       			addEvent(i);
@@ -40,6 +40,7 @@
     	body{width: 100%;background: #fff;}
     	.mui-bar{background: #DD524D;border-bottom: 1px #ccc solid;height: 50px;box-shadow: none;}
     	.mui-bar h1{color: #fff;}
+    	.mui-bar a{color: #fff;}
     	#foot{bottom:0;border-top: 1px #ccc solid;height:40px;background: #fff;}
     	#foot ul{width: 100%;float: left;}
     	#foot ul li{width:25%;float: left;}
@@ -51,6 +52,7 @@
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>		
 	    <h1 class="mui-title">我的账户</h1>
 	</header>
 	<div class="mui-bar" id="foot">

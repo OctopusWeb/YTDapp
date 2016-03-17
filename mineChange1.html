@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;list-style: none;font-weight: 400;font-family: "微软雅黑";}
+    	.mui-bar{background: #DD524D;box-shadow: none;border-bottom:1px solid #ccc;}
+    	.mui-bar a,.mui-bar .mui-title,.mui-bar{color: #fff;}
+    	.mui-content{width: 100%;float: left;}
+    	.mui-content .renzheng{width: 100%;float: left;background: #fff;margin-top: 10px;height: 40px;}
+    	.mui-content .renzheng input{background: none;width: 70%;border: none;float: left;}
+    	.mui-content .renzheng button{border: none;width: 25%;height: 25px;line-height: 10px;margin-top: 10px;float: left;margin-left: 0;}
+    	.mui-content button{width: 80%;float: left;margin-left: 10%;margin-top: 20px;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">手机认证</h1>
+	</header>
+	<div class="mui-content">
+	    <div class="renzheng">
+	    	<input type="text" placeholder="请输入短信验证码"/><button type="button" class="mui-btn mui-btn-danger">发送验证码</button>
+	    </div>
+	    <button type="button" class="mui-btn mui-btn-danger">下一步</button>
+	</div>
+</body>
+</html>

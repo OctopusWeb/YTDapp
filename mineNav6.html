@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	window.onload=function(){
+      		var blackBack = document.getElementsByClassName("blackBack")[0];
+      		document.getElementById("choose").addEventListener("tap",function(){
+      			var cla = blackBack.className;
+      			cla == "blackBack"?blackBack.className = "blackBack blackBckShow":blackBack.className="blackBack";
+      		})
+      		blackBack.addEventListener("tap",function(){
+      			var cla = blackBack.className;
+      			cla == "blackBack"?blackBack.className = "blackBack blackBckShow":blackBack.className="blackBack";
+      		})
+      	}
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;list-style: none;font-weight: 400;}
+    	.mui-bar{background: #DD524D;box-shadow: none;border-bottom:1px solid #ccc;}
+    	.mui-bar a,.mui-bar .mui-title,.mui-bar{color: #fff;}
+    	.mui-bar h1{float: right;font-size: 16px;line-height: 35px;display: block;}
+
+		.mui-content{width: 100%;float: left;margin-top: 10px;}
+		.mui-content ul{width: 100%;float: left;}
+		.mui-content ul li{float: left;width: 100%;background: #fff;border-bottom: 1px #ccc solid;}
+		.mui-content ul li h1,.mui-content ul li h2,.mui-content ul li h3{width: 33.3%;float: left;font-size: 14px;text-align: center;height: 40px;line-height: 40px;} 
+		.mui-content ul .selected{background: none;}	
+		
+		.blackBack{width: 100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;display: none;}
+		.blackBckShow{display: block;}
+		.blackBack ul{width: 150px;background: #49494b;height: auto;float: right;margin-top: 50px;border-radius: 5px;margin-right: 10px;}
+		.blackBack ul li{width: 100%;float: left;height: 50px;}
+    	.blackBack ul li h1{width: 80%;float: left;margin-left: 10%;font-size: 16px;color: #fff;text-align: center;line-height: 45px;border-bottom: 1px #646466 solid;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>		
+			<div class="mui-title">交易记录</div>
+			<h1 id="choose">筛选</h1>
+	</header>
+	
+	<div class="blackBack">
+		<ul>
+			<li><h1>全部记录</h1></li>
+			<li><h1>充值记录</h1></li>
+			<li><h1>投资记录</h1></li>
+			<li><h1>借款记录</h1></li>
+			<li><h1>体现记录</h1></li>
+			<li><h1>生利宝记录</h1></li>
+			<li><h1>回款记录</h1></li>
+			<li><h1>体验金记录</h1></li>
+		</ul>
+	</div>
+	<div class="mui-content">
+	    <ul>
+	    	<li class="selected">
+	    		<h1>交易类型</h1>
+	    		<h2>交易金额</h2>
+	    		<h3>交易时间</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    	<li>
+	    		<h1>投资标的</h1>
+	    		<h2>-1,390.00</h2>
+	    		<h3>2016-03-11 11:31</h3>
+	    	</li>
+	    </ul>
+	</div>
+</body>
+</html>

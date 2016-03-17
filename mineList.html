@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	window.onload = function(){
+      		var nav = document.getElementsByTagName("ul")[0].getElementsByTagName("li");
+      		var navHref = ["mineNav1","mineNav2","mineNav3","mineNav4","mineNav5","mineNav6"]
+      		
+      		for(var i=0;i<nav.length;i++){
+      			addEvent(i);
+      		}
+      		function addEvent(i){
+      			nav[i].addEventListener("tap",function(){
+      				mui.openWindow({
+      					url:navHref[i]+".html",
+      					id:navHref[i]
+      				})
+      			})
+      		}
+      	}
+    </script>
+</head>
+<style type="text/css">
+		*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
+    	body{width: 100%;background: #fff;}
+    	
+    	.mui-content{float: left;background: #fff;width: 100%;}
+    	.mui-content .mineInfo{width: 100%;float: left;background: #DD524D;}
+    	.mui-content .mineInfo span{color: #fff;position: absolute;left: 5%;top: 2px;}
+    	.mui-content .mineInfo h1{float: left;width: 100%;color:#fff;font-size: 12px;padding-left: 5%;margin-top: 10px;}
+    	.mui-content .mineInfo h2{float: left;width: 100%;color:#fff;font-size: 30px;padding-left: 5%;margin-top: 10px;}
+		.mui-content .mineInfo #name{padding-left: 15%;}
+		.mui-content .money{width: 50%;float: left;background: #fff;height: auto;}
+		.mui-content .money h2{font-size: 12px;color: #ccc;padding-left: 10%;line-height: 20px;width: 100%;margin: 0;margin-top: 10px;}
+		.mui-content .money h3{font-size: 20px;color: #333;padding-left: 10%;line-height: 30px;width: 100%;margin: 0;}
+		.mui-content .moneyLeft h2{border-right: 1px #ccc solid;}
+		.mui-content .moneyLeft h3{border-right: 1px #ccc solid;}
+		.mui-content ul{float: left;width: 100%;margin-top: 10px;}
+		.mui-content ul li{float: left;width: 33%;padding-top: 20px;border: 1px #ccc solid;padding-bottom: 20px;border-right: none;}
+		.mui-content ul li img{width: 40%;margin-left: 30%;}
+		.mui-content ul li h4{font-size: 14px;width: 100%;text-align: center;}
+		.mui-content ul .disborder{border-top:none}
+		
+</style>
+<body>
+	<div class="mui-content">
+	    <div class="mineInfo">
+	    	<span class="mui-icon mui-icon-person"></span>
+	    	<h1 id="name">您好，某某账户</h1>
+	    	<h1>账户总资产（元）</h1>
+	    	<h2>0.00</h2>
+	    	<h1>可用余额（元）</h1>
+	    	<h2>0.00</h2>
+	    	<h1>总收益（元）</h1>
+	    	<h2>0.00</h2>
+	    </div>
+	    <div class="moneyLeft money"><h2>待收总额（元）</h2><h3>0.00</h3></div>
+		<div class="moneyRight money"><h2>冻结总额（元）</h2><h3>0.00</h3></div>
+		<ul>
+			<li><img src="images/icon1.jpg" alt="" /><h4>我的投资</h4></li>
+			<li><img src="images/icon2.jpg" alt="" /><h4>我的红包</h4></li>
+			<li><img src="images/icon3.jpg" alt="" /><h4>充值</h4></li>
+			<li class="disborder"><img src="images/icon4.jpg" alt="" /><h4>债权转让</h4></li>
+			<li class="disborder"><img src="images/icon5.jpg" alt="" /><h4>账户管理</h4></li>
+			<li class="disborder"><img src="images/icon6.jpg" alt="" /><h4>资金记录</h4></li>
+		</ul>
+	</div>
+</body>
+</html>

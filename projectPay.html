@@ -15,8 +15,21 @@
       			if(money==""){
       				alert("请输入投标金额");
       			}else if(parseFloat(money)>parseFloat(balance)){
-      				alert("您的余额不足，请重新输入")
+      				alert("您的余额不足，请重新输入");
       			}
+      		})
+      		
+      		document.getElementById("pay").addEventListener("tap",function(){
+      			mui.openWindow({
+      					url:"mineNav3.html",
+      					id:"mineNav3"
+      				})
+      		})
+      		document.getElementsByClassName("bag")[0].addEventListener("tap",function(){
+      			mui.openWindow({
+      					url:"mineNav2.html",
+      					id:"mineNav2"
+      				})
       		})
       	}
     </script>
@@ -59,9 +72,9 @@
 		</ul>
 		<ul class="money_much">
 			<li><h1>可投金额:</h1><h2>￥120,000.00</h2></li>
-			<li><h1>可用余额:</h1><button type="button" class="mui-btn mui-btn-success">充值</button><h2>12.18</h2></li>
+			<li><h1>可用余额:</h1><button type="button" class="mui-btn mui-btn-success" id="pay">充值</button><h2>12.18</h2></li>
 			<li><h1>还款期限:</h1><input type="number" placeholder="最低投资金额100元" /></li>
-			<li><h1>还款方式:</h1><button type="button" class="mui-btn mui-btn-danger">选择红包</button><h3>3个</h3></li>
+			<li><h1>还款方式:</h1><button type="button" class="mui-btn mui-btn-danger bag">选择红包</button><h3>3个</h3></li>
 		</ul>
 	</div>
 	<div class="mui-bar foot">

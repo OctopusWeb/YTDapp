@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;list-style: none;font-weight: 400;font-family: "微软雅黑";}
+    	.mui-bar{background: #DD524D;box-shadow: none;border-bottom:1px solid #ccc;}
+    	.mui-bar a,.mui-bar .mui-title,.mui-bar{color: #fff;}
+    	
+    	.mui-content{float: left;width: 100%;margin-top: 10px;}
+    	.mui-content input{width: 100%;float: left;margin: 0;border-top:none ;}
+    	.mui-content #num{border-top: 1px #ccc solid;}
+    	.mui-content button{width: 90%;float: left;margin-left: 5%;margin-top: 20px;}
+    	.mui-content p{float: left;width: 50%;text-align: left;padding-left: 5%;font-size: 12px;margin-top: 10px;}
+    	.mui-content span{float: left;width: 50%;text-align: right;padding-right: 5%;font-size: 12px;color: #DD524D;margin-top: 10px;}
+    	#zhengma{position: absolute;top: 158px;right: 0;width: 30%;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">登录</h1>
+	</header>
+	<div class="mui-content">
+	    <input type="text" placeholder="手机号码/用户名/邮箱" id="num"/>
+	    <input type="number" placeholder="请输入手机号码" />
+	    <input type="text" placeholder="请输入验证码" />
+	    <input type="text" placeholder="请输入短信验证码"/>
+	    <button type="button" class="mui-btn mui-btn-danger" id="zhengma">获取验证码</button>
+	    <input type="password" placeholder="请输入您的密码" />
+	    <button type="button" class="mui-btn mui-btn-danger">免费注册</button>
+	</div>
+</body>
+</html>

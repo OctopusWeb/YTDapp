@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	window.onload=function(){
+      		document.getElementsByTagName("span")[0].addEventListener("tap",function(){
+      			mui.openWindow({
+      					url:"log.html",
+      					id:"log"
+      				})
+      		})
+      		document.getElementsByTagName("p")[0].addEventListener("tap",function(){
+      			mui.openWindow({
+      					url:"logForget.html",
+      					id:"logForget"
+      				})
+      		})
+      		document.getElementsByTagName("button")[0].addEventListener("tap",function(){
+      			mui.openWindow({
+      					url:"mine.html",
+      					id:"mine"
+      				})
+      		})
+      	}
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;list-style: none;font-weight: 400;font-family: "微软雅黑";}
+    	.mui-bar{background: #DD524D;box-shadow: none;border-bottom:1px solid #ccc;}
+    	.mui-bar a,.mui-bar .mui-title,.mui-bar{color: #fff;}
+    	
+    	.mui-content{float: left;width: 100%;margin-top: 10px;}
+    	.mui-content input{width: 100%;float: left;margin: 0;}
+    	.mui-content #num{border-bottom: none;}
+    	.mui-content button{width: 90%;float: left;margin-left: 5%;margin-top: 20px;}
+    	.mui-content p{float: left;width: 50%;text-align: left;padding-left: 5%;font-size: 12px;margin-top: 10px;}
+    	.mui-content span{float: left;width: 50%;text-align: right;padding-right: 5%;font-size: 12px;color: #DD524D;margin-top: 10px;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">登录</h1>
+	</header>
+	<div class="mui-content">
+	    <input type="text" placeholder="手机号码/用户名/邮箱" id="num"/>
+	    <input type="text" placeholder="请输入您的密码" />
+	    <button type="button" class="mui-btn mui-btn-danger">登陆</button>
+	    <p>忘记密码</p><span>免费注册</span>
+	</div>
+</body>
+</html>

@@ -9,7 +9,8 @@
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
       	window.onload = function(){
-      		document.getElementsByClassName("foot")[0].addEventListener("tap",function(){
+      		var foot = document.getElementsByClassName("foot")[0];
+      		foot.addEventListener("tap",function(){
       			var money = document.getElementsByTagName("input")[0].value;
       			var balance =document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[1].getElementsByTagName("h2")[0].innerHTML.substr(0);
       			if(money==""){
@@ -19,6 +20,15 @@
       			}
       		})
       		
+      		document.getElementsByTagName("input")[0].onblur=function(){
+      			var money = document.getElementsByTagName("input")[0].value;
+      			if(money==""){
+      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].className="select"
+      			}else{
+      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].className=""
+      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].getElementsByTagName("h4")[0].innerHTML="￥"+money
+      			}
+      		}
       		document.getElementById("pay").addEventListener("tap",function(){
       			mui.openWindow({
       					url:"mineNav3.html",
@@ -53,6 +63,8 @@
     	.mui-content .money_much li button{float: right;height: 25px;padding: 0 3px;margin-left: 10px;margin-top: -3px;}
     	.mui-content .money_much li input{width: 70%;float: right;margin-top: -8px;font-size: 12px;text-align: center;
     	height: 35px;line-height: 12px;}
+    	.mui-content .money_much li h4{color: #DD524D;float: right;font-size: 14px;}
+    	.mui-content .money_much .select{display: none;}
     	
     	.foot{bottom: 0;border: none;}
     	.foot h1{float: left;width: 100%;text-align: center;line-height: 35px;font-size: 16px;}
@@ -73,7 +85,8 @@
 		<ul class="money_much">
 			<li><h1>可投金额:</h1><h2>￥120,000.00</h2></li>
 			<li><h1>可用余额:</h1><button type="button" class="mui-btn mui-btn-success" id="pay">充值</button><h2>12.18</h2></li>
-			<li><h1>还款期限:</h1><input type="number" placeholder="最低投资金额100元" /></li>
+			<li><h1>投资金额(元):</h1><input type="number" placeholder="最低投资金额100元" /></li>
+			<li class="select"><h1>预计收入:</h1><h4>￥120,000.00</h4></li>
 			<li><h1>还款方式:</h1><button type="button" class="mui-btn mui-btn-danger bag">选择红包</button><h3>3个</h3></li>
 		</ul>
 	</div>

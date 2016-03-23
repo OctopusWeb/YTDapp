@@ -9,8 +9,8 @@
     <script type="text/javascript" charset="UTF-8">
       	mui.init({
       		subpages: [{
+      				url: 'mineList.html',
 					id: 'mineList',
-					url: 'mineList.html',
 					styles: {
 						top: '50px',
 						bottom: "40px",
@@ -20,7 +20,7 @@
 				}]
       	});
       	window.onload = function(){
-      		var navPage = ["index","projectList","reg","more"]
+      		var navPage = ["index","projectList","reg","more"];
       		var nav = document.getElementById("foot").getElementsByTagName("li");
       		for(var i=0;i<nav.length;i++){
       			addEvent(i);
@@ -33,6 +33,9 @@
       				})
       			})
       		}
+      		document.getElementsByClassName("mui-bar")[0].getElementsByTagName("h2")[0].addEventListener("tap",function(){
+      			alert("签到成功");
+      		})
       	}
     </script>
     <style type="text/css">
@@ -41,6 +44,10 @@
     	.mui-bar{background: #DD524D;border-bottom: 1px #ccc solid;height: 50px;box-shadow: none;}
     	.mui-bar h1{color: #fff;}
     	.mui-bar a{color: #fff;}
+    	.mui-bar-nav p{width: 8px;height: 8px;background: #0062CC;border-radius: 50%;position: absolute;top: 15px;left: 28px;z-index: 100;}
+    	.mui-bar-nav span{color: #fff;position: absolute;line-height: 30px;}
+    	.mui-bar-nav h2{color: #fff;position: absolute;line-height: 30px;right: 10px;top: 0;line-height: 40px;font-size: 14px;}
+    	.mui-bar-nav .mui-icon-compose{position: absolute;right: 40px;font-size: 30px;}
     	#foot{bottom:0;border-top: 1px #ccc solid;height:40px;background: #fff;}
     	#foot ul{width: 100%;float: left;}
     	#foot ul li{width:25%;float: left;}
@@ -52,8 +59,10 @@
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav">
-	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>		
+		<span class="mui-icon mui-icon-chat"></span><p></p>
 	    <h1 class="mui-title">我的账户</h1>
+	    <span class="mui-icon mui-icon-compose"></span>
+	    <h2>签到</h2>
 	</header>
 	<div class="mui-bar" id="foot">
 		<ul>

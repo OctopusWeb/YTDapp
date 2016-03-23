@@ -87,6 +87,7 @@
 			#nav{width: 100%;float: left;}
 			#nav1,#nav2,#nav3{width: 33%;float: left;text-align: center;border-right: 1px #ccc solid;}
 			#nav3{border: none;}
+			.mui-bar h2{position: absolute;right: 5px;font-size: 16px;bottom: 5px;color: #fff;}
 		</style>
 	</head>
 
@@ -94,6 +95,7 @@
 		<header class="mui-bar mui-bar-nav">
 	    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>		
 			<div class="mui-title">全部投资</div>
+			<h2>帮助</h2>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
@@ -236,6 +238,12 @@
 						return fragment;
 					};
 					
+					document.getElementsByClassName("mui-bar")[0].getElementsByTagName("h2")[0].addEventListener("tap",function(){
+						mui.openWindow({
+								url:"help.html",
+								id:"help"
+							})
+					})
 					function bindEvent(){
 						var ul1 = document.getElementById("ul1").getElementsByTagName("li");
 						var ul2 = document.getElementById("ul2").getElementsByTagName("li");

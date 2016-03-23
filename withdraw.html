@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	window.onload=function(){
+      		noBank("");
+			function noBank(num){
+				var bankName = document.getElementsByClassName("bankName");
+				if(num == ""){
+					document.getElementsByClassName("bankH")[0].addEventListener("tap",function(){
+						document.getElementsByClassName("bankList")[0].className = "bankList"
+					});
+					document.getElementsByClassName("bankList")[0].getElementsByTagName("p")[0].addEventListener("tap",function(){
+						document.getElementsByClassName("bankList")[0].className = "bankList bankHide";
+					});
+					for (var i=0;i<bankName.length;i++) {
+						addEvent(bankName,i)
+					}
+				}else{
+					document.getElementsByClassName("bankH")[0].className="";
+				}
+			}
+			function addEvent(bankName,a){
+				bankName[a].addEventListener("tap",function(){
+					for (var i=0;i<bankName.length;i++) {
+						bankName[i].className="bankName";
+					}
+					bankName[a].className="bankName selected";
+				})
+			}
+			document.getElementsByClassName("bankList")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
+				var bank = document.getElementsByClassName("selected")[0].getElementsByTagName("h6")[0].innerHTML;
+				document.getElementsByClassName("bankH")[0].getElementsByTagName("h3")[0].innerText=bank;
+				document.getElementsByClassName("bankList")[0].className = "bankList bankHide";
+			})
+      	}
+    </script>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
+    	.mui-bar{box-shadow: none;border-bottom:1px #ccc solid ;background: #DD524D;}
+    	.mui-bar h1{color: #fff;}
+    	.mui-bar a{color: #fff;}
+    	.mui-bar h2{font-size: 14px;color: #fff;position: absolute;width: 100%;text-align: right;line-height: 40px;padding-right: 20px;}
+    	.mui-content h1{width: 100%;float: left;font-size: 14px;line-height: 40px;padding-left: 5%;}
+    	.contentLi{width: 100%;float: left;background: #fff;border-bottom: 1px #ccc solid;}
+    	.mui-content h2{width: 100px;float: left;font-size: 14px;text-align: center;line-height: 30px;}
+    	.mui-content h3{float: right;font-size: 14px;text-align: right;line-height: 30px;margin-right: 10px;}
+    	.mui-content input{width: 50%;float: left;background:none;font-size: 12px;height: 40px;line-height: 15px;border: none;padding: 0;margin: 0;}
+    	.mui-content h4{font-size: 14px;color: #DD524D;line-height: 30px;width: 100%;text-align: right;padding-right: 10px;}
+    	.mui-content span{float: right;line-height: 40px;font-size: 20px;}
+    	.mui-content button{width: 80%;float: left;margin-left: 10%;margin-top: 20px;}
+    	.mui-content .addBank{margin-top: 10px;}
+    	
+    	.mui-content .bankList{position: absolute;width: 100%;height: 365px;background: #fff;margin-top: 220px;z-index: 100;border-top: 1px #ccc solid;}
+    	.mui-content .bankList h1{float: left;width: 100%;text-align: center;font-size: 14px;line-height: 40px;border-bottom: 1px #ccc solid;margin: 0;}
+    	.mui-content .bankList p{position: absolute;font-size: 16px;color: #000;top: 10px;right: 10px;}
+    	.mui-content .bankList .bankName{width: 33.3%;height: 40px;border: 1px #ccc solid;float: left;border-right: none;border-top: none;}
+    	.mui-content .bankList .bankName img{width: 20px;height: 20px;margin: 10px;float: left;}
+    	.mui-content .bankList .bankName h6{float: left;font-size: 14px;line-height: 30px;}
+    	.mui-content .bankList .info{position: absolute;bottom: 100px;background: #ccc;width: 100%;}
+    	.mui-content .bankList .info span{width: 100%;text-align: center;font-size: 12px;float: left;line-height: 30px;}
+    	.mui-content .bankList h3{position: absolute;bottom: 40px;background: #d43b33;width: 100%;height: 50px;line-height: 50px;
+    							color: #fff;width: 100%;text-align: center;font-size: 16px;}
+    	.mui-content .bankHide{display: none;}
+    	.mui-content .bankList .selected{background: #ccc;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">提现</h1>
+	    <h2>提现说明</h2>
+	</header>
+	<div class="mui-content">
+	    <h1>可提余额：0.00</h1>
+	    <div class="contentLi">
+	    	<h2>提现金额</h2><input type="number" placeholder="请输入金额"/><h3>元</h3>
+	    </div>
+	    <div class="contentLi">
+	    	<h2>提现手续费</h2>
+	    	<h3>1.00元</h3>
+	    </div>
+	    <div class="contentLi">
+	    	<h4>世纪提现金额0.00元</h4>
+	    </div>
+	    <div class="contentLi addBank  bankH">
+	    	<h2>添加银行卡</h2>
+	    	<span class="mui-icon mui-icon-arrowright"></span>
+	    	<h3>请选择银行卡</h3>
+	    </div>
+	    <button type="button" class="mui-btn mui-btn-danger">提现</button>
+	    <div class="bankList bankHide">
+			<h1>选择银行卡</h1><p>X</p>
+			<div class="bankName selected"><img src="images/backName1.jpg"/><h6>中国银行</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行1</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行2</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行3</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行4</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行5</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行6</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行7</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行8</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行9</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行0</h6></div>
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行1</h6></div>
+			<div class="info">
+				<span>其他银行卡充值请登录www.baidu.com使用网银操作</span>
+				<span>感谢您对我们的支持，如有问题请致电400-000-0000</span>
+			</div>
+			<h3>确定</h3>
+		</div>
+	</div>
+</body>
+</html>

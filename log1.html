@@ -9,82 +9,32 @@
     <script type="text/javascript" src="js/md5.js" ></script>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
+      	
       	window.onload=function(){
+      		
       		document.getElementById("next").addEventListener("tap",function(){
-      			var num = document.getElementById("num").value;
-      			var message = document.getElementById("message").value;
-      			if(message!=""){
-      				if(num!=""){
-      					if(message.length==6){
-      						document.getElementsByClassName("back")[0].className="back"
-      						verifyMessage(num,message);
-      					}
-      				}else{alert("您输入的手机号为空")}
-      			}else{alert("您输入的验证码为空")}
-      		})
-      		document.getElementById("zhengma").addEventListener("tap",function(){
-      			var num = document.getElementById("num").value;
-      			if(num!=""){
-      				if(num.length==11){
-      					document.getElementsByClassName("back")[0].className="back"
-      					sendMessage(num)
-      				}else{alert("您输入的手机号不正确")}
-      			}else{
-      				alert("您输入的手机号为空")
+      			var pass = document.getElementsByTagName("input");
+				var self = plus.webview.currentWebview();
+				var mobileNo = self.mobileNo;
+				var smsCode = self.smsCode;
+				alert(mobileNo+""+smsCode);
+      			if(pass[1].value==pass[2].value){
+      				document.getElementsByClassName("back")[0].className="back";
+      				reg(mobileNo,pass[0].value,pass[1].value,smsCode)
       			}
       			
       		})
-			function sendMessage(num) {
-				var array = [num,"mod",ts,rn];
+      		function reg(mobileNo,userNm,userPw,smsCode) { 
+				var array = [mobileNo,userNm,userPw,smsCode,"ios",ts,rn]; 
 				var cVal=getcval(array);
-				var URL=""+rooturl+"/sms/send_sms_verify.bl?mobileNo="+num+"&busiType=mod&cVal="+cVal+"&ts="+ts+"&rn="+rn;
-				if ( xhr ) {
-					console.log( "xhr请求已创建" );
-					return;
-				}
-				console.log(URL)
-				var xhr = new plus.net.XMLHttpRequest();
-				xhr.onreadystatechange = function () {
-			        switch ( xhr.readyState ) {
-			            case 0:
-			            	console.log( "xhr请求已初始化" );
-			            break;
-			            case 1:
-			            	console.log( "xhr请求已打开" +URL );
-			            break;
-			            case 2:
-			            	console.log( "xhr请求已发送"+rooturl );
-			            break;
-			            case 3:
-			                console.log( "xhr请求已响应"+cVal);
-			                break;
-			            case 4:
-			                console.log( "xhr请求已"+rn+"完成"+ts);
-			                if ( xhr.status == 200 ) {
-			                	chake(xhr.response.code ,xhr.response.cVal,xhr.response.body);
-			                	document.getElementsByClassName("back")[0].className="back backHide"
-			                	alert(xhr.response.body.statusMessage)
-			                } else {
-			                	alert( xhr.response.statusMessage);
-			                }
-			                break;
-			            default :
-			                break;
-			        }
-				}
-				xhr.open( "GET", URL );
-				xhr.responseType="json";
-				xhr.send();
-			}
-			function verifyMessage(userNm,smsCode) {
-				var array = [userNm,smsCode,ts,rn]; 
-				var cVal=getcval(array);
-				var URL=""+rooturl+"/sms/check_sms_code.bl?mobileNo="+userNm+"&smsCode="+smsCode+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				var URL=""+rooturl+"/user/regist_user.bl?mobileNo="+mobileNo+"&userNm="+userNm+"&userPw="+userPw+"&smsCode="+smsCode
+				+"&clientSide=ios"+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
 				if ( xhr ) {
 					alert( "xhr请求已创建" );
 					return;
 				}
 				console.log(URL)
+				alert( "创建请求：" );
 				var xhr = new plus.net.XMLHttpRequest();
 				xhr.onreadystatechange = function () { 
 			        switch ( xhr.readyState ) {
@@ -104,19 +54,16 @@
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	document.getElementsByClassName("back")[0].className="back backHide"
+			                	document.getElementsByClassName("back")[0].className="back backHide";
 			                	alert(xhr.response.body.statusMessage);
-			                	if(hr.response.body.statusCode =="send_sms_success"){
-			                		mui.openWindow({
-					  					url:"logForget1.html",
-					  					id:"logForget1",
-					  					extras:{
-					  						mobileNo:userNm,
-					  						smsCode:smsCode
-					  					}
-					  				});
-			                	}
-			                	
+			                	mui.openWindow({
+				  					url:"reg.html",
+				  					id:"reg",
+				  					extras:{
+				  						num:num,
+				  						message:message
+				  					}
+				  				});
 			                } else {
 			                	alert( xhr.response.statusMessage);
 			                }
@@ -142,7 +89,7 @@
     	.mui-content button{width: 90%;float: left;margin-left: 5%;margin-top: 20px;}
     	.mui-content p{float: left;width: 50%;text-align: left;padding-left: 5%;font-size: 12px;margin-top: 10px;}
     	.mui-content span{float: left;width: 50%;text-align: right;padding-right: 5%;font-size: 12px;color: #DD524D;margin-top: 10px;}
-    	#zhengma{position: absolute;top: 150px;right: 10px;width: 30%;}
+    	#zhengma{position: absolute;top: 215px;right: 10px;width: 30%;}
     	.mui-content .status{width: 100%;float: left;}
     	.mui-content .status div{float: left;width: 33.3%;}
     	.mui-content .status div h1{float: left;text-align: center;font-size: 14px;color: #fff;width: 20px;height: 20px;padding: 0;
@@ -154,7 +101,7 @@
     	.mui-content .check{float: left;width:15px;height: 15px;margin:13px;}
     	.mui-content p{float: left;width: 120px;}
     	.mui-content span{float: left;width: 150px;text-align: left;}
-    	.back{width: 100%;height: 100%;position: fixed;background: rgba(0,0,0,0.2);z-index: 100;}
+    	.back{width: 100%;height: 100%;position: fixed;z-index: 1000;background: rgba(0,0,0,0.2);}
     	.backHide{display: none;}
     </style>
 </head>
@@ -162,23 +109,24 @@
 	<div class="back backHide"></div>
 	<header class="mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	    <h1 class="mui-title">忘记密码</h1>
+	    <h1 class="mui-title">注册</h1>
 	</header>
 	<div class="mui-content">
 		<div class="status">
 			<div class="finish">
-				<h1>1</h1><h2>验证账户</h2>
+				<h1>1</h1><h2>验证手机号</h2>
+			</div>
+			<div class="finish">
+				<h1>2</h1><h2>设置密码</h2>
 			</div>
 			<div>
-				<h1>2</h1><h2>重置密码</h2>
-			</div>
-			<div>
-				<h1>3</h1><h2>完成</h2>
+				<h1>3</h1><h2>开通支付账号</h2>
 			</div>
 		</div>
-	    <input type="number" placeholder="请输入手机号码" id="num"/>
-	    <input type="text" placeholder="请输入短信验证码" id="message"/>
-	    <button type="button" class="mui-btn mui-btn-danger" id="zhengma">获取验证码</button>
+		<h1>您的手机号将作为登录账号</h1>
+		<input type="text" placeholder="请输入以字母和数字组成的6-18位用户名" />
+	    <input type="password" placeholder="密码" />
+	    <input type="password" placeholder="重复密码"/>
 	    <button type="button" class="mui-btn mui-btn-danger" id="next">下一步</button>
 	</div>
 </body>

@@ -18,7 +18,7 @@
 				
 			}
 			.mui-bar~.mui-content .mui-fullscreen {
-				top: 44px;
+				top: 40px;
 				height: auto;
 			
 			}
@@ -35,7 +35,7 @@
 				z-index: 1;
 			}
 			.mui-bar~.mui-pull-top-tips {
-				top: 24px;
+				top: 80px;
 			}
 			.mui-pull-top-wrapper {
 				width: 42px;
@@ -91,6 +91,11 @@
 			}
 			.mui-scroll ul {width:100%;height:auto;background: #f5f5f5}
 			.mui-scroll ul li{width:96%;height:auto;margin-top: 10px;margin-left: 2%;background: #fff;position: relative;padding: 0;}
+			.mui-scroll ul li .cla{width: 50px;height: 50px;right: 0;position: absolute;top: 0;}
+			.mui-scroll ul li .cla1{background: url(images/1@2x.png);background-size:100%;}
+			.mui-scroll ul li .cla2{background: url(images/2@2x.png);background-size:100%;}
+			.mui-scroll ul li .cla3{background: url(images/3@2x.png);background-size:100%;}
+			.mui-scroll ul li .cla4{background: url(images/4@2x.png);background-size:100%;}
 			.mui-scroll ul li p{width:85%;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;color: #000;font-size: 14px;
 							float: left;margin-bottom: 10px;margin-left: 5%;margin-top: 10px;}
 			.mui-scroll ul li #icon{float:right;width:20px;;height:20px;display: inline-block;}
@@ -119,14 +124,100 @@
 	    	#foot ul li p{font-size: 10px;width: 100%;float: left;text-align: center;color: #a2a2a2;}
 	    	#foot ul .selected span{color: #dd524d;font-weight: 600;}
 	    	#foot ul .selected p{color: #dd524d;}
+	    	
+	    	.mui-bar{height: 40px;}
+	    	.mui-bar h1{color: #555;font-size: 16px;font-weight: 400;position: absolute;right: 10px;line-height: 30px;}
+	    	.mui-bar .shai{height: 40px;width: 100%;bottom: 0;position: absolute;line-height: 40px;border-top: 1px #ccc solid;left: 0;}
+			.mui-bar .shai .nav{width: 100%;float: left;}
+			.mui-bar .shai .nav li{width: 33.3%;float: left;}
+			.mui-bar .shai .nav li h1{font-size: 14px;width: 100%;float: left;text-align: center;line-height: 30px;
+								border-right:1px #ccc solid;font-weight: 400;}
+			.mui-bar .shai .content li{display: none;}
+			.mui-bar .shai .content{width: 100%;float: left;background: #fff;}
+			.mui-bar .shai .content .select{display: block;}
+			.mui-bar .shai .content .select h2{width: 100%;float: left;text-align: center;font-size: 14px;line-height: 35px;
+											border-bottom: 1px #ccc solid;font-weight: 400;margin: 0;}
+			.mui-bar .shai .content .select .change{background: #ccc;}
+			.content_back{position: fixed;background: rgba(0,0,0,0.3);height: 100%;width: 100%;z-index: 100;}
+			.contentHide{display: none;}
+			.content_back .opition{width: 100%;height: auto;position: absolute;bottom: 0;background: #fff;}
+			.content_back .opition h1{width: 100%;float: left;height: 30px;line-height: 30px;font-size: 16px;text-align: center;
+									border-bottom: 1px #ccc solid;font-weight: 400;}
+			.content_back .opition div{float: left;width: 100%;height: auto;border-bottom: 1px #ccc solid;padding-bottom: 10px;padding-left: 5%;}
+			.content_back .opition h2{width: 100%;line-height: 30px;font-size: 14px;}
+			.content_back .opition button{margin-top: 5px;}
+			.content_back .opition h3{width: 100%;height: 30px;line-height: 30px;float: left;background: #DD524D;margin: 0;text-align: center;
+										color: #fff;font-size: 14px;font-weight: 400;}
 		</style>
+		<script type="text/javascript">
+			window.onload=function(){
+				var opition = document.getElementsByClassName("opition")[0];
+				var opitionDiv =  opition.getElementsByTagName("div");
+				var btn1 = opitionDiv[0].getElementsByTagName("button");
+				var btn2 = opitionDiv[1].getElementsByTagName("button");
+				var btn3 = opitionDiv[2].getElementsByTagName("button");
+				for(var i=0;i<btn1.length;i++){
+					btnEvent(btn1,i);
+				}
+				for(var i=0;i<btn2.length;i++){
+					btnEvent(btn2,i);
+				}
+				for(var i=0;i<btn3.length;i++){
+					btnEvent(btn3,i);
+				}
+				function btnEvent(arr,i){
+					arr[i].addEventListener("tap",function(){
+						for(var j=0;j<arr.length;j++){
+							arr[j].className="mui-btn mui-btn-outlined"
+						}
+						arr[i].className="mui-btn mui-btn-danger"
+					})
+					
+				}
+				document.getElementsByClassName("mui-bar-nav")[0].getElementsByTagName("h1")[0].addEventListener("tap",function(){
+					document.getElementsByClassName("content_back")[0].className="content_back"
+				})
+				document.getElementsByClassName("content_back")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
+					document.getElementsByClassName("content_back")[0].className="content_back contentHide"
+				})
+			}
+		</script>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<div class="mui-title">项目列表</div>
-			
+			<h1>筛选</h1>
 		</header>
+		<div class="content_back contentHide">
+			<div class="opition">
+				<h1>筛选</h1>
+				<div>
+					<h2>还款方式</h2>
+					<button type="button" class="mui-btn mui-btn-danger">全部</button>
+					<button type="button" class="mui-btn mui-btn-outlined">等额本息</button>
+					<button type="button" class="mui-btn mui-btn-outlined">一次性还本付息</button>
+					<button type="button" class="mui-btn mui-btn-outlined">分机付息到期还本</button>
+					<button type="button" class="mui-btn mui-btn-outlined">按月付息到期还本</button>
+				</div>
+				<div>
+					<h2>年利率</h2>
+					<button type="button" class="mui-btn mui-btn-danger">全部</button>
+					<button type="button" class="mui-btn mui-btn-outlined">10%以下</button>
+					<button type="button" class="mui-btn mui-btn-outlined">10%-12%</button>
+					<button type="button" class="mui-btn mui-btn-outlined">24%以上</button>
+				</div>
+				<div>
+					<h2>借款期限</h2>
+					<button type="button" class="mui-btn mui-btn-danger">全部</button>
+					<button type="button" class="mui-btn mui-btn-outlined">1-6个月</button>
+					<button type="button" class="mui-btn mui-btn-outlined">7-12个月</button>
+					<button type="button" class="mui-btn mui-btn-outlined">13到24个月</button>
+					<button type="button" class="mui-btn mui-btn-outlined">24个月以上</button>
+				</div>
+				<h3>确定</h3>
+			</div>
+		</div>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
@@ -156,6 +247,7 @@
 											<h3>本息保障</h3>
 											<h3>按月等额本息</h3>
 										</div>
+										<div class="cla cla1"></div>
 									</li>
 									<li class="mui-table-view-cell">
 										<nobr><p>中小企业短期资金周转（债权编号：FMOjsfjdklfFMOjsfjdklfFMOjsfjdklf）</p></nobr>
@@ -168,6 +260,7 @@
 											<h3>本息保障</h3>
 											<h3>按月等额本息</h3>
 										</div>
+										<div class="cla cla2"></div>
 									</li>
 								</ul>
 							</div>
@@ -188,6 +281,7 @@
 											<h3>本息保障</h3>
 											<h3>按月等额本息</h3>
 										</div>
+										<div class="cla cla3"></div>
 									</li>
 									<li class="mui-table-view-cell">
 										<nobr><p>中小企业短期资金周转（债权编号：FMOjsfjdklfFMOjsfjdklfFMOjsfjdklf）</p></nobr>
@@ -200,6 +294,7 @@
 											<h3>本息保障</h3>
 											<h3>按月等额本息</h3>
 										</div>
+										<div class="cla cla4"></div>
 									</li>
 								</ul>
 							</div>
@@ -266,7 +361,7 @@
 						for (var i = 0; i < count; i++) {
 							li = document.createElement('li');
 							li.className = 'mui-table-view-cell';
-							li.innerHTML = '<li class="mui-table-view-cell"><nobr><p>中小企业短期资金周转（债权编号：FMOjsfjdklfFMOjsfjdklfFMOjsfjdklf）</p></nobr><div class="box check0"><h2>10.80</h2><h4>%</h4><span>年化利率</span></div><div class="box check1"><h2>1</h2><h4>个月</h4><span>还款期限</span></div><div class="box check2"><h2>20.00</h2><h4>万</h4><span>借款金额</span></div><div class="p_bar"><span></span></div><h5>50%</h5><div class="info"><h3>AAA</h3><h3>本息保障</h3><h3>按月等额本息</h3></div></li>'
+							li.innerHTML = '<li class="mui-table-view-cell"><nobr><p>中小企业短期资金周转（债权编号：FMOjsfjdklfFMOjsfjdklfFMOjsfjdklf）</p></nobr><div class="box check0"><h2>10.80</h2><h4>%</h4><span>年化利率</span></div><div class="box check1"><h2>1</h2><h4>个月</h4><span>还款期限</span></div><div class="box check2"><h2>20.00</h2><h4>万</h4><span>借款金额</span></div><div class="p_bar"><span></span></div><h5>50%</h5><div class="info"><h3>AAA</h3><h3>本息保障</h3><h3>按月等额本息</h3></div><div class="cla cla4"></div></li>'
 							fragment.appendChild(li);
 						}
 						return fragment;
@@ -304,6 +399,7 @@
 		      				})
 		      			})
 		      		}
+
 				});
 			})(mui);
 		</script>

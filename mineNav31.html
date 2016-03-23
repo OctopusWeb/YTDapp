@@ -9,7 +9,18 @@
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
       	window.onload=function(){
-
+      		document.getElementById("mackSure").addEventListener("tap",function(){
+      			var num = document.getElementById("much").value;
+      			if(num == ""){
+      				alert("请输入充值金额")
+      			}else{
+      				mui.openWindow({
+      					url:"payBank.html",
+      					id:"payBank"
+      				})
+      			}
+      			
+      		})
       	}
     </script>
     <style type="text/css">
@@ -26,9 +37,6 @@
     	.mui-content ul li h3{position: absolute;top: 0;right: 10px;font-size: 14px;line-height: 30px;color: #FF0000;}
     	.mui-content ul li h4{position: absolute;top: 0;right: 10px;font-size: 14px;line-height: 30px;color: #2AC845;}
     	.mui-content #mackSure{width: 80%;margin-left: 10%;float: left;margin-top: 10px;}
-    	.mui-content ul li #phone{width: 40%;right: 35%;}
-    	.mui-content ul li button{position: absolute;right: 5px;top: 5px;height: 30px;font-size: 12px;line-height: 10px;}
-    	.mui-content ul li select{position: absolute;top: 0;right: 0;background: none;width: 100px;text-align: center;}
     </style>
 </head>
 <body>
@@ -38,23 +46,8 @@
 	</header>
 	<div class="mui-content">
 		<ul>
-			<li><h1>订单号：</h1><h2>201603161549</h2></li>
-			<li><h1>实际到账金额：</h1><h4>￥100.00</h4></li>
-			<li><h1>选择银行：</h1>
-				<select name="cars">
-					<option value="bank1" selected="selected">平安银行</option>
-					<option value="bank2">中国银行</option>
-					<option value="bank3">中国民生银行</option>
-					<option value="bank4">中国广大银行</option>
-				</select>
-			</li>
-			<li><h1>银行卡号：</h1><input type="number" placeholder="请输入您的银行卡号" id="bank"/></li>
-			<li><h1>姓名：</h1><h2>叶**</h2></li>
-			<li><h1>身份证号：</h1><h2>********000</h2></li>
-			<li><h1>手机号码：</h1><input type="number" placeholder="请输入银行预留手机号" id="banknum"/></li>
-			<li><h1>短信验证码：</h1><input type="number" placeholder="请输入您的银行卡号" id="phone"/>
-				<button type="button" class="mui-btn mui-btn-danger">发送验证码</button>
-			</li>
+			<li><h1>支付渠道：</h1><h2>丰付</h2></li>
+			<li><h1>充值金额：</h1><input type="number" placeholder="请输入充值金额" id="much"/></li>
 		</ul>
 		<button type="button" class="mui-btn mui-btn-success" id="mackSure">立即充值</button>
 	</div>

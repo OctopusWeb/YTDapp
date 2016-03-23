@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>手势锁屏示例</title>
+		<title>手势锁屏</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -51,7 +51,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">手势解锁</h1>
+			<h1 class="mui-title">修改手势解锁</h1>
 		</header>
 		<div class="mui-content">
 			<div class="head">
@@ -59,16 +59,15 @@
 				<h1>Hi,moumou</h1>
 			</div>
 			<div id='holder' class="mui-locker" data-locker-options='{"ringColor":"rgba(210,210,210,1)","fillColor":"#ffffff","pointColor":"rgba(0,136,204,1)","lineColor":"rgba(0,136,204,1)"}' data-locker-width='300' data-locker-height='300'></div>
-
-			<div id='alert'>请输入手势密码，请重新输入</div>
-<!--			<p>忘记手势密码</p><span>使用其他账号登录</span>-->
-		</div>
+			
+			<div id='alert'>请输入手势密码</div>
+<!--			<p>忘记手势密码</p><span>使用其他账号登录</span>
+-->		</div>
 
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.locker.js"></script>
 		<script>
-			(function($, doc) {
-
+			(function($, doc) { 
 				$.init();
 				var holder = doc.querySelector('#holder'),
 					alert = doc.querySelector('#alert'),
@@ -83,21 +82,13 @@
 						return;
 					}
 					console.log(rs.points.join(''));
-					record.push(rs.points.join(''));
-					if (record.length >= 2) {
-						if (record[0] == record[1]) {
-							mui.openWindow({
-		      					url:"mine.html",
-		      					id:"mine"
+					if(rs.points.join('')=="0125"){
+						mui.openWindow({
+		      					url:"locker.html",
+		      					id:"locker"
 		      				})
-						} else {
-							alert.innerText = '两次手势设定不一致'; 
-						}
-						rs.sender.clear();
-						record = [];
-					} else {
-						alert.innerText = '请确认手势设定';
-						rs.sender.clear();
+					}else{
+						alert.innerText = '手势密码输入错误'; 
 					}
 				});
 			}(mui, document));

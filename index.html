@@ -9,8 +9,8 @@
     <script type="text/javascript" charset="UTF-8">
       	mui.init({
       		subpages: [{
-					id: 'indexList',
 					url: 'indexList.html',
+					id: 'indexList',
 					styles: {
 						top: '50px',
 						bottom: "40px",
@@ -19,13 +19,15 @@
 					}
 				}]
       	});
+
       	window.onload = function(){
-      		var navPage = ["index","projectList","reg","more"]
+      		var navPage = ["index","projectList","reg","more"]	
       		var nav = document.getElementById("foot").getElementsByTagName("li");
       		for(var i=0;i<nav.length;i++){
       			addEvent(i);
       		}
       		function addEvent(i){
+      			
       			nav[i].addEventListener("tap",function(){
       				mui.openWindow({
       					url:navPage[i]+".html",
@@ -33,6 +35,27 @@
       				})
       			})
       		}
+      		document.addEventListener( "plusready", onPlusReady, false );
+			function onPlusReady() {
+				document.addEventListener( "netchange", onNetChange, false );  
+			}
+			function onNetChange() {
+				var nt = plus.networkinfo.getCurrentType();
+				switch ( nt ) {
+					case plus.networkinfo.CONNECTION_ETHERNET:
+					case plus.networkinfo.CONNECTION_WIFI:
+					alert("成功连接wifi网络"); 
+					break; 
+					case plus.networkinfo.CONNECTION_CELL2G:
+					case plus.networkinfo.CONNECTION_CELL3G:
+					case plus.networkinfo.CONNECTION_CELL4G:
+					alert("成功连接数据网络");  
+					break; 
+					default:
+					alert("没有网络连接"); 
+					break;
+				}
+			}
       	}
     </script>
     <style type="text/css">

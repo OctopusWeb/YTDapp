@@ -9,17 +9,9 @@
     <link href="css/mui.min.css" rel="stylesheet"/>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
-      	window.onload=function(){
-      		if(localStorage["userNm"]=="" && localStorage["mobileNo"]==""){
-      			alert("您还没有登录");
-      		}else{
-      			alert("您的用户名是"+localStorage["userNm"]+"手机号是"+localStorage["mobileNo"]);
-      			alert(111);
-      			mui.openWindow({ 
-      				url:"mine.html",
-      				id:"mine"
-      			})
-      		}
+      	(function($) {
+      	$.ready(function() {
+			mui.plusReady(function(){
       		document.getElementsByTagName("span")[0].addEventListener("tap",function(){
       			mui.openWindow({
       					url:"log0.html",
@@ -29,61 +21,49 @@
       		document.getElementsByTagName("p")[0].addEventListener("tap",function(){
       			mui.openWindow({
       					url:"logForget.html",
-      					id:"logForget"
+      					id:"logForget",
+      					createNew:true
       				})
       		})
       		document.getElementsByTagName("button")[0].addEventListener("tap",function(){
       			var num = document.getElementById("num").value;
       			var pass = document.getElementById("pass").value;
-      			window.localStorage.mobileNo = num;
       			document.getElementsByClassName("back")[0].className="back"
       			logIn(num,pass);
 
       		})
-      		function opWindow(){
-      			mui.openWindow({
-      				url:"mine.html",
-      				id:"mine"
-      			})
-      		}
       		function logIn(loginId,userPw) {
 				var array = [loginId,userPw,ts,rn];
 				var cVal=getcval(array);
 				var url=""+rooturl+"/user/login.bl?loginId="+loginId+"&userPw="+userPw+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
 				console.log(url)
 				if ( xhr ) {
-					console.log( "xhr请求已创建" );
 					return;
 				}
-				console.log(URL)
-				console.log( "创建请求：" );
 				var xhr = new plus.net.XMLHttpRequest();
 				xhr.onreadystatechange = function () { 
 			        switch ( xhr.readyState ) {
-			            case 0:
-			            	console.log( "xhr请求已初始化" );
-			            break;
-			            case 1:
-			            	console.log( "xhr请求已打开" +URL );
-			            break;
-			            case 2:
-			            	console.log( "xhr请求已发送"+rooturl );
-			            break;
-			            case 3:
-			                console.log( "xhr请求已响应"+cVal);
-			                break;
 			            case 4:
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	alert(xhr.response.body.statusMessage);
+			                	
 			                	document.getElementsByClassName("back")[0].className="back backHide"
 								if(xhr.response.body.statusCode=="login_success"){
 									window.localStorage.userNm=xhr.response.body.userNm;
-									opWindow();
+									window.localStorage.mobileNo=xhr.response.body.mobileNo;
+									window.localStorage.realNameAuthYn=xhr.response.body.realNameAuthYn;
+									window.localStorage.feedbackUrl=xhr.response.body.feedbackUrl;
+									alert(xhr.response.body.statusMessage);
+									mui.openWindow({
+					      				url:"locker.html",
+					      				id:"locker"
+					      			}); 
+								}else{
+									alert(xhr.response.body.statusMessage);
 								}
 			                } else {
-			                	alert( xhr.response.statusMessage);
+			                	
 			                }
 			                break;
 			            default :
@@ -94,7 +74,9 @@
 				xhr.responseType="json";
 				xhr.send();
 			}
-      	}
+      	});
+      	});
+	})(mui);
     </script>
     <style type="text/css">
     	*{margin: 0;padding: 0;list-style: none;font-weight: 400;font-family: "微软雅黑";}
@@ -113,7 +95,7 @@
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	    <h1 class="mui-title">登录</h1>
 	</header>
 	<div class="back backHide"></div>

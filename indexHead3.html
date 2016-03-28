@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	(function($) {
+      	mui.plusReady(function() {
+      		document.getElementsByTagName("img")[0].addEventListener("tap",function(){
+      			plus.os.name=="Android"?window.localStorage.platform="Android":window.localStorage.platform="IOS";
+      			alert(localStorage["platform"]);
+      			window.localStorage.userNm="";
+      			window.localStorage.mobileNo = "";
+      			window.localStorage.record="";
+      			window.localStorage.redTotal="";
+      			mui.openWindow({
+      				url:"index.html",
+      				id:"index"
+      			})
+      		})
+      	});
+	})(mui);
+    </script>
+    <style type="text/css">
+    	.back{position: fixed;height: 100%;width: 100%;background: #fcbd60;}
+    	.back img{width: 100%;height: auto;}
+    </style>
+</head>
+<body>
+	<div class="back">
+		<img src="images/4.png" alt="" />
+	</div>
+</body>
+</html>

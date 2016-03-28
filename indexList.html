@@ -9,49 +9,51 @@
     <link href="css/mui.min.css" rel="stylesheet"/>
     <script type="text/javascript" charset="utf-8">
       	mui.init();
-      	window.onload = function(){
-			setTimeout(xhrCreate,0);
+
+	(function($) {
+      	mui.plusReady(function() { 
+      		var loadId="";
+			xhrCreate();
+			addMuch();
+			addBanner();
 			function xhrCreate() {
 				var array = [ts,rn];
 				var cVal=getcval(array);
 				var url=""+rooturl+"/loan/indexLoanList.bl?cVal="+cVal+"&ts="+ts+"&rn="+rn;
 				console.log(url)
 				if ( xhr ) {
-					console.log( "xhr请求已创建" );
 					return;
 				}
 				var xhr = new plus.net.XMLHttpRequest();
 				xhr.onreadystatechange = function () {
 			        switch ( xhr.readyState ) {
-			            case 0:
-			            	console.log( "xhr请求已初始化" );
-			            break;
-			            case 1:
-			            	console.log( "xhr请求已打开" +url );
-			            break;
-			            case 2:
-			            	console.log( "xhr请求已发送"+rooturl );
-			            break;
-			            case 3:
-			                console.log( "xhr请求已响应"+cVal);
-			                break;
 			            case 4:
-			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	console.log( "xhr请求"+xhr.response.body+"成功："+mm);
-			                	var data = xhr.response.body;
+			                	var data = xhr.response.body; 
 			                	var navList=""
 			                	for (var i=0;i<data.length;i++) {
-			                		var time ="年"
-			                		data[i].loanPeriodType=="M"?time ="年":time ="月"
-			                		navList+="<li><h1 class="+data[i].loanId+">"+data[i].loanRate.substr(0,2)+"</h1><h3>年化利率</h3><h2>"+data[i].loanRate.substr(2)+
-			                				"</h2><div class='time'><h4>"+data[i].repayMode+"</h4><h6>还款期限</h6><h5>个月</h5></div>"+
-			                				"<button type='button' class='mui-btn mui-btn-danger'>"+"项目描述"+"</button><div class='pro'><p></p></div>"
+			                		var time ="年";
+			                		
+			                		if(parseInt(data[i].loanStatus)<3){
+			                			if(data[i].loanPeriodType=="M"){
+				                			var times=data[i].loanPeriod;
+				                			time ="个月"
+				                		}else{
+				                			var times=parseInt(data[i].loanPeriod);
+				                			time ="天"; 
+				                		}
+			                			navList+="<li><h1 class='"+data[i].loanId+"'>"+data[i].loanRate.substr(0,2)+"</h1><h3>年化利率</h3><h2>"+data[i].loanRate.substr(2)+
+			                				"</h2><div class='time'><h4>"+times+"</h4><h6>还款期限</h6><h5>"+time+"</h5></div>"+
+			                				"<button type='button' class='mui-btn mui-btn-danger'>"+"项目描述"
+			                				+"</button><div class='pro'><p class='"+data[i].loanProgress+"'></p></div></li>"
+			                		}
+			                		
 			                	} 
 			                	document.getElementsByClassName("slider_info")[0].getElementsByTagName("ul")[0].innerHTML=navList;
 			                	document.getElementsByClassName("back")[0].className="back backHide"
 			                	document.getElementsByClassName("slider_info")[0].getElementsByTagName("ul")[0].getElementsByTagName("li")[0].className="selected";
+			                	projectEvent(0);
 			                	document.getElementsByClassName("content")[0].getElementsByTagName("span")[0].addEventListener("tap",function(){
 					      			num--;
 					      			num<0?num=project.length-1:num=num;
@@ -62,7 +64,78 @@
 					      			num>project.length-1?num=0:num=num;
 					      			projectEvent(num);
 					      		})
-			                	console.log(navList);
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+			function addMuch() {
+				var array = [ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/summary.bl?cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				console.log(url)
+				if ( xhr ) {
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4: 
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	document.getElementsByClassName("much")[0].innerHTML=data.totalIncomeAmt+"元"
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+			function addBanner() {
+				var array = [ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/banner.bl?cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				console.log(url)
+				if ( xhr ) {
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4: 
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	var banner = document.getElementsByClassName("mui-slider-loop")[0];
+			                	var banenrLi="";
+			                	var bannerLi2=""
+			                	for (var i=0;i<data.length;i++) {
+			                		
+			                		banenrLi+='<div class="mui-slider-item mui-slider-item-duplicate"><a href="'+data[i].banLink+
+			                		'"><img src="'+data[i].banImage+'"></a></div>'
+			                		if(i==0){
+			                			bannerLi2=banenrLi;
+			                		}
+			                	}
+			                	banenrLi+=bannerLi2;
+			                	banner.innerHTML=banenrLi;
+			                	var gallery = mui('.mui-slider');
+								gallery.slider({
+								  interval:3000
+								});
 			                } else {
 			                	alert( "打开页面失败："+xhr.status );
 			                }
@@ -78,19 +151,21 @@
       		
       		var project = document.getElementsByClassName("slider_info")[0].getElementsByTagName("li");
       		var num = 0;
-      		var gallery = mui('.mui-slider');
-			gallery.slider({
-			  interval:3000
-			});
+      		
       		function projectEvent(num){
       			for(var i=0;i<project.length;i++){
       				project[i].className="";
+      				var pro_p=document.getElementsByClassName("pro")[i].getElementsByTagName("p")[0]
+      				pro_p.style.width=pro_p.className+"%";
       			}
       			project[num].className="selected";
-      			var loadId=project[num].getElementsByTagName("h1")[0].className;
-      			console.log(loadId)
+      			loadId=project[num].getElementsByTagName("h1")[0].className;
+      			window.localStorage.projectID=loadId;
+      			window.localStorage.pageId="loan";
       		}
-      		function openProject(num){
+      		function openProject(){
+      			
+      			alert(localStorage["pageId"]+localStorage["projectID"]);
       			mui.openWindow({
       				url:"project.html",
       				id:"project"
@@ -99,12 +174,13 @@
       		
       		
       		document.getElementById("content_btn").addEventListener("tap",function(){
-      			openProject(num);
+      			openProject();
       		})
       		document.getElementsByClassName("slider_info")[0].addEventListener("tap",function(){
-      			openProject(num);
+      			openProject();
       		})
-      	}
+      	});
+	})(mui);
     </script>
     <style type="text/css">
     	*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
@@ -114,7 +190,7 @@
     	.mui-content{background: #fff;width: 100%;float: left;overflow: hidden;}
     	.mui-content h1{width: 100%;float: left;font-size: 14px;text-align: center;line-height: 30px;}
     	.mui-content span{width: 7%;float: left;text-align: center;line-height: 150px;height: 150px;color: #A2A2A2;}
-    	.mui-content .slider_info{width: 86%;float: left;height: 150px;float: left;position: relative;overflow: hidden;}
+    	.mui-content .slider_info{width: 86%;float: left;height: 140px;float: left;position: relative;overflow: hidden;}
     	.mui-content .slider_info ul{float: left;position: absolute;width: 100%;}
     	.mui-content .slider_info ul li{float: left;width: 100%;position: relative;display: none;}
     	.mui-content .slider_info ul .selected{display: block;}
@@ -127,14 +203,17 @@
     	.mui-content .slider_info ul li h4{float: left;color: #f0ad4e;width: 15%;text-align: right;font-size: 30px;}
     	.mui-content .slider_info ul li h5{float: left;color: #f0ad4e;width: 75%;font-size: 14px;line-height: 0px;}
     	.mui-content .slider_info ul li h6{float: left;width: 75%;font-size: 12px;line-height: 12px;}
-    	.mui-content .slider_info ul li .pro{width: 200px;float: left;height: 4px;background: #ccc;position: absolute;bottom: 10px;margin-left: 50%;
-    										left: -100px;border-radius: 3px;overflow: hidden;}
-    	.mui-content .slider_info ul li .pro p{float: left;width: 50%;background: #dd524d;height: 4px;}
+    	.mui-content .slider_info ul li .pro{width: 200px;float: left;height: 4px;background: #ccc;position: absolute;bottom: 20px;margin-left: 50%;
+    										left: -100px;border-radius: 3px;overflow: hidden;z-index: 100;}
+    	.mui-content .slider_info ul li .pro p{float: left;width: 100%;background: #dd524d;height: 4px;}
     	.mui-content .content button{width: 80%;float: left;margin-left: 10%;border-radius: 20px;margin-top: 10px;}
     	.mui-content .content h2{width: 100%;float: left;text-align: center;font-size: 12px;line-height: 20px;margin-top: 5px;}
     	.mui-content .content h3{width: 100%;float: left;text-align: center;font-size: 20px;color: #dd524d;}
     	.back{height: 100%;width: 100%;position: fixed;background: rgba(0,0,0,0.2);z-index: 1000;}
     	.backHide{display: none;}
+    	#slider{width: 100%;height: 200px;overflow: hidden;}
+    	.mui-content .content img{width: 100%;height: auto;float: left;margin-top: -30px;}
+    	
 
     	
     </style>
@@ -144,52 +223,17 @@
 	<div class="mui-content">
 	    <div id="slider" class="mui-slider" >
 			<div class="mui-slider-group mui-slider-loop">
-				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-				<div class="mui-slider-item mui-slider-item-duplicate">
-					<a href="#">
-						<img src="images/banner.jpg">
-					</a>
-				</div>
-				<!-- 第一张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img src="images/idnexbg1.jpg">
-					</a>
-				</div>
-				<!-- 第二张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img src="images/idnexbg2.jpg">
-					</a>
-				</div>
-				<!-- 第三张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img src="images/idnexbg1.jpg">
-					</a>
-				</div>
-				<!-- 第四张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img src="images/idnexbg2.jpg">
-					</a>
-				</div>
-				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-				<div class="mui-slider-item mui-slider-item-duplicate">
-					<a href="#">
-						<img src="images/banner.jpg">
-					</a>
-				</div>
 			</div>
 			<div class="mui-slider-indicator">
 				<div class="mui-indicator mui-active"></div>
 				<div class="mui-indicator"></div>
 				<div class="mui-indicator"></div>
 				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
 			</div>
 		</div>
 		<div class="content">
-			<h1>e起购</h1>
+			<h1>为您推荐</h1>
 			<span class="mui-icon mui-icon-arrowleft"></span>
 			<div class="slider_info">
 				<ul>
@@ -198,9 +242,9 @@
 			</div>
 			<span class="mui-icon mui-icon-arrowright"></span>
 			<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" id="content_btn">点击抢购</button>
-			<h2>易通贷平台已作何借贷</h2>
-			<h3>57亿400万9000元</h3>
-
+			<h2>银湖网累计投资额（元）</h2>
+			<h3 class="much"></h3>
+			<img src="images/indexback.png"/>
 		</div>
 	</div>
 </body>

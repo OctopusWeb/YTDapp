@@ -8,7 +8,8 @@
     <link href="css/mui.min.css" rel="stylesheet"/>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
-      	window.onload=function(){
+      	(function($) {
+      	mui.plusReady(function() {
       		document.getElementById("mackSure").addEventListener("tap",function(){
       			var num = document.getElementById("much").value;
       			if(num == ""){
@@ -21,7 +22,8 @@
       			}
       			
       		})
-      	}
+      	});
+	})(mui);
     </script>
     <style type="text/css">
     	*{margin: 0;padding: 0;list-style: none;font-weight: 400;}

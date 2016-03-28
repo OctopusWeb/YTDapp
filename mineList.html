@@ -9,41 +9,32 @@
     <script type="text/javascript" src="js/md5.js" ></script>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
-      	window.onload = function(){
+      	(function($) {
+      	$.ready(function() {
+      		mui.plusReady(function(){
       		var mobileNo = localStorage["mobileNo"];
       		var userNm = localStorage["userNm"];
-      		setTimeout(mineInfo,0)
+      		console.log(mobileNo+userNm);
+			mineInfo();
       		function mineInfo() { 
 				var array = [userNm,mobileNo,ts,rn];
 				var cVal=getcval(array);
 				var URL=""+rooturl+"/user/accountInfo.bl?userName="+userNm+"&mobileNo="+mobileNo+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
 				if ( xhr ) {
-					alert( "xhr请求已创建" );
 					return;
 				}
-				console.log(URL)
 				var xhr = new plus.net.XMLHttpRequest();
 				xhr.onreadystatechange = function () { 
 			        switch ( xhr.readyState ) {
-			            case 0:
-			            	console.log( "xhr请求已初始化" );
-			            break;
-			            case 1:
-			            	console.log( "xhr请求已打开" +URL );
-			            break;
-			            case 2:
-			            	console.log( "xhr请求已发送"+rooturl );
-			            break;
-			            case 3:
-			                console.log( "xhr请求已响应"+cVal);
-			                break;
 			            case 4:
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	window.localStorage.redTotal=xhr.response.body.redTotal;
+								console.log(xhr.response.body.redTotal);
 			                	addInfo(xhr.response.body)
 			                } else {
-			                	alert( xhr.response.statusMessage);
+			                	alert( xhr.response.statusMessage); 
 			                }
 			                break;
 			            default :
@@ -97,7 +88,9 @@
       		document.getElementsByClassName("jifen")[0].addEventListener("tap",function(){
       			document.getElementsByClassName("jifen")[0].className="jifen jifenshow"
       		})
-      	}
+      	});
+      	});
+	})(mui);
     </script>
 </head>
 <style type="text/css">
@@ -137,6 +130,8 @@
 		.jifen div{width: 90%;position: absolute;background: #fff;left: 5%;height: 300px;top: 50%;margin-top: -150px;border-radius: 10px;}
 		.jifen div h1{font-size: 16px;width: 100%;padding-left: 5%;margin-top: 15px;}
 		.jifen div h2{font-size: 14px;width: 100%;padding-left: 5%;margin-top: 15px;padding-right: 5%;line-height: 18px;color: #555;}
+
+
 </style>
 <body>
 	<div class="mui-content">
@@ -145,26 +140,26 @@
 	    		<img src="images/5@2x.png"/>
 	    		<h3>账户名称</h3>
 	    		<h1>用户等级</h1>
-	    		<h5>我的积分：220</h5><span class="mui-badge">?</span>
+	    		<h5>我的积分：</h5><span class="mui-badge">?</span>
 	    	</div>
 	    	
 	    	<h1>账户总资产（元）</h1><h1>总收益（元）</h1>
 	    	<!--<button type="button" class="mui-btn mui-btn-warning" id="withdraw">提现</button>-->
-	    	<h2>0.00</h2><h2>1.00</h2>
+	    	<h2></h2><h2></h2>
 	    	
 	    	<div class="yue">
-	    		<h1>可用余额（元）</h1><h2  id="balance">1.00</h2>
+	    		<h1>可用余额（元）</h1><h2  id="balance"></h2>
 	    		<b id="withdraw">提现</b>
 	    	</div>
 	    </div>
-	    <div class="moneyLeft money"><h2>待收总额（元）</h2><h3>0.00</h3></div>
-		<div class="moneyRight money"><h2>冻结总额（元）</h2><h3>0.00</h3></div>
+	    <div class="moneyLeft money"><h2>待收总额（元）</h2><h3></h3></div>
+		<div class="moneyRight money"><h2>冻结总额（元）</h2><h3></h3></div>
 		<ul>
 			<li><img src="images/icon1.jpg" alt="" /><h4>我的投资</h4></li>
 			<li><img src="images/icon2.jpg" alt="" /><h4>我的红包</h4></li>
 			<li><img src="images/icon3.jpg" alt="" /><h4>充值</h4></li>
 			<li class="disborder"><img src="images/icon4.jpg" alt="" /><h4>债权转让</h4></li>
-			<li class="disborder"><img src="images/icon5.jpg" alt="" /><h4>账户管理</h4></li>
+			<li class="disborder"><img src="images/icon5.jpg" alt="" /><h4>安全设置</h4></li>
 			<li class="disborder"><img src="images/icon6.jpg" alt="" /><h4>资金记录</h4></li>
 		</ul>
 		<div class="jifen jifenshow">

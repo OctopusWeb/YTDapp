@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title></title>
     <script src="js/mui.min.js"></script>
+    <script type="text/javascript" src="js/md5.js" ></script>
     <link href="css/mui.min.css" rel="stylesheet"/>
     <script type="text/javascript" charset="UTF-8">
       	mui.init({
@@ -19,7 +20,15 @@
 					}
 				}]
       	});
-      	window.onload = function(){
+      	(function($) {
+      	$.ready(function() {
+			mui.plusReady(function(){
+			document.getElementsByClassName("mui-icon-chat")[0].addEventListener("tap",function(){
+				mui.openWindow({
+					url:"mineMessage.html",
+					id:"mineMessage"
+				})
+			})
       		var navPage = ["index","projectList","reg","more"];
       		var nav = document.getElementById("foot").getElementsByTagName("li");
       		for(var i=0;i<nav.length;i++){
@@ -27,16 +36,80 @@
       		}
       		function addEvent(i){
       			nav[i].addEventListener("tap",function(){
-      				mui.openWindow({
-      					url:navPage[i]+".html",
-      					id:navPage[i]
-      				})
+      				if(i=="2"){
+	      				if(localStorage["userNm"]=="" && localStorage["mobileNo"]==""){
+			      			mui.openWindow({
+		      					url:"reg.html",
+		      					id:"reg",
+	      						createNew:true
+		      				})
+			      		}else{
+							mui.openWindow({
+		      					url:"mine.html",
+		      					id:"mine",
+	      						createNew:true
+		      				})
+			      		}
+	      			}else{
+	      				mui.openWindow({
+	      					url:navPage[i]+".html",
+	      					id:navPage[i],
+	      					createNew:true
+	      				})
+  					}
       			})
       		}
       		document.getElementsByClassName("mui-bar")[0].getElementsByTagName("h2")[0].addEventListener("tap",function(){
-      			alert("签到成功");
+      			setTimeout(xhrCreate,0);
+				function xhrCreate() {
+					var array = [localStorage["userNm"],localStorage["mobileNo"],ts,rn];
+					var cVal=getcval(array);
+					var url=""+rooturl+"/user/daySign.bl?userName="+localStorage["userNm"]+"&mobileNo="+
+					localStorage["mobileNo"]+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+					console.log(url);
+					if ( xhr ) {
+						alert( "xhr请求已创建" );
+						return;
+					}
+					var xhr = new plus.net.XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+				        switch ( xhr.readyState ) {
+				            case 4:
+				                if ( xhr.status == 200 ) {
+				                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+				                	var data = xhr.response.code;
+				                	if(data=="101"){
+				                		
+				                		alert("签到成功")
+				                	}else if(data=="102"){
+				                		alert("该用户今日已签到")
+				                	}else{
+				                		alert("用户信息不正确")
+				                	}
+//				                	if(xhr.response.code=="102"){
+//				                		alert("该用户今日已签到")；
+//				                	}
+//else if(xhr.response.code=="101"){
+//				                		alert("签到成功")；
+//				                	}else{
+//				                		alert("表示用户信息不正确")
+//				                	}
+				                } else {
+				                	alert( "打开页面失败："+xhr.status );
+				                }
+				                break;
+				            default :
+				                break;
+				        }
+					}
+					xhr.open( "GET", url );
+					xhr.responseType="json";
+					xhr.send();
+				}
       		})
-      	}
+      	});
+      	});
+	})(mui);
     </script>
     <style type="text/css">
     	*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
@@ -67,7 +140,7 @@
 	<div class="mui-bar" id="foot">
 		<ul>
 			<li><span class="mui-icon mui-icon-home"></span><p>首页</p></li>
-			<li><span class="mui-icon mui-icon-bars"></span><p>项目列表</p></li>
+			<li><span class="mui-icon mui-icon-bars"></span><p>可投项目</p></li>
 			<li class="selected"><span class="mui-icon mui-icon-person"></span><p>我的账户</p></li>
 			<li><span class="mui-icon mui-icon-more"></span><p>更多</p></li>
 		</ul>

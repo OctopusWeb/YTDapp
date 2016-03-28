@@ -45,6 +45,8 @@
     		#holder{background: #DD524D;border: none;}
     		p{width: 100%;position: absolute;color: #fff;bottom: 0;padding-left: 5%;}
     		span{width: 100%;position: absolute;color: #fff;bottom: 0;padding-right: 5%;text-align: right;font-size: 14px;line-height: 40px;}
+			#tiaoguo{width: 40px;height: 20px;background: #fff;position: absolute;right: 20px;top: 5px;}
+			#tiaoguo h2{color: #DD524D;font-size: 14px;width: 100%;text-align: center;line-height: 14px;}
 		</style>
 	</head>
 
@@ -55,8 +57,9 @@
 		</header>
 		<div class="mui-content">
 			<div class="head">
-				<img src="images/head.jpg"/>
-				<h1>Hi,moumou</h1>
+				<div id="tiaoguo"><h2>跳过</h2></div>
+				<img src="images/icon/87.png"/>
+				<h1 id="name">你好</h1>
 			</div>
 			<div id='holder' class="mui-locker" data-locker-options='{"ringColor":"rgba(210,210,210,1)","fillColor":"#ffffff","pointColor":"rgba(0,136,204,1)","lineColor":"rgba(0,136,204,1)"}' data-locker-width='300' data-locker-height='300'></div>
 
@@ -67,9 +70,27 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.locker.js"></script>
 		<script>
+		
 			(function($, doc) {
 
 				$.init();
+				document.getElementById("name").innerHTML="你好,"+localStorage["userNm"];
+				document.getElementById("tiaoguo").addEventListener("tap",function(){
+					mui.openWindow({
+						url:"mine.html",
+						id:"mine",
+	      				createNew:true
+					})
+				})
+				function onPlusReady() {
+				document.addEventListener( "resume", onAppReume, false );
+				}
+				function onAppReume() {
+					mui.openWindow({
+						url:"locker1.html",
+						id:"locker1"
+					})
+				}
 				var holder = doc.querySelector('#holder'),
 					alert = doc.querySelector('#alert'),
 					record = [];
@@ -86,10 +107,12 @@
 					record.push(rs.points.join(''));
 					if (record.length >= 2) {
 						if (record[0] == record[1]) {
+							window.localStorage.record=record[0];
+							onPlusReady();
 							mui.openWindow({
-		      					url:"mine.html",
-		      					id:"mine"
-		      				})
+								url:"mine.html",
+								id:"mine"
+							})
 						} else {
 							alert.innerText = '两次手势设定不一致'; 
 						}

@@ -6,12 +6,137 @@
     <title></title>
     <script src="js/mui.min.js"></script>
     <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/md5.js" ></script>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
-      	window.onload = function(){
+      (function($) {
+      	mui.plusReady(function() {
       		var pro_title = document.getElementsByClassName("pro_title")[0].getElementsByTagName("li");
       		var pro_content = document.getElementsByClassName("pro_content")[0].getElementsByTagName("li");
-      		
+      		setTimeout(addInfo,0)
+      		function addInfo() {
+				var array = [localStorage["projectID"],ts,rn];
+				var cVal=getcval(array);
+				if(localStorage["pageId"]=="loan"){
+					var url=""+rooturl+"/loan/loanDetail.bl?loanId="+localStorage["projectID"]+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+					
+				}else{
+					var url=""+rooturl+"/credit/creditTransDetail.bl?creditId="+localStorage["projectID"]+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				}
+				console.log(url)
+				if ( xhr ) {
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () { 
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                console.log( "xhr请求已"+rn+"完成"+ts);
+			                if ( xhr.status == 200 ) {
+			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	if(localStorage["pageId"]=="loan"){
+			                		innerInfo1(xhr.response.body);
+			                	}else{
+			                		innerInfo2(xhr.response.body);
+			                	}
+			                } else { 
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+      		function innerInfo1(data){
+      			var repayModeArr=["空","等额本息","到期一次性还本付息"];
+      			var loanStatusArr=["空","等待放标","筹款中","满标","还款中","还款结束"]
+      			var projectInfo = document.getElementsByClassName("projectInfo")[0];
+      			var day;
+      			data.loanPeriodType=="M"?day="月":day="天";
+      			var topInfo = '<h1>'+data.title+'</h1><div class="font_group font_group1"><h2>'+
+      						data.loanRate+'</h2><h3>%</h3><h4>借款利率</h4></div><div class="font_group font_group2"><h2>'+
+      						data.loanPeriod+'</h2><h3>'+day+'</h3><h4>借款期限</h4></div><div class="pro"><p></p></div><h5>'+
+      						data.loanProgress+'%</h5><h6>可投金额/借款金额</h6><p>￥'+data.remainAmt+'/</p><span>'+
+      						data.loanAmt+'</span><ul>'+
+							'<li><p>'+data.loanLevel+'</p></li><li class="liW"><p>'+repayModeArr[data.repayMode]+'</p></li>'+
+							'<li><p>'+loanStatusArr[data.loanStatus]+'</p></li></ul>'
+      			projectInfo.innerHTML=topInfo;
+      			
+     			var pro_content=document.getElementsByClassName("pro_content")[0];
+      			pro_content.getElementsByTagName("li")[0].getElementsByTagName("p")[0].innerText=data.loanDesc;
+      			var userList='<div class="table"><h1>投资人</h1><h2>投标时间</h2></div>'
+      			for (var i=0;i<data.userInvests.length;i++) {
+      				userList+='<div class="table"><h1>'+data.userInvests[i].userName+'</h1><h2>'+data.userInvests[i].bidTime+'</h2></div>';
+      			}
+      			pro_content.getElementsByTagName("li")[1].innerHTML=userList;
+      			
+      			var agencies='<div class="table"><h1>投资项目</h1><h2>审核时间</h2></div><div class="table"><h1>用户名</h1><h2>'
+      			+data.userName+'</h2></div><div class="table"><h1>出生日期</h1><h2>'
+      			+data.birthDay+'</h2></div><div class="table"><h1>学历</h1><h2>'
+      			+data.eduBg+'</h2></div><div class="table"><h1>学校</h1><h2>'
+      			+data.school+'</h2></div><div class="table"><h1>婚姻</h1><h2>'
+      			+data.marryInfo+'</h2></div><div class="table"><h1>公司行业</h1><h2>'
+      			+data.corpIndustry+'</h2></div><div class="table"><h1>公司规模</h1><h2>'
+      			+data.corpScale+'</h2></div><div class="table"><h1>岗位职位</h1><h2>'
+      			+data.jobTitle+'</h2></div><div class="table"><h1>工作城市</h1><h2>'
+      			+data.workCity+'</h2></div><div class="table"><h1>工作时间</h1><h2>'
+      			+data.workYears+'</h2></div><div class="table"><h1>月均收入</h1><h2>'
+      			+data.monthIncome+'</h2></div><div class="table"><h1>房产有无 (Y/N)</h1><h2>'
+      			+data.houseYn+'</h2></div><div class="table"><h1>房贷有无（Y/N)</h1><h2>'
+      			+data.houseMortgageYn+'</h2></div><div class="table"><h1>车产有无（Y/N)</h1><h2>'
+      			+data.carYn+'</h2></div><div class="table"><h1>车贷有无（Y/N）</h1><h2>'
+      			+data.carMortgageYn+'</h2></div>';
+      			pro_content.getElementsByTagName("li")[2].innerHTML=agencies;
+      			var wid=document.getElementsByTagName("h5")[0].innerHTML;
+      			document.getElementsByClassName("pro")[0].getElementsByTagName("p")[0].style.width=wid+"%"
+      		}
+      		function innerInfo2(data){
+      			var repayModeArr=["空","等额本息","到期一次性还本付息"];
+      			var loanStatusArr=["空","等待放标","筹款中","满标","还款中","还款结束"]
+      			var projectInfo = document.getElementsByClassName("projectInfo")[0];
+      			var day;
+      			data.loanPeriodType=="M"?day="月":day="天";
+      			var topInfo = '<h1>'+data.title+'</h1><div class="font_group font_group1"><h2>'+
+      						data.loanRate+'</h2><h3>%</h3><h4>借款利率</h4></div><div class="font_group font_group2"><h2>'+
+      						data.loanPeriod+'</h2><h3>'+day+'</h3><h4>借款期限</h4></div><div class="pro"><p></p></div><h5>'+
+      						data.loanProgress+'%</h5><h6>可投金额/借款金额</h6><p>￥0.00/</p><span>'+
+      						data.loanAmt+'</span><ul>'+
+							'<li><p>'+data.loanLevel+'</p></li><li class="liW"><p>'+repayModeArr[data.repayMode]+'</p></li>'+
+							'<li><p>'+loanStatusArr[data.loanStatus]+'</p></li></ul>'
+      			projectInfo.innerHTML=topInfo;
+      			
+     			var pro_content=document.getElementsByClassName("pro_content")[0];
+      			pro_content.getElementsByTagName("li")[0].getElementsByTagName("p")[0].innerText=data.loanDesc;
+      			var userList='<div class="table"><h1>投资人</h1><h2>投标时间</h2></div>'
+      			for (var i=0;i<data.userInvests.length;i++) {
+      				userList+='<div class="table"><h1>'+data.userInvests[i].userName+'</h1><h2>'+data.userInvests[i].bidTime+'</h2></div>';
+      			}
+      			pro_content.getElementsByTagName("li")[1].innerHTML=userList;
+      			
+      			var agencies='<div class="table"><h1>投资项目</h1><h2>审核时间</h2></div><div class="table"><h1>用户名</h1><h2>'
+      			+data.userName+'</h2></div><div class="table"><h1>出生日期</h1><h2>'
+      			+data.birthDay+'</h2></div><div class="table"><h1>学历</h1><h2>'
+      			+data.eduBg+'</h2></div><div class="table"><h1>学校</h1><h2>'
+      			+data.school+'</h2></div><div class="table"><h1>婚姻</h1><h2>'
+      			+data.marryInfo+'</h2></div><div class="table"><h1>公司行业</h1><h2>'
+      			+data.corpIndustry+'</h2></div><div class="table"><h1>公司规模</h1><h2>'
+      			+data.corpScale+'</h2></div><div class="table"><h1>岗位职位</h1><h2>'
+      			+data.jobTitle+'</h2></div><div class="table"><h1>工作城市</h1><h2>'
+      			+data.workCity+'</h2></div><div class="table"><h1>工作时间</h1><h2>'
+      			+data.workYears+'</h2></div><div class="table"><h1>月均收入</h1><h2>'
+      			+data.monthIncome+'</h2></div><div class="table"><h1>房产有无 (Y/N)</h1><h2>'
+      			+data.houseYn+'</h2></div><div class="table"><h1>房贷有无（Y/N)</h1><h2>'
+      			+data.houseMortgageYn+'</h2></div><div class="table"><h1>车产有无（Y/N)</h1><h2>'
+      			+data.carYn+'</h2></div><div class="table"><h1>车贷有无（Y/N）</h1><h2>'
+      			+data.carMortgageYn+'</h2></div>';
+      			pro_content.getElementsByTagName("li")[2].innerHTML=agencies;
+      			var wid=document.getElementsByTagName("h5")[0].innerHTML;
+      			document.getElementsByClassName("pro")[0].getElementsByTagName("p")[0].style.width=wid+"%"
+      		}
       		proEvent();
       		function proEvent(){
       			for(var i=0;i<pro_title.length;i++){
@@ -29,12 +154,24 @@
       			})
       		}
       		document.getElementsByClassName("foot")[0].addEventListener("tap",function(){
-      			mui.openWindow({
-      				url:"projectPay.html",
-      				id:"projectPay"
-      			})
+      			var mobileNo = localStorage["mobileNo"];
+      			var userNm = localStorage["userNm"];
+      			if(mobileNo==""||userNm==""){
+	      			alert("请登录账号");
+	      			mui.openWindow({
+	  					url:"reg.html",
+	  					id:"reg"
+	  				})
+	      		}else{
+	      			mui.openWindow({
+	      				url:"projectPay.html",
+	      				id:"projectPay",
+	      				createNew:true
+	      			})
+	      		}
       		})
-      	}
+      	});
+	})(mui);
     </script>
     <style type="text/css">
     	*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
@@ -59,7 +196,8 @@
     	.projectInfo p{width: 25%;color: #fff;font-size: 12px;float: left;text-align: right;}
     	.projectInfo span{width: 15%;color: #fff;font-size: 12px;float: left;text-align: left;}
     	.projectInfo ul{float: left;width: 100%;height: 30px;border-top: 1px #fff solid;padding-top: 10px;}
-    	.projectInfo ul li{width: 33%;float: left;position: relative;}
+    	.projectInfo ul li{width: 30%;float: left;position: relative;}
+    	.projectInfo ul .liW{width: 40%;}
     	.projectInfo ul li p{font-size: 12px;float: left;width: 100%;float: left;text-align: center;}
     	
     	.projectProgaress{top: 231px;background: #fff;width: 100%;position: fixed;}
@@ -89,74 +227,37 @@
 	    <h1 class="mui-title">项目详情</h1>
 	</header>
 	<div class="mui-bar projectInfo">
-		<h1>中小企业短期资金周转（债券编号：FM456213687915）</h1>
-		<div class="font_group">
-			<h2>17.76</h2><h3>%</h3><h4>年化利率</h4>
-		</div>
-		<div class="font_group font_group2">
-			<h2>6</h2><h3>个月</h3><h4>还款期限</h4>
-		</div>
-		<div class="pro"><p></p></div>
-		<h5>90.00%</h5>
-		<h6>可投金额/借款金额</h6>
-		<p>￥0.00/</p><span>30.00万</span>
-		<ul>
-			<li><p>AAA</p></li>
-			<li><p>本息保障</p></li>
-			<li><p>按月等额本息</p></li>
-		</ul>
+		
 	</div>
 	<div class="projectProgaress">
 		<h1>担保信息</h1><p>合作机构</p>
 		<ul class="pro_title">
-			<li class="selected"><h2>基本资料</h2></li>
+			<li class="selected"><h2>借款描述</h2></li>
 			<li><h2>投资记录</h2></li>
-			<li><h2>合规资料</h2></li>
-			<li><h2>风控措施</h2></li>
+			<li><h2>借款人信息</h2></li>
+			<li><h2>保障方案</h2></li>
 		</ul>
 	</div>
 	<ul class="pro_content">
 		<li class="selected">
-			<p>一.借贷基本情况</p>
-			<p>1.接待用途</p>
-			<p>借款人本次所借资金主要用于其水暖公司短期资金周转。</p>
-			<p>2.还款来源</p>
-			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
-			<p>一.借贷基本情况</p>
-			<p>1.接待用途</p>
-			<p>借款人本次所借资金主要用于其水暖公司短期资金周转。</p>
-			<p>2.还款来源</p>
-			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
+			<p></p>
 		</li>
 		<li>
-			<div class="table"><h1>投资人</h1><h2>投标时间</h2></div>
-			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
-			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
-			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
-			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
-			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
-			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
-			<div class="table"><h1>r***2</h1><h2>2016-03-14 16:34:39</h2></div>
+			
 		</li>
 		<li>
-			<div class="table"><h1>投资项目</h1><h2>审核时间</h2></div>
-			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
-			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
-			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
-			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
-			<div class="table"><h1>基本资料</h1><h2>2016-03-14</h2></div>
+			
 		</li>
 		<li>
-			<p>抵押货物名称</p>
-			<p>FM15485461</p>
-			<p>抵押物信息</p>
-			<p>抵押物为北京住宅房产一套，建筑面积159.92平方米</p>
-			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
-			<p>一.借贷基本情况</p>
-			<p>1.接待用途</p>
-			<p>借款人本次所借资金主要用于其水暖公司短期资金周转。</p>
-			<p>2.还款来源</p>
-			<p>借款人的还款来源为其公司经营收入。企业自成立以来，规模不断扩大，经营稳健，无不良正信，信誉保障</p>
+			<p><b>风险备用金制度</b></p>
+			<p>为了保证投资人的权益，银湖网及合作方融信通商务顾问有限公司均建立了完善的风险备用金制度。当线上认证借款成交时，银湖网会提取一定比例的金额放入“银湖网风险备用金账户”，当线下认证借款成交时，融信通会提取一定比例的金额放入“融信通风险备用金账户”。投资人投资的银湖网线上及线下资产出现逾期时，融信通或银湖网将使用各自的风险备用金按照与该投资相应的保障规则垫付该笔投资的逾期本息。
+</p>
+			<p><b>熊猫金控股东垫付逾期本息</b></p>
+			<p>当投资人投资的银湖网线上及线下资产出现逾期并满足相应规则规定的补偿条件，且银湖网及融信通因风险备用金不足无法垫付逾期本息时，熊猫金控控股股东--万载县银河湾投资有限公司及银河湾国际投资有限公司承诺在五个工作日内向投资人垫付逾期本息。</p>
+			<p><b>熊猫金控股东回购不良债权</b></p>
+			<p>当投资人投资的银湖网线上及线下资产成为不良债权（即连续逾期超过90天）时，熊猫金控控股股东--万载县银河湾投资有限公司及银河湾国际投资有限公司将对投资人的投资进行100%回购。
+在银湖网和融信通健全而完备的风控体系下，我们有能力控制不良债权的规模和水平，同时万载县银河湾投资有限公司及银河湾国际投资有限公司作为熊猫金控控股股东，也完全有实力对不良债权进行回购。 </p>
+
 		</li>
 	</ul>
 	<div class="mui-bar foot">

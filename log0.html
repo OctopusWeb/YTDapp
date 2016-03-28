@@ -9,32 +9,56 @@
     <script type="text/javascript" src="js/md5.js" ></script>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
-      	window.onload=function(){
-      		document.getElementById("next").addEventListener("tap",function(){
-      			var num = document.getElementById("num").value;
-      			var message = document.getElementById("message").value;
-      			if(message!=""){
-      				if(num!=""){
-      					if(message.length==6){
-      						document.getElementsByClassName("back")[0].className="back"
-      						verifyMessage(num,message);
-      					}
-      				}else{alert("您输入的手机号为空")}
-      			}else{alert("您输入的验证码为空")}
+      	(function($) {
+      	mui.plusReady(function() {
+      		document.getElementsByTagName("span")[0].addEventListener("tap",function(){
+      			mui.openWindow({
+  					url:"xieyi.html",
+  					id:"xieyi"
+  				});
       		})
+      		if(document.getElementsByClassName("check")[0].checked){
+      			document.getElementById("next").addEventListener("tap",function(){
+	      			var num = document.getElementById("num").value;
+	      			var message = document.getElementById("message").value;
+	      			if(message!=""){
+	      				if(num!=""){
+	      					if(message.length==6){
+	      						document.getElementsByClassName("back")[0].className="back"
+	      						verifyMessage(num,message);
+	      					}
+	      				}else{alert("您输入的手机号为空")}
+	      			}else{alert("您输入的验证码为空")}
+	      		})
+      		}
       		document.getElementById("zhengma").addEventListener("tap",function(){
       			var num = document.getElementById("num").value;
       			if(num!=""){
       				if(num.length==11){
-      					document.getElementsByClassName("back")[0].className="back"
-      					sendMessage(num)
+      					a = 60;
+      					document.getElementsByClassName("back")[0].className="back";
+      					document.getElementById('zhengma').style.display="none";
+      					document.getElementById('zhengma1').style.display="block"
+      					remainTime();
+      					sendMessage(num);
       				}else{alert("您输入的手机号不正确")}
       			}else{
       				alert("您输入的手机号为空")
       			}
       			
       		})
+      		var a = 60;  
+			function remainTime(){   
+				a--
+				if(a==0){
+					document.getElementById('zhengma').style.display="block"
+					document.getElementById('zhengma1').style.display="none"
+				}
+			    document.getElementById('zhengma1').innerHTML=a+"秒后重发";  
+			    setTimeout(remainTime,1000);  
+			}  
 			function sendMessage(num) {
+				
 				var array = [num,"reg",ts,rn];
 				var cVal=getcval(array);
 				var URL=""+rooturl+"/sms/send_sms_verify.bl?mobileNo="+num+"&busiType=reg&cVal="+cVal+"&ts="+ts+"&rn="+rn;
@@ -61,7 +85,9 @@
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code ,xhr.response.cVal,xhr.response.body);
-			                	document.getElementsByClassName("back")[0].className="back backHide"
+			                	document.getElementsByClassName("back")[0].className="back backHide";
+			                	window.localStorage.mobileNo=num;
+			                	alert(localStorage["mobileNo"]);
 			                	alert(xhr.response.body.statusMessage)
 			                } else {
 			                	alert( xhr.response.statusMessage);
@@ -84,36 +110,19 @@
 					return;
 				}
 				console.log(URL)
-				alert( "创建请求：" );
 				var xhr = new plus.net.XMLHttpRequest();
 				xhr.onreadystatechange = function () { 
 			        switch ( xhr.readyState ) {
-			            case 0:
-			            	console.log( "xhr请求已初始化" );
-			            break;
-			            case 1:
-			            	console.log( "xhr请求已打开" +URL );
-			            break;
-			            case 2:
-			            	console.log( "xhr请求已发送"+rooturl );
-			            break;
-			            case 3:
-			                console.log( "xhr请求已响应"+cVal);
-			                break;
 			            case 4:
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
 			                	document.getElementsByClassName("back")[0].className="back backHide"
-			                	alert(xhr.response.body.statusMessage);
-			                	if(hr.response.body.statusCode=="send_sms_success"){
+			                	console.log(xhr.response.body.statusCode)
+			                	if(xhr.response.body.statusCode=="check_smscode_success"){
 				                	mui.openWindow({
 					  					url:"log1.html",
-					  					id:"log1",
-					  					extras:{
-					  						mobileNo:userNm,
-					  						smsCode:smsCode
-					  					}
+					  					id:"log1"
 					  				});
 					  			}
 			                } else {
@@ -128,7 +137,8 @@
 				xhr.responseType="json";
 				xhr.send();
 			}
-      	}
+      	});
+	})(mui);
     </script>
     <style type="text/css">
     	*{margin: 0;padding: 0;list-style: none;font-weight: 400;font-family: "微软雅黑";}
@@ -142,6 +152,7 @@
     	.mui-content p{float: left;width: 50%;text-align: left;padding-left: 5%;font-size: 12px;margin-top: 10px;}
     	.mui-content span{float: left;width: 50%;text-align: right;padding-right: 5%;font-size: 12px;color: #DD524D;margin-top: 10px;}
     	#zhengma{position: absolute;top: 215px;right: 10px;width: 30%;}
+    	#zhengma1{position: absolute;top: 215px;right: 10px;width: 30%;display: none;}
     	.mui-content .status{width: 100%;float: left;}
     	.mui-content .status div{float: left;width: 33.3%;}
     	.mui-content .status div h1{float: left;text-align: center;font-size: 14px;color: #fff;width: 20px;height: 20px;padding: 0;
@@ -179,7 +190,9 @@
 	    <input type="number" placeholder="请输入手机号码" id="num"/>
 	    <input type="text" placeholder="请输入短信验证码" id="message"/>
 	    <button type="button" class="mui-btn mui-btn-danger" id="zhengma">获取验证码</button>
+	    <button type="button" class="mui-btn mui-btn-outlined" id="zhengma1">获取验证码</button>
 	    <input type="checkbox" name="agreen" class="check"/><p>我已经阅读并同意</p><span>《网站服务协议》</span>
+	    <h5></h5>
 	    <button type="button" class="mui-btn mui-btn-danger" id="next">下一步</button>
 	</div>
 </body>

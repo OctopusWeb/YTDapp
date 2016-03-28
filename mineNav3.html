@@ -5,23 +5,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>提示</title>
     <script src="js/mui.min.js"></script>
+    <script type="text/javascript" src="js/md5.js" ></script>
     <link href="css/mui.min.css" rel="stylesheet"/>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
-      	window.onload=function(){
+      	(function($) {
+      	mui.plusReady(function() {
+      		
+      		var gateBusiId="";
+      		var rechargeAmt="";
+      		var bankCode="";
+      		ifBank();
+      		
       		noBank("");
+      		var bankName = document.getElementsByClassName("bankName");
 			function noBank(num){
-				var bankName = document.getElementsByClassName("bankName");
 				if(num == ""){
 					document.getElementsByClassName("bankH")[0].addEventListener("tap",function(){
-						document.getElementsByClassName("bankList")[0].className = "bankList"
+						ifBank();
 					});
 					document.getElementsByClassName("bankList")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
 						document.getElementsByClassName("bankList")[0].className = "bankList bankHide";
 					});
-					for (var i=0;i<bankName.length;i++) {
-						addEvent(bankName,i)
-					}
+					
 				}else{
 					document.getElementsByClassName("bankH")[0].className="";
 				}
@@ -32,20 +38,183 @@
 						bankName[i].className="bankName";
 					}
 					bankName[a].className="bankName selected";
+					bankCode=bankName[a].id;
 				})
 			}
-			document.getElementsByClassName("bankList")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
-				var bank = document.getElementsByClassName("selected")[0].getElementsByTagName("h2")[0].innerHTML;
-				document.getElementsByClassName("bankH")[0].getElementsByTagName("h2")[0].innerText=bank;
-				document.getElementsByClassName("bankList")[0].className = "bankList bankHide";
-			})
 			document.getElementById("mackSure").addEventListener("tap",function(){
-				mui.openWindow({
-      					url:"nav3H5.html",
-      					id:"nav3H5"
-      				})
+				rechargeAmt=document.getElementById("bank").value;
+				if(rechargeAmt==""){
+					alert("请输入充值金额");
+				}else{
+					forBank()
+				}
+				
 			})
-      	}
+			
+			function withBank() {
+				var array = [localStorage["userNm"],localStorage["mobileNo"],ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/user/bankCardList.bl?userName="+localStorage["userNm"]+"&mobileNo="+localStorage["mobileNo"]+
+				"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				console.log(url);
+				if ( xhr ) {
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	if(data==""){
+			                		alert("请先选择银行卡");
+			                	}else{
+			                		document.getElementsByClassName("bankH")[0].getElementsByTagName("h2")[0].innerHTML = data[0].bankName;
+			                		gateBusiId = "QP";
+			                		bankCode=data[0].bankCode;
+			                	}
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+			
+			function ifBank() {
+				var array = [localStorage["userNm"],localStorage["mobileNo"],ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/user/userBindCard.bl?userName="+localStorage["userNm"]+"&mobileNo="+localStorage["mobileNo"]+
+				"&cVal="+cVal+"&ts="+ts+"&rn="+rn; 
+				console.log(url);
+				if ( xhr ) {
+					alert( "xhr请求已创建" );
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	if(data.url==""){
+			                		alert(data.errorMsg);
+			                		if(data.errorMsg=="您未开通汇付天下账号,请先开通"){
+			                			mui.openWindow({
+						  					url:"nav3H5.html",
+						  					id:"nav3H5"
+						  				});
+			                		}else if(data.errorMsg=="您已绑定快捷支付银行卡，无法添加其他银行卡，详情咨询客服400-888-6633"){
+			                			withBank();
+			                		}else{
+			                			chooseBank();
+			                		}
+			                	}else{
+			                		document.getElementsByClassName("bankList")[0].className = "bankList"
+			                	}
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+			
+			function chooseBank() {
+				var array = [ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/bankList.bl?"+"cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				console.log(url);
+				if ( xhr ) {
+					alert( "xhr请求已创建" );
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	var indexUl='<h1>选择支付方式</h1><p>X</p> '
+			                	document.getElementsByClassName("bankList")[0].className = "bankList";
+			                	for (var i=0;i<data.length;i++) {
+			                		indexUl+='<div class="bankName" id="'+data[i].bankCode+'"><img src="images/'+data[i].bankCode+'.png"/><h6>'
+			                		+data[i].bankName+'</h6></div>'
+			                	}
+			                	indexUl+='<div class="info"><span>其他银行卡充值请登录www.baidu.com使用网银操作</span><span>感谢您对我们的支持，如有问题请致电400-000-0000</span></div><h3>确定</h3>'
+			                	document.getElementsByClassName("bankList")[0].innerHTML=indexUl;
+			                	for (var i=0;i<bankName.length;i++) {
+									addEvent(bankName,i)
+								}
+			                	document.getElementsByClassName("bankList")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
+									var bank = document.getElementsByClassName("selected")[0].getElementsByTagName("h6")[0].innerHTML;
+									document.getElementsByClassName("bankH")[0].getElementsByTagName("h2")[0].innerText=bank;
+									document.getElementsByClassName("bankList")[0].className = "bankList bankHide";
+								})
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+			
+			function forBank() {
+				var array = [rechargeAmt,gateBusiId,localStorage["userNm"],bankCode,localStorage["mobileNo"],ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/user/userRecharge.bl?userName="+localStorage["userNm"]+"&mobileNo="+localStorage["mobileNo"]+
+				"&rechargeAmt="+rechargeAmt+"&gateBusiId="+gateBusiId+"&bankCode="+bankCode+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				console.log(url);
+				if ( xhr ) {
+					alert( "xhr请求已创建" );
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	if(data.url==""){
+			                		alert(data.errorMsg);
+			                	}else{
+			                		document.getElementsByClassName("ifram")[0].getElementsByTagName("iframe")[0].src=data.url;
+			                		document.getElementsByClassName("ifram")[0].style.display="block";
+			                		
+			                	}
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+      	});
+	})(mui);
     </script>
     <style type="text/css">
     	*{margin: 0;padding: 0;list-style: none;font-weight: 400;}
@@ -68,15 +237,18 @@
     	.mui-content .bankList{position: absolute;width: 100%;height: 365px;background: #fff;margin-top: 80px;z-index: 100;border-top: 1px #ccc solid;}
     	.mui-content .bankList h1{float: left;width: 100%;text-align: center;font-size: 14px;line-height: 40px;border-bottom: 1px #ccc solid;margin: 0;}
     	.mui-content .bankList p{position: absolute;font-size: 16px;color: #000;top: 10px;right: 10px;}
-    	.mui-content .bankList .bankName{width: 33.3%;height: 40px;border: 1px #ccc solid;float: left;border-right: none;border-top: none;}
+    	.mui-content .bankList .bankName{width: 33.3%;height: 40px;border: 1px #ccc solid;float: left;border-right: none;border-top: none;position: relative;}
     	.mui-content .bankList .bankName img{width: 20px;height: 20px;margin: 10px;float: left;}
-    	.mui-content .bankList .bankName h2{float: left;font-size: 14px;line-height: 30px;}
+    	.mui-content .bankList .bankName h2{float: left;font-size: 14px;line-height: 30px;width: 100%;text-align: center;}
+    	.mui-content .bankList .bankName h6{position: absolute;width: 100%;text-align: center;line-height: 30px;}
     	.mui-content .bankList .info{position: absolute;bottom: 100px;background: #ccc;width: 100%;}
     	.mui-content .bankList .info span{width: 100%;text-align: center;font-size: 12px;float: left;line-height: 30px;}
     	.mui-content .bankList h3{position: absolute;bottom: 40px;background: #d43b33;width: 100%;height: 50px;line-height: 50px;
     							color: #fff;width: 100%;text-align: center;font-size: 16px;}
     	.mui-content .bankHide{display: none;}
     	.mui-content .bankList .selected{background: #ccc;}
+    	.ifram{width: 100%;height: 100%;position: fixed;display: none;overflow: auto;}
+    	.ifram #if{background: #fff;position: absolute;left: 0;top: 0;}
     </style>
 </head>
 <body>
@@ -90,19 +262,8 @@
 			<li class="bankH"><h1>选择银行：</h1><h2>请选择银行</h2></li>
 		</ul>
 		<div class="bankList bankHide">
-			<h1>选择银行卡</h1><p>X</p>
-			<div class="bankName selected"><img src="images/backName1.jpg"/><h2>中国银行</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行1</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行2</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行3</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行4</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行5</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行6</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行7</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行8</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行9</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行0</h2></div>
-			<div class="bankName"><img src="images/backName1.jpg"/><h2>中国银行1</h2></div>
+			<h1>选择支付方式</h1><p>X</p> 
+			<div class="bankName"><img src="images/backName1.jpg"/><h6>中国银行</h6></div>
 			<div class="info">
 				<span>其他银行卡充值请登录www.baidu.com使用网银操作</span>
 				<span>感谢您对我们的支持，如有问题请致电400-000-0000</span>
@@ -111,6 +272,8 @@
 		</div>
 		<button type="button" class="mui-btn mui-btn-success" id="mackSure">立即充值</button>
 	</div>
-	
+	<div class="ifram">
+		<iframe src="" width="100%" height="100%" id="if"></iframe>
+	</div>
 </body>
 </html>

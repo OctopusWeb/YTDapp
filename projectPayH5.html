@@ -15,11 +15,21 @@
 	      		var mobileNo = localStorage["mobileNo"]
 	      		var userNm = localStorage["userNm"]
 	      		var money = localStorage["projectMoney"]
+	      		
 				setTimeout(pay,0);
 				function pay() {
+					if(localStorage["redLen"]=="未选择"){
+		      			var addArr=[];
+	        			var addUrl='';
+	        		}else{
+	        			var addArr=[localStorage['redAmt'],localStorage['redLen']];
+	        			var addUrl="&redAmt="+localStorage['redAmt']+"&redIds="+localStorage['redLen'];
+	        		}
 					var array = [userNm,mobileNo,localStorage["projectID"],money,ts,rn];
+					array=array.concat(addArr);
 					var cVal=getcval(array);
 					var url=""+rooturl+"/loan/invest.bl?userName="+userNm+"&investAmt="+money+"&mobileNo="+mobileNo+"&loanId="+localStorage["projectID"]+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;				
+					url=url+addUrl;
 					console.log(url)
 					if ( xhr ) {
 						return;
@@ -31,8 +41,20 @@
 				                console.log( "xhr请求已"+rn+"完成"+ts);
 				                if ( xhr.status == 200 ) {
 				                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-				                	console.log(xhr.response.body.url);
-				                	document.getElementsByTagName("iframe")[0].src=xhr.response.body.url;
+				                	if(xhr.response.code=="101"){
+					                	console.log(xhr.response.body.url);
+					                	if(xhr.response.code=='101'){
+					                		document.getElementsByTagName("iframe")[0].src=xhr.response.body.url;
+					                	}else{
+					                		alert(xhr.response.body.errorMsg);
+					                		mui.openWindow({
+						      					url:"mineNav21.html",
+						      					id:"mineNav21"	
+						      				})
+					                	}
+					                }else{
+					                	alert("错误代码"+xhr.response.code);
+					                }
 				                } else { 
 				                	alert( "打开页面失败："+xhr.status );
 				                }

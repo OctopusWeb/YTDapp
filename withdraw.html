@@ -27,12 +27,16 @@
 			            case 4:
 			                if ( xhr.status == 200 ) {
 			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	var data = xhr.response.body; 
-								if(data==""){
-									alert("请绑定银行卡");
+			                	if(xhr.response.code=="101"){
+				                	var data = xhr.response.body; 
+									if(data==""){
+										alert("请绑定银行卡");
+									}else{
+										console.log(data.url);
+										document.getElementById("ifram").getElementsByTagName("iframe")[0].src=data.url;
+									}
 								}else{
-									console.log(data.url);
-									document.getElementById("ifram").getElementsByTagName("iframe")[0].src=data.url;
+									alert("错误代码"+xhr.response.code);
 								}
 			                } else {
 			                	alert( "打开页面失败："+xhr.status );

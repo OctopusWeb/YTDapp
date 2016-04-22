@@ -34,11 +34,15 @@
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	if(localStorage["pageId"]=="loan"){
-			                		innerInfo1(xhr.response.body);
-			                	}else{
-			                		innerInfo2(xhr.response.body);
-			                	}
+			                	if(xhr.response.code=="101"){
+				                	if(localStorage["pageId"]=="loan"){
+				                		innerInfo1(xhr.response.body);
+				                	}else{
+				                		innerInfo2(xhr.response.body);
+				                	}
+				                }else{
+				                	alert("错误代码"+xhr.response.code);
+				                }
 			                } else { 
 			                	alert( "打开页面失败："+xhr.status );
 			                }
@@ -56,7 +60,7 @@
       			var loanStatusArr=["空","等待放标","筹款中","满标","还款中","还款结束"]
       			var projectInfo = document.getElementsByClassName("projectInfo")[0];
       			var day;
-      			data.loanPeriodType=="M"?day="月":day="天";
+      			data.loanPeriodType=="M"?day="个月":day="天";
       			var topInfo = '<h1>'+data.title+'</h1><div class="font_group font_group1"><h2>'+
       						data.loanRate+'</h2><h3>%</h3><h4>借款利率</h4></div><div class="font_group font_group2"><h2>'+
       						data.loanPeriod+'</h2><h3>'+day+'</h3><h4>借款期限</h4></div><div class="pro"><p></p></div><h5>'+

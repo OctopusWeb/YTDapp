@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <script type="text/javascript" src="js/md5.js" ></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+   
+    <style type="text/css">
+    	*{margin: 0;padding: 0;list-style: none;font-weight: 400;}
+    	html,body{width: 100%;height: 100%;}
+    	.mui-bar{background: #DD524D;box-shadow: none;border-bottom:1px solid #ccc;}
+    	.mui-bar a,.mui-bar h1{color: #fff;}
+    	.mui-content{width: 100%;height: 100%;}
+    	.creditInfo{width: 100%;float: left;margin-top: 10px;background: #fff;}
+    	.creditInfo h1{width: 100%;float: left;line-height: 30px;border-bottom: 1px #ccc solid;font-size: 14px;padding-left: 5%;}
+    	.creditInfo .group{width: 50%;float: left;}
+    	.creditInfo .group h2{width: 100%;float: left;text-align: center;font-size: 14px;color: #b5b5b5;line-height: 35px;}
+    	.mui-content span{width: 20px;height: 20px;line-height: 15px;color: #fff;text-align: center;background: #5b5b5b;margin-left: 5px;}
+    	.creditInfo .group h3{width: 100%;float: left;text-align: center;font-size: 14px;padding-bottom: 20px;}
+    	.inputGroup{width: 100%;float: left;background: #fff;height: 50px;margin-top: 10px;}
+    	.inputGroup h1{font-size: 14px;padding-left: 5%;line-height: 45px;float: left;color: #b5b5b5;}
+    	.inputGroup .mui-numbox{float: right;height: 30px;margin-top: 10px;margin-right: 10px;}
+    	.inputGroup h2{float: right;color: #DD524D;font-size: 14px;line-height: 45px;margin-right: 5%;}
+    	.mui-btn-danger{float: left;width: 90%;margin-left: 5%;margin-top: 20px;}
+    	.check{float: left;width: 15px;height: 15px;margin-left: 5%;margin-top: 15px;}
+    	.mui-content p{float: left;font-size: 12px;line-height: 25px;margin-top: 10px;margin-left: 5px;}
+    	.mui-content h5{float: left;color: #D43B33;line-height: 25px;margin-top: 10px;margin-left: 5px;font-size: 12px;}
+    	.bkInfo{position: fixed;background: rgba(0,0,0,0.7);width: 80%;top: 30%;left: 10%;border-radius: 5px;display: none;}
+    	.bkInfo h1{color: #fff;font-size: 20px;line-height: 40px;text-align: center;border-bottom: 1px #ccc solid;}
+    	.bkInfo h2{width: 80%;float: left;margin-left: 10%;color: #fff;font-size: 16px;line-height: 30px;}
+    	.bkInfo1{top: 10%;width: 92%;left: 3%;height: 80%;overflow: auto;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">申请债权转让</h1>
+	</header>
+	<div class="mui-content">
+		<div class="creditInfo">
+			<h1>某某某打发斯蒂芬</h1>
+			<div class="group">
+				<h2>转出债权本金</h2>
+				<h3>255元</h3>
+			</div>
+			<div class="group">
+				<h2>转让费用<span class="mui-badge">？</span></h2>
+				<h3>2.55元</h3>
+			</div>
+		</div>
+		<div class="inputGroup">
+			<h1>设置折扣率<span class="mui-badge">？</span></h1>
+				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='90' data-numbox-max='100'>
+					<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+					<input class="mui-input-numbox" type="number" value="100"/>
+					<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+				</div>
+		</div>
+		<div class="inputGroup">
+			<h1>转出价格<span class="mui-badge">？</span></h1>
+			<h2>255元</h2>
+		</div>
+		 <input type="radio" name="identity" value="学生" checked="checked" class="check"/>
+		 <p>我已经阅读并同意</p>
+		 <h5>《债权转让与受让协议》</h5>
+		<button type="button" class="mui-btn mui-btn-danger">确认转出</button>
+	</div>
+	<div class="bkInfo">
+		<h1>转让费用</h1>
+		<h2>转出债权总价格=转出本金总额*转让系数</h2>
+	</div>
+	<div class="bkInfo">
+		<h1>转出价格</h1>
+		<h2>·转让系数为90%-100%</h2>
+		<h2>·折扣率设置月底，让利给债权购买人额度越大，债权越容易卖出</h2>
+	</div>
+	<div class="bkInfo bkInfo1">
+		<h1>折扣率</h1>
+		<h2>·债权持有天数小于90天的项目进行债权转让建议成功时，收取转让金额的1%作为转让手续费</h2>
+		<h2>·债权持有天数在91-180天的项目进行债权转让建议成功时，收取转让金额的0.8%作为转让手续费</h2>
+		<h2>·债权持有天数在181-364天的项目进行债权转让交易成功时，收取转让金额的0.5%作为转让手续费</h2>
+		<h2>·债权持有天数大于365天的项目进行债权转让建议成功时，转让免收手续费</h2>
+		<h2>·债权转让管理费在转让后直接从转让本金中扣除，不转让时平台不向用户收取转让管理费</h2>
+	</div>
+</body>
+ <script type="text/javascript" charset="utf-8">
+      	mui.init();
+		(function($) {
+			var old_back = mui.back;
+			mui.back = function(){
+			  mui.openWindow({
+	  				url:"mineNav4.html",
+	  				id:"mineNav4",
+	  				createNew:true
+	  			})
+			}
+			for(var i=0;i<document.getElementsByClassName("mui-badge").length;i++){
+				bindEvent(i);
+			}
+			document.getElementsByTagName("body")[0].addEventListener("tap",function(){
+				for(var j=0;j<document.getElementsByClassName("mui-badge").length;j++){
+					document.getElementsByClassName("bkInfo")[j].style.display="none";
+				}
+			})
+			function bindEvent(i){
+				for(var j=0;j<document.getElementsByClassName("mui-badge").length;j++){
+					document.getElementsByClassName("bkInfo")[j].style.display="none";
+				}
+				document.getElementsByClassName("mui-badge")[i].addEventListener("tap",function(e){
+					e.stopPropagation()
+					document.getElementsByClassName("bkInfo")[i].style.display="block";
+				})
+			}
+			
+	      	mui.plusReady(function() {
+	      		pay();
+				function pay() {
+					var mobileNo = localStorage["mobileNo"];
+		      		var userNm = localStorage["userNm"];
+		      		var creditId = localStorage["creditId"];
+					var array = [mobileNo,userNm,creditId,ts,rn];
+					var cVal=getcval(array);
+					var url=""+rooturl+"/user/creditTransDetail.bl?userName="+userNm+"&mobileNo="+mobileNo+"&creditId="+creditId+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+					if ( xhr ) {
+						return;
+					}
+					var xhr = new plus.net.XMLHttpRequest();
+					xhr.onreadystatechange = function () { 
+				        switch ( xhr.readyState ) {
+				            case 4:
+				                if ( xhr.status == 200 ) {
+				                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+				                	var data = xhr.response.body;
+				                	if(xhr.response.code=="101"){
+					                	document.getElementsByClassName("creditInfo")[0].getElementsByTagName("h1")[0].innerHTML=data.title;
+					                	addContent(100)
+					                	function addContent(num){
+					                		for(var i=0;i<data.transCalTable.length;i++){
+						                		if(data.transCalTable[i].rate==num){
+							                		var money1 = document.getElementsByClassName("creditInfo")[0].getElementsByClassName("group")[0];
+								                	money1.getElementsByTagName("h3")[0].innerHTML=data.transCalTable[i].transAmt;
+								                	var money2 = document.getElementsByClassName("creditInfo")[0].getElementsByClassName("group")[1];
+								                	money2.getElementsByTagName("h3")[0].innerHTML=data.transCalTable[i].transFee;
+								                	var nums = document.getElementsByClassName("mui-input-numbox")[0].value;
+								                	var jiage = parseFloat(nums)*parseFloat(data.transCalTable[i].transAmt)/100;
+								                	document.getElementsByClassName("inputGroup")[1].getElementsByTagName("h2")[0].innerHTML=jiage.toFixed(2);
+							                	}
+						                	}
+					                	}
+					                	document.getElementsByClassName("mui-btn-danger")[0].addEventListener("tap",function(){
+						                		var num = document.getElementsByClassName("mui-input-numbox")[0].value
+						                		zhuanrang(num);
+						                	})
+					                	document.getElementsByClassName("mui-btn-numbox-minus")[0].addEventListener("tap",function(){
+								      			var inputVal = document.getElementsByClassName('mui-input-numbox')[0].value;
+								      			addContent(parseInt(inputVal)-1)
+								      		})
+										document.getElementsByClassName("mui-btn-numbox-plus")[0].addEventListener("tap",function(){
+								      			var inputVal = document.getElementsByClassName('mui-input-numbox')[0].value;
+								      			addContent(parseInt(inputVal)+1)
+								      		})
+					                }else{
+					                	alert("错误代码"+xhr.response.code);
+					                }
+				                } else { 
+				                	console.log( "打开页面失败："+xhr.status );
+				                }
+				                break;
+				            default :
+				                break;
+				        }
+					}
+					xhr.open( "GET", url );
+					xhr.responseType="json";
+					xhr.send();
+				}
+				function zhuanrang(discountRate) {
+					var mobileNo = localStorage["mobileNo"];
+		      		var userNm = localStorage["userNm"];
+		      		var creditId = localStorage["creditId"];
+					var array = [mobileNo,userNm,creditId,discountRate,ts,rn];
+					var cVal=getcval(array);
+					var url=""+rooturl+"/user/applyCreditTrans.bl?userName="+userNm+"&mobileNo="+mobileNo+"&discountRate="+discountRate+"&creditId="+creditId+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+					console.log(url)
+					if ( xhr ) {
+						return;
+					}
+					var xhr = new plus.net.XMLHttpRequest();
+					xhr.onreadystatechange = function () { 
+				        switch ( xhr.readyState ) {
+				            case 4:
+				                if ( xhr.status == 200 ) {
+				                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+				                	var data = xhr.response.body;
+				                	if(xhr.response.code=='101'){
+				                		alert("转让成功");
+				                		mui.openWindow({
+						      				url:"mineNav4.html",
+						      				id:"mineNav4",
+	      									createNew:true
+						      			})
+				                	}else{
+				                		alert(data.errorMsg);
+				                	}
+				                } else { 
+				                	alert( "打开页面失败："+xhr.status );
+				                }
+				                break;
+				            default :
+				                break;
+				        }
+					}
+					xhr.open( "GET", url );
+					xhr.responseType="json";
+					xhr.send();
+				}
+			});
+		})(mui);
+    </script>
+</html>

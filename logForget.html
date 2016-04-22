@@ -14,6 +14,8 @@
       		document.getElementById("next").addEventListener("tap",function(){
       			var num = document.getElementById("num").value;
       			var message = document.getElementById("message").value;
+      			document.getElementById("num").value="";
+      			document.getElementById("message").value=""
       			if(message!=""){
       				if(num!=""){
       					if(message.length==6){
@@ -79,8 +81,12 @@
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code ,xhr.response.cVal,xhr.response.body);
-			                	document.getElementsByClassName("back")[0].className="back backHide"
-			                	alert(xhr.response.body.statusMessage)
+			                	if(xhr.response.code=="101"){
+				                	document.getElementsByClassName("back")[0].className="back backHide"
+				                	alert(xhr.response.body.statusMessage)
+			                	}else{
+			                		alert("错误代码"+xhr.response.code);
+			                	}
 			                } else {
 			                	alert( xhr.response.statusMessage);
 			                }

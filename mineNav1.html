@@ -88,6 +88,7 @@
 			#nav1,#nav2,#nav3{width: 33%;float: left;text-align: center;border-right: 1px #ccc solid;}
 			#nav3{border: none;}
 			.mui-content{float: left;width: 100%;height: 100%;}
+			.mui-table-view img{float: left;width: 100%;}
 		</style>
 	</head>
 
@@ -221,22 +222,34 @@
 						var xhr = new plus.net.XMLHttpRequest();
 						xhr.onreadystatechange = function () {
 					        switch ( xhr.readyState ) {
+					        	
 					            case 4:
 					                if ( xhr.status == 200 ) {
-					                	navList1=document.getElementById(id).innerHTML;
-					                	push?navList1="":navList1=navList1;
 					                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-					                	data = xhr.response.body;
-					                	for (var i=0;i<data.length;i++) {
-											navList1+='<li class="mui-table-view-cell"><h1>'+data[i].title+
-							'</h1><h2>投资于'+data[i].bidTime+'</h2><div class="moneyGroup"><h3>投资金额</h3><h4>'+
-							data[i].bidAmt+'</h4></div><div class="moneyGroup"><h3>已获利息</h3><h4>'+
-							data[i].earnAmt+'</h4></div><div class="moneyGroup"><h3>还款进度</h3><h4>'+data[i].repayStatus+'</h4></div></li>'
-										} 
-										document.getElementById(id).innerHTML=navList1;
-										bindEvent();
+					                	if(xhr.response.code=="101"){
+						                	data = xhr.response.body;
+						                	if(data==""){
+						                		if(navList1==""){
+						                			document.getElementById(id).innerHTML='<img src="images/nodata.png"/>';
+						                		}	
+						                	}else{
+						                		for (var i=0;i<data.length;i++) {
+						                			navList1=document.getElementById(id).innerHTML;
+						           					push?navList1="":navList1=navList1;
+													navList1+='<li class="mui-table-view-cell" id="'+data[i].investId+'"><h1>'+data[i].title+
+									'</h1><h2>投资于'+data[i].bidTime+'</h2><div class="moneyGroup"><h3>投资金额</h3><h4>'+
+									data[i].bidAmt+'</h4></div><div class="moneyGroup"><h3>已获利息</h3><h4>'+
+									data[i].earnAmt+'</h4></div><div class="moneyGroup"><h3>还款进度</h3><h4>'+data[i].repayStatus+'</h4></div></li>'
+												} 
+												document.getElementById(id).innerHTML=navList1;
+												bindEvent();
+						                	}
+						                }else{
+						                	alert("错误代码"+xhr.response.code);
+						                }
+					                	
 					                } else {
-					                	alert( "打开页面失败："+xhr.status );
+					                	document.getElementById(id).innerHTML='<img src="images/noweb.png"/>';
 					                }
 					                break;
 					            default :
@@ -264,11 +277,10 @@
 					}
 					function hrefEvent(cla,i){
 						cla[i].addEventListener("tap",function(){
-							window.localStorage.pageId=page;
-							window.localStorage.projectID=cla[i].id;
+							window.localStorage.investId=cla[i].id;
 							mui.openWindow({
-								url:"project.html",
-								id:"project"
+								url:"mineNav1Info.html",
+								id:"mineNav1Info"
 							})
 						})
 					}

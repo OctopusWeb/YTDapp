@@ -22,7 +22,9 @@
       			var userNm = localStorage["userNm"];
       			if(pass[1].value==pass[2].value){
       				document.getElementsByClassName("back")[0].className="back";
-      				reg(mobileNo,pass[0].value,pass[1].value,smsCode)
+      				reg(mobileNo,pass[0].value,pass[1].value,smsCode);
+      				pass[1].value=""
+      				pass[2].value=""
       			}
       			
       		})
@@ -57,12 +59,17 @@
 			                window.localStorage.userNm= userNm;
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	document.getElementsByClassName("back")[0].className="back backHide";
-			                	alert(xhr.response.body.statusMessage);
-			                	mui.openWindow({
-				  					url:"nav3H5.html",
-				  					id:"nav3H5"
-				  				});
+			                	if(xhr.response.code=="101"){
+				                	document.getElementsByClassName("back")[0].className="back backHide";
+				                	alert(xhr.response.body.statusMessage);
+				                	mui.openWindow({
+					  					url:"nav3H5.html",
+					  					id:"nav3H5"
+					  				});
+			                	}else{
+			                		alert("错误代码"+xhr.response.code);
+			                	}
+			                	
 			                } else {
 			                	alert( xhr.response.statusMessage);
 			                }

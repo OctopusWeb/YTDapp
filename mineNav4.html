@@ -7,7 +7,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+		
+		<script type="text/javascript" src="js/md5.js" ></script>
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
 		*{margin: 0;padding: 0;list-style: none;font-weight: 400;}
@@ -76,10 +77,9 @@
 			
 			.mui-scroll ul {width:100%;height:auto;background: #f5f5f5}
 			.mui-scroll ul li{width:96%;height:auto;margin-top: 10px;margin-left: 2%;background: #fff;position: relative;padding: 0;}
-			.mui-scroll ul li p{width: 13%;font-size: 10px;color: #fff;position: absolute;background: #2AC845;text-align: center;margin-top: 8px;border-radius: 4px;}
-			.mui-scroll ul li h1{width: 60%;overflow: hidden;font-size: 14px;height: 30px;line-height: 30px;border-bottom: 1px #ccc solid;
-									padding-left: 12%;float: left;color: #555555;}
-			.mui-scroll ul li h2{width: 40%;overflow: hidden;font-size: 12px;height: 30px;line-height: 30px;border-bottom: 1px #ccc solid;
+			.mui-scroll ul li h1{width: 50%;overflow: hidden;font-size: 14px;height: 30px;line-height: 30px;border-bottom: 1px #ccc solid;
+									padding-left: 2%;float: left;color: #555555;}
+			.mui-scroll ul li h2{width: 50%;overflow: hidden;font-size: 12px;height: 30px;line-height: 30px;border-bottom: 1px #ccc solid;
 									padding-left: 2%;float: left;text-align: right;padding-right: 2%;color: #555555;}
 			.mui-scroll ul li .moneyGroup{width: 33%;float: left;}
 			.mui-scroll ul li .moneyGroup h3{width: 100%;text-align: center;font-size: 14px;color: #555555;}
@@ -87,14 +87,16 @@
 			#nav{width: 100%;float: left;}
 			#nav1,#nav2,#nav3{width: 33%;float: left;text-align: center;border-right: 1px #ccc solid;}
 			#nav3{border: none;}
-			.mui-bar h2{position: absolute;right: 5px;font-size: 16px;bottom: 5px;color: #fff;}
+			.mui-content{float: left;width: 100%;height: 100%;}
+			.mui-table-view img{float: left;width: 100%;}
+			.mui-bar h2{font-size: 14px;color: #fff;line-height: 35px;float: right;}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 	    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>		
-			<div class="mui-title">全部投资</div>
+			<div class="mui-title">债权转让</div>
 			<h2>帮助</h2>
 		</header>
 		<div class="mui-content">
@@ -117,20 +119,6 @@
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view" id="ul1">
-									<li class="mui-table-view-cell">
-										<p>可转让</p>
-										<h1>叶某11 敬仰周庄（北京-海淀）</h1><h2>投资于2016年03月11日</h2>
-										<div class="moneyGroup"><h3>投资金额</h3><h4>10,000.00</h4></div>
-										<div class="moneyGroup"><h3>已获利息</h3><h4>0.00</h4></div>
-										<div class="moneyGroup"><h3>还款进度</h3><h4>0/1</h4></div>
-									</li>
-									<li class="mui-table-view-cell">
-										<p>可转让</p>
-										<h1>叶某11 敬仰周庄（北京-海淀）</h1><h2>投资于2016年03月11日</h2>
-										<div class="moneyGroup"><h3>投资金额</h3><h4>10,000.00</h4></div>
-										<div class="moneyGroup"><h3>已获利息</h3><h4>0.00</h4></div>
-										<div class="moneyGroup"><h3>还款进度</h3><h4>0/1</h4></div>
-									</li>
 								</ul>
 							</div>
 						</div>
@@ -139,43 +127,14 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view" id="ul2">
-									<li class="mui-table-view-cell">
-										<p>可转让</p>
-										<h1>叶某22 敬仰周庄（北京-海淀）</h1><h2>投资于2016年03月11日</h2>
-										<div class="moneyGroup"><h3>投资金额</h3><h4>10,000.00</h4></div>
-										<div class="moneyGroup"><h3>已获利息</h3><h4>0.00</h4></div>
-										<div class="moneyGroup"><h3>还款进度</h3><h4>0/1</h4></div>
-									</li>
-									<li class="mui-table-view-cell">
-										<p>可转让</p>
-										<h1>叶某22 敬仰周庄（北京-海淀）</h1><h2>投资于2016年03月11日</h2>
-										<div class="moneyGroup"><h3>投资金额</h3><h4>10,000.00</h4></div>
-										<div class="moneyGroup"><h3>已获利息</h3><h4>0.00</h4></div>
-										<div class="moneyGroup"><h3>还款进度</h3><h4>0/1</h4></div>
-									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					
 					<div id="item3mobile" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view" id="ul3">
-									<li class="mui-table-view-cell">
-										<p>可转让</p>
-										<h1>叶某33 敬仰周庄（北京-海淀）</h1><h2>投资于2016年03月11日</h2>
-										<div class="moneyGroup"><h3>投资金额</h3><h4>10,000.00</h4></div>
-										<div class="moneyGroup"><h3>已获利息</h3><h4>0.00</h4></div>
-										<div class="moneyGroup"><h3>还款进度</h3><h4>0/1</h4></div>
-									</li>
-									<li class="mui-table-view-cell">
-										<p>可转让</p>
-										<h1>叶某33 敬仰周庄（北京-海淀）</h1><h2>投资于2016年03月11日</h2>
-										<div class="moneyGroup"><h3>投资金额</h3><h4>10,000.00</h4></div>
-										<div class="moneyGroup"><h3>已获利息</h3><h4>0.00</h4></div>
-										<div class="moneyGroup"><h3>还款进度</h3><h4>0/1</h4></div>
-									</li>
 								</ul>
 							</div>
 						</div>
@@ -189,15 +148,30 @@
 		<script>
 			mui.init();
 			(function($) {
-				//阻尼系数
-				var deceleration = mui.os.ios?0.003:0.0009;
-				$('.mui-scroll-wrapper').scroll({
-					bounce: false,
-					indicators: true, //是否显示滚动条
-					deceleration:deceleration
-				});
+				mui.plusReady(function(){
+					var old_back = mui.back;
+					mui.back = function(){
+					  mui.openWindow({
+			  				url:"mine.html",
+			  				id:"mine",
+			  				createNew:true
+			  			})
+					}
+				})
 				$.ready(function() {
-					//循环初始化所有下拉刷新，上拉加载。
+					
+					var navList1="";
+					var deceleration = mui.os.ios?0.003:0.0009;
+					$('.mui-scroll-wrapper').scroll({
+						bounce: false,
+						indicators: true, //是否显示滚动条
+						deceleration:deceleration
+					});
+					mui.plusReady(function(){
+						loanList("0","ul1");
+						loanList("1","ul2");
+						loanList("2","ul3");
+					});
 					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
 						$(pullRefreshEl).pullToRefresh({
 							down: {
@@ -205,9 +179,17 @@
 									var self = this;
 									setTimeout(function() {
 										var ul = self.element.querySelector('.mui-table-view');
-										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
+										if(ul.id=="ul1"){
+											navList1='';
+											loanList("0","ul1");
+										}else if(ul.id=="ul2"){
+											navList1='';
+											loanList("1","ul2");
+										}else{
+											navList1='';
+											loanList("2","ul3");
+										}
 										self.endPullDownToRefresh();
-										bindEvent()
 									}, 1000);
 								}
 							},
@@ -216,56 +198,122 @@
 									var self = this;
 									setTimeout(function() {
 										var ul = self.element.querySelector('.mui-table-view');
-										ul.appendChild(createFragment(ul, index, 5));
+										if(ul.id=="ul1"){
+											navList1=''; 
+											loanList("0","ul1");
+										}else if(ul.id=="ul2"){
+											navList1='';
+											loanList("1","ul2")
+										}else{
+											navList1='';
+											loanList("2","ul3")
+										}
+//										ul.appendChild(createFragment(ul, index, data.body.length));
 										self.endPullUpToRefresh();
-										bindEvent()
 									}, 1000);
 								}
 							}
 						});
 						bindEvent()
 					});
-					var createFragment = function(ul, index, count, reverse) {
-						var length = ul.querySelectorAll('li').length;
-						var fragment = document.createDocumentFragment();
-						var li;
-						for (var i = 0; i < count; i++) {
-							li = document.createElement('li');
-							li.className = 'mui-table-view-cell';
-							li.innerHTML = '<li class="mui-table-view-cell"><p>可转让</p><h1>叶某 00敬仰周庄（北京-海淀）</h1><h2>投资于2016年03月11日</h2><div class="moneyGroup"><h3>投资金额</h3><h4>10,000.00</h4></div><div class="moneyGroup"><h3>已获利息</h3><h4>0.00</h4></div><div class="moneyGroup"><h3>还款进度</h3><h4>0/1</h4></div></li>'
-							fragment.appendChild(li);
+
+					function loanList(transStatus,id) {
+						var array = [localStorage["userNm"],localStorage["mobileNo"],transStatus,ts,rn];
+						var cVal=getcval(array);
+						var url=""+rooturl+"/user/creditTransList.bl?userName="+localStorage["userNm"]+"&mobileNo="+localStorage["mobileNo"]+
+						"&transStatus="+transStatus+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+						console.log(url);
+						if ( xhr ) {
+							alert( "xhr请求已创建" );
+							return;
 						}
-						return fragment;
-					};
+						var xhr = new plus.net.XMLHttpRequest();
+						xhr.onreadystatechange = function () {
+					        switch ( xhr.readyState ) {
+					        	
+					            case 4:
+					                if ( xhr.status == 200 ) {
+					                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+					                	if(xhr.response.code=="101"){
+						                	data = xhr.response.body.creditList;
+						                	console.log(data.length);	
+						                	if(data!=""){
+						                		navList1='';
+						                		for (var i=0;i<data.length;i++) {
+						                			if(transStatus==data[i].transStatus){
+						                				navList1+='<li class="mui-table-view-cell" id="'+data[i].creditId+'"><h1>'+data[i].title+
+										'</h1><h2>投资于'+data[i].investDate+'</h2><div class="moneyGroup"><h3>投资金额</h3><h4>'+
+										data[i].investAmt+'</h4></div><div class="moneyGroup">'
+										
+														if(data[i].transStatus=="0"){
+							                				navList1+='<h3>已获利息</h3><h4>'+data[i].hadInterest+'</h4></div><div class="moneyGroup"><h3>还款进度</h3><h4>'+data[i].repayProgress+'</h4></div></li>'
+							                			}else if(data[i].transStatus=="1"){
+							                				navList1+='<h3>转让价格</h3><h4>'+data[i].transAmt+'</h4></div><div class="moneyGroup"><h3>债权价值</h3><h4>'+data[i].creditValue+'</h4></div></li>'
+							                			}else{
+							                				navList1+='<h3>转让价格</h3><h4>'+data[i].transAmt+'</h4></div><div class="moneyGroup"><h3>实收金额</h3><h4>'+data[i].dealAmt+'</h4></div></li>'
+							                			}
+						                			}	
+												}
+						                	}else{
+						                		navList1='<img src="images/nodata.png"/>'
+						                	}
+					                		
+											document.getElementById(id).innerHTML=navList1;
+											bindEvent();
+											document.getElementsByClassName("mui-bar")[0].getElementsByTagName("h2")[0].addEventListener("tap",function(){
+												mui.openWindow({
+														url:"help.html",
+														id:"help"
+													})
+											}) 
+										}else{
+											alert("错误代码"+xhr.response.code);
+										}
+					                	
+					                } else {
+					                	document.getElementById(id).innerHTML='<img src="images/noweb.png"/>';
+					                }
+					                break;
+					            default :
+					                break;
+					        }
+					}
+					xhr.open( "GET", url );
+					xhr.responseType="json";
+					xhr.send();
+				}
 					
-					document.getElementsByClassName("mui-bar")[0].getElementsByTagName("h2")[0].addEventListener("tap",function(){
-						mui.openWindow({
-								url:"help.html",
-								id:"help"
-							})
-					})
 					function bindEvent(){
 						var ul1 = document.getElementById("ul1").getElementsByTagName("li");
 						var ul2 = document.getElementById("ul2").getElementsByTagName("li");
-						var ul3 = document.getElementById("ul3").getElementsByTagName("li");
 						for (var i=0;i<ul1.length;i++) {
 							hrefEvent(ul1,i);
 						}
 						for (var i=0;i<ul2.length;i++) {
-							hrefEvent(ul2,i);
-						}
-						for (var i=0;i<ul3.length;i++) {
-							hrefEvent(ul3,i);
+							hrefEvent2(ul2,i);
 						}
 					}
 					function hrefEvent(cla,i){
 						cla[i].addEventListener("tap",function(){
+							window.localStorage.creditId=cla[i].id;
 							mui.openWindow({
-								url:"mineNavZhuan.html",
-								id:"mineNavZhuan"
+								url:"mineNav4Info.html",
+								id:"mineNav4Info",
+	      						createNew:true
 							})
 						})
 					}
+					function hrefEvent2(cla,i){
+						cla[i].addEventListener("tap",function(){
+							window.localStorage.creditId=cla[i].id;
+							mui.openWindow({
+								url:"mineNav4Info3.html",
+								id:"mineNav4Info3",
+	      						createNew:true
+							})
+						})
+					}
+					
 				});
 			})(mui);
 		</script>

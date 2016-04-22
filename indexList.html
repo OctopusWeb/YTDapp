@@ -30,40 +30,45 @@
 			            case 4:
 			                if ( xhr.status == 200 ) {
 			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	var data = xhr.response.body; 
-			                	var navList=""
-			                	for (var i=0;i<data.length;i++) {
-			                		var time ="年";
-			                		
-			                		if(parseInt(data[i].loanStatus)<3){
-			                			if(data[i].loanPeriodType=="M"){
-				                			var times=data[i].loanPeriod;
-				                			time ="个月"
-				                		}else{
-				                			var times=parseInt(data[i].loanPeriod);
-				                			time ="天"; 
+			                	if(xhr.response.code=="101"){
+			                		var data = xhr.response.body; 
+				                	var navList=""
+				                	for (var i=0;i<data.length;i++) {
+				                		var time ="年";
+				                		
+				                		if(parseInt(data[i].loanStatus)<3){
+				                			if(data[i].loanPeriodType=="M"){
+					                			var times=data[i].loanPeriod;
+					                			time ="个月"
+					                		}else{
+					                			var times=parseInt(data[i].loanPeriod);
+					                			time ="天"; 
+					                		}
+				                			navList+="<li><h1 class='"+data[i].loanId+"'>"+data[i].loanRate.substr(0,2)+"</h1><h3>年化利率</h3><h2>"+data[i].loanRate.substr(2)+
+				                				"</h2><div class='time'><h4>"+times+"</h4><h6>还款期限</h6><h5>"+time+"</h5></div>"+
+				                				"<button type='button' class='mui-btn mui-btn-danger'>"+"项目描述"
+				                				+"</button><div class='pro'><p class='"+data[i].loanProgress+"'></p></div></li>"
 				                		}
-			                			navList+="<li><h1 class='"+data[i].loanId+"'>"+data[i].loanRate.substr(0,2)+"</h1><h3>年化利率</h3><h2>"+data[i].loanRate.substr(2)+
-			                				"</h2><div class='time'><h4>"+times+"</h4><h6>还款期限</h6><h5>"+time+"</h5></div>"+
-			                				"<button type='button' class='mui-btn mui-btn-danger'>"+"项目描述"
-			                				+"</button><div class='pro'><p class='"+data[i].loanProgress+"'></p></div></li>"
-			                		}
-			                		
-			                	} 
-			                	document.getElementsByClassName("slider_info")[0].getElementsByTagName("ul")[0].innerHTML=navList;
-			                	document.getElementsByClassName("back")[0].className="back backHide"
-			                	document.getElementsByClassName("slider_info")[0].getElementsByTagName("ul")[0].getElementsByTagName("li")[0].className="selected";
-			                	projectEvent(0);
-			                	document.getElementsByClassName("content")[0].getElementsByTagName("span")[0].addEventListener("tap",function(){
-					      			num--;
-					      			num<0?num=project.length-1:num=num;
-					      			projectEvent(num);
-					      		});
-					      		document.getElementsByClassName("content")[0].getElementsByTagName("span")[1].addEventListener("tap",function(){
-					      			num++;
-					      			num>project.length-1?num=0:num=num;
-					      			projectEvent(num);
-					      		})
+				                		
+				                	} 
+				                	document.getElementsByClassName("slider_info")[0].getElementsByTagName("ul")[0].innerHTML=navList;
+				                	document.getElementsByClassName("back")[0].className="back backHide"
+				                	document.getElementsByClassName("slider_info")[0].getElementsByTagName("ul")[0].getElementsByTagName("li")[0].className="selected";
+				                	projectEvent(0);
+				                	document.getElementsByClassName("content")[0].getElementsByTagName("span")[0].addEventListener("tap",function(){
+						      			num--;
+						      			num<0?num=project.length-1:num=num;
+						      			projectEvent(num);
+						      		});
+						      		document.getElementsByClassName("content")[0].getElementsByTagName("span")[1].addEventListener("tap",function(){
+						      			num++;
+						      			num>project.length-1?num=0:num=num;
+						      			projectEvent(num);
+						      		})
+			                	}else{
+			                		alert("错误代码"+xhr.response.code);
+			                	}
+			                	
 			                } else {
 			                	alert( "打开页面失败："+xhr.status );
 			                }
@@ -165,7 +170,7 @@
       		}
       		function openProject(){
       			
-      			alert(localStorage["pageId"]+localStorage["projectID"]);
+      			(localStorage["pageId"]+localStorage["projectID"]);
       			mui.openWindow({
       				url:"project.html",
       				id:"project"
@@ -189,8 +194,9 @@
     	
     	.mui-content{background: #fff;width: 100%;float: left;overflow: hidden;}
     	.mui-content h1{width: 100%;float: left;font-size: 14px;text-align: center;line-height: 30px;}
-    	.mui-content span{width: 7%;float: left;text-align: center;line-height: 150px;height: 150px;color: #A2A2A2;}
-    	.mui-content .slider_info{width: 86%;float: left;height: 140px;float: left;position: relative;overflow: hidden;}
+    	.mui-content span{width: 15%;float: left;text-align: center;line-height: 150px;height: 150px;color: #A2A2A2;font-size: 40px
+    						;height: 150px;}
+    	.mui-content .slider_info{width: 70%;float: left;height: 140px;float: left;position: relative;overflow: hidden;}
     	.mui-content .slider_info ul{float: left;position: absolute;width: 100%;}
     	.mui-content .slider_info ul li{float: left;width: 100%;position: relative;display: none;}
     	.mui-content .slider_info ul .selected{display: block;}
@@ -201,8 +207,8 @@
     	.mui-content .slider_info ul li button{width: auto;height: 30px;line-height: 15px;font-size: 12px;float: right;margin-top: 20px;margin-right: 3%;}
     	.mui-content .slider_info ul li .time{float: right;width: 50%;height: 75px;margin-top: 15px;}
     	.mui-content .slider_info ul li h4{float: left;color: #f0ad4e;width: 15%;text-align: right;font-size: 30px;}
-    	.mui-content .slider_info ul li h5{float: left;color: #f0ad4e;width: 75%;font-size: 14px;line-height: 0px;}
-    	.mui-content .slider_info ul li h6{float: left;width: 75%;font-size: 12px;line-height: 12px;}
+    	.mui-content .slider_info ul li h5{float: right;color: #f0ad4e;width: 45%;font-size: 14px;line-height: 0px;text-align: center;}
+    	.mui-content .slider_info ul li h6{float: left;width: 75%;font-size: 12px;line-height: 12px;text-align: right;}
     	.mui-content .slider_info ul li .pro{width: 200px;float: left;height: 4px;background: #ccc;position: absolute;bottom: 20px;margin-left: 50%;
     										left: -100px;border-radius: 3px;overflow: hidden;z-index: 100;}
     	.mui-content .slider_info ul li .pro p{float: left;width: 100%;background: #dd524d;height: 4px;}

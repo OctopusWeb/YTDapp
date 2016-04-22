@@ -115,7 +115,7 @@
 			.mui-scroll ul li .p_bar span{width: 50%;float: left;height: 3px;background: #DD524D;}
 			.mui-scroll ul li h5{float: left;width: 20%;line-height: 35px;text-align: center;}
 			#nav{width: 100%;float: left;}
-			#nav1{width: 100%;float: left;text-align: center;border-right: 1px #ccc solid;}
+			#nav1{width: 50%;float: left;text-align: center;border-right: 1px #ccc solid;}
 			#nav2{width: 50%;float: left;text-align: center;}
 			
 			#foot{bottom:0;border-top: 1px #ccc solid;height:40px}
@@ -150,6 +150,10 @@
 			.content_back .opition h3{width: 100%;height: 30px;line-height: 30px;float: left;background: #DD524D;margin: 0;text-align: center;
 										color: #fff;font-size: 14px;font-weight: 400;}
 			.back{width: 100%;height: 100%;}
+			
+			.help{width: 90%;background: #fff;float: left;height: 40px;line-height: 40px;text-align: center;margin:5px 5%;}
+			.opition2{display: none;}
+			#slider{height: 87%;}
 		</style>
 	</head>
 
@@ -159,7 +163,7 @@
 			<h1>筛选</h1>
 		</header>
 		<div class="content_back contentHide">
-			<div class="opition">
+			<div class="opition opition1">
 				<h1>筛选</h1>
 				<div id="0">
 					<h2>还款方式</h2>
@@ -185,10 +189,57 @@
 				</div>
 				<h3>确定</h3>
 			</div>
+			<div class="opition opition2">
+				<h1>筛选</h1>
+				<div id="0">
+					<h2>信用等级</h2>
+					<button type="button" class="mui-btn mui-btn-danger">全部</button>
+					<button type="button" class="mui-btn mui-btn-outlined">AA</button>
+					<button type="button" class="mui-btn mui-btn-outlined">A</button>
+					<button type="button" class="mui-btn mui-btn-outlined">B</button>
+					<button type="button" class="mui-btn mui-btn-outlined">C</button>
+					<button type="button" class="mui-btn mui-btn-outlined">D</button>
+					<button type="button" class="mui-btn mui-btn-outlined">E</button>
+				</div>
+				<div id="0">
+					<h2>转出价格</h2>
+					<button type="button" class="mui-btn mui-btn-danger">全部</button>
+					<button type="button" class="mui-btn mui-btn-outlined">1万以下</button>
+					<button type="button" class="mui-btn mui-btn-outlined">1-3万</button>
+					<button type="button" class="mui-btn mui-btn-outlined">3-5万</button>
+					<button type="button" class="mui-btn mui-btn-outlined">5万以上</button>
+				</div>
+				<div id="0">
+					<h2>标的类型</h2>
+					<button type="button" class="mui-btn mui-btn-danger">全部</button>
+					<button type="button" class="mui-btn mui-btn-outlined">实地认证</button>
+					<button type="button" class="mui-btn mui-btn-outlined">实物抵押</button>
+					<button type="button" class="mui-btn mui-btn-outlined">机构渠道</button>
+				</div>
+				<div id="0">
+					<h2>借款期限</h2>
+					<button type="button" class="mui-btn mui-btn-danger">全部</button>
+					<button type="button" class="mui-btn mui-btn-outlined">1-6个月</button>
+					<button type="button" class="mui-btn mui-btn-outlined">6-12个月</button>
+					<button type="button" class="mui-btn mui-btn-outlined">12到24个月</button>
+					<button type="button" class="mui-btn mui-btn-outlined">24个月以上</button>
+				</div>
+				<h3>确定</h3>
+			</div>
 		</div>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
-				
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll" id="nav">
+						<a class="mui-control-item mui-active" href="#item1mobile" id="nav1">
+							投资项目
+						</a>
+						<a class="mui-control-item" href="#item2mobile" id="nav2">
+							债权转让
+						</a>
+						
+					</div>
+				</div>
 				<div class="mui-slider-group">
 					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 						<div id="scroll1" class="mui-scroll-wrapper">
@@ -200,7 +251,20 @@
 							</div>
 						</div>
 					</div>
-					
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="ul2">
+									<li class="mui-table-view-cell">
+										
+									</li>
+									<li class="mui-table-view-cell">
+										
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 					
 				</div>
 			</div>
@@ -221,19 +285,31 @@
 			(function($) {
 				var opition = document.getElementsByClassName("opition")[0];
 				var opitionDiv =  opition.getElementsByTagName("div");
+				var opitionDiv2 =  document.getElementsByClassName("opition")[1].getElementsByTagName("div");
 				var btn1 = opitionDiv[0].getElementsByTagName("button");
 				var btn2 = opitionDiv[1].getElementsByTagName("button");
 				var btn3 = opitionDiv[2].getElementsByTagName("button");
-				var arr1;//["loanType","minPeriod","maxPeriod","minLoanRate","maxLoanRate"];
-				var minLoanRate1=["","0","12","24","100"]
-				var minPeriod1=["","1","6","12","24","100"]
+				
+				var btn21 = opitionDiv2[0].getElementsByTagName("button");
+				var btn22 = opitionDiv2[1].getElementsByTagName("button");
+				var btn23 = opitionDiv2[2].getElementsByTagName("button");
+				var btn24 = opitionDiv2[3].getElementsByTagName("button");
+				var arr1,arr3;//["loanType","minPeriod","maxPeriod","minLoanRate","maxLoanRate"];
+				var minLoanRate1=["","0","12","24","100"];
+				var minPeriod1=["","1","6","12","24","100"];
+				
+				var TransAmt=["","0","10000","30000","50000","1000000"]
+				var Period=["","1","6","12","24","100"]
+				var loanLevel=["","AA","A","B","C","D","E"]
+				
+				
 				
 				//阻尼系数
 				var data;
 				var page=1;
 				var page1=1;
 				var navList1=""
-				var navList2=""
+				var navList2="<div class='help'>债权转让的优势是什么？折扣率是什么？</div>"
 				var deceleration = mui.os.ios?0.003:0.0009;
 				for(var i=0;i<btn1.length;i++){
 					btnEvent(btn1,i);
@@ -244,6 +320,18 @@
 				for(var i=0;i<btn3.length;i++){
 					btnEvent(btn3,i);
 				}
+				for(var i=0;i<btn21.length;i++){
+					btnEvent(btn21,i);
+				}
+				for(var i=0;i<btn22.length;i++){
+					btnEvent(btn22,i);
+				}
+				for(var i=0;i<btn23.length;i++){
+					btnEvent(btn23,i);
+				}
+				for(var i=0;i<btn24.length;i++){
+					btnEvent(btn24,i);
+				}
 				function btnEvent(arr,i){
 					arr[i].addEventListener("tap",function(){
 						for(var j=0;j<arr.length;j++){
@@ -252,7 +340,6 @@
 						arr[i].className="mui-btn mui-btn-danger";
 						arr[i].parentNode.id=i;
 					})
-					
 				}
 				document.getElementsByClassName("mui-bar-nav")[0].getElementsByTagName("h1")[0].addEventListener("tap",function(){
 					document.getElementsByClassName("content_back")[0].className="content_back";
@@ -265,15 +352,32 @@
 					deceleration:deceleration
 				});
 				$.ready(function() {
+					
+					var item2Show = false,item3Show = false;//子选项卡是否显示标志
+					document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+					  if (event.detail.slideNumber === 0) {
+					   document.getElementsByClassName("opition")[0].style.display="block";
+					   document.getElementsByClassName("opition")[1].style.display="none";
+					  } else if (event.detail.slideNumber === 1) {
+					    document.getElementsByClassName("opition")[1].style.display="block";
+					   document.getElementsByClassName("opition")[0].style.display="none";
+					  }
+					});
+					
+					
 					mui.plusReady(function(){			
-					    loanList(1,10,[],"");
-						creditList(1,10,[],"");
+					    loanList(1,3,[],"");
+						creditList(1,3,[],"");
 						var btnN1,btnN2,btnN3,btnN4,btnN5;
+						var btn2N1,btn2N2,btn2N3,btn2N4,btn2N5,btn2N6;
 						document.getElementsByClassName("content_back")[0].addEventListener("tap",function(e){
 							e.stopPropagation();
 							document.getElementsByClassName("content_back")[0].className="content_back contentHide";
 						})
 						document.getElementsByClassName("content_back")[0].getElementsByClassName("opition")[0].addEventListener("tap",function(e){
+							e.stopPropagation()
+						});
+						document.getElementsByClassName("content_back")[0].getElementsByClassName("opition")[1].addEventListener("tap",function(e){
 							e.stopPropagation()
 						})
 						document.getElementsByClassName("content_back")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
@@ -284,15 +388,26 @@
 							opition[1].id=="0"?btnN3="":btnN3=minLoanRate1[parseInt(opition[1].id)+1];
 							opition[2].id=="0"?btnN4="":btnN4=minPeriod1[opition[2].id];
 							opition[2].id=="0"?btnN5="":btnN5=minPeriod1[parseInt(opition[2].id)+1]; 
-							arr1=[btnN1,btnN2,btnN3,btnN4,btnN5];
-							
+							arr1=[btnN1,btnN2,btnN3,btnN4,btnN5];							
 							var arr2="&loanType="+btnN1+"&minLoanRate="+btnN2+"&maxLoanRate="+btnN3+"&minPeriod="+btnN4+"&maxPeriod="+btnN5
-							console.log(arr2)
 							navList1=""
-							creditList(1,10,arr1,arr2);
-							navList2=""
 							loanList(1,10,arr1,arr2);
-							
+						})
+						document.getElementsByClassName("content_back")[0].getElementsByTagName("h3")[1].addEventListener("tap",function(){
+							document.getElementsByClassName("content_back")[0].className="content_back contentHide";
+							var opition1=document.getElementsByClassName("opition")[1].getElementsByTagName("div");
+							opition1[0].id=="0"?btn2N1="":btn2N1=loanLevel[opition1[0].id]; 
+							opition1[1].id=="0"?btn2N2="":btn2N2=TransAmt[opition1[1].id];
+							opition1[1].id=="0"?btn2N3="":btn2N3=TransAmt[parseInt(opition1[1].id)+1];
+							opition1[2].id=="0"?btn2N4="":btn2N4=opition1[2].id; 
+							opition1[3].id=="0"?btn2N5="":btn2N5=Period[opition1[3].id];
+							opition1[3].id=="0"?btn2N6="":btn2N6=Period[parseInt(opition1[3].id)+1]; 
+							arr3=[btn2N1,btn2N2,btn2N3,btn2N4,btn2N5,btn2N6];
+							console.log(arr3); 
+							var arr4="&loanType="+btn2N4+"&minTransAmt="+btn2N2+"&maxTransAmt="+btn2N3+"&minPeriod="+btn2N5+"&maxPeriod="+btn2N6+"&loanLevel="+btn2N1
+							navList2="<div class='help'>债权转让的优势是什么？折扣率是什么？</div>"
+							creditList(1,10,arr3,arr4);
+	
 						})
 					});
 					
@@ -307,11 +422,11 @@
 										if(ul.id=="ul1"){
 											navList1=""
 											page=1;
-											loanList(page++,3,[],"");
+											loanList(page,3,[],"");
 										}else{
-											navList2=""
+											navList2="<div class='help'>债权转让的优势是什么？折扣率是什么？</div>"
 											page1=1;
-											creditList(page1++,3,[],"")
+											creditList(page1,3,[],"")
 										}
 										var btn1 = opitionDiv[0].getElementsByTagName("button");
 										var btn2 = opitionDiv[1].getElementsByTagName("button");
@@ -343,9 +458,11 @@
 									setTimeout(function() {
 										var ul = self.element.querySelector('.mui-table-view');
 										if(ul.id=="ul1"){
-											loanList(page++,3,[],"");
+											page++
+											loanList(page,3,[],"");
 										}else{
-											creditList(page1++,3,[],"")
+											page1++
+											creditList(page1,3,[],"")
 										}
 //										ul.appendChild(createFragment(ul, index, 1));
 										self.endPullUpToRefresh();
@@ -394,30 +511,35 @@
 				            case 4:
 				                if ( xhr.status == 200 ) {
 				                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-				                	data = xhr.response.body;
-				                	for (var i=0;i<data.length;i++) {
-				                		if(data[i].loanPeriodType=="M"){
-				                			var perido=parseInt(data[i].loanPeriod);
-				                		}else{
-				                			var perido=parseInt(data[i].loanPeriod)/30;
-				                		}
-				                		var repayModeArr=["空","等额本息","到期一次性还本付息"];
-      									var loanStatusArr=["空","等待放标","筹款中","满标","还款中","还款结束"]
-										navList1+='<li class="mui-table-view-cell" id="'+data[i].loanId+'"><nobr><p>'+data[i].title+
-													'</p></nobr><div class="box check0"><h2>'+data[i].loanRate+
-													'</h2><h4>%</h4><span>年化利率</span></div><div class="box check1"><h2>'+perido.toFixed(1)+
-													'</h2><h4>个月</h4><span>还款期限</span></div><div class="box check2"><h2>'+parseInt(data[i].loanAmt)/10000+
-													'</h2><h4>万</h4><span>借款金额</span></div><div class="p_bar"><span class="'+data[i].loanProgress+'"></span></div><h5>'+data[i].loanProgress+
-													'%</h5><div class="info"><h3>'+data[i].loanLevel+
-													'</h3><h3  class="liW">'+repayModeArr[data[i].repayMode]+'</h3><h3>'+loanStatusArr[data[i].loanStatus]+'</h3></div><div class="cla cla'+data[i].loanType+'"></div></li>'
-									} 
-									document.getElementById("ul1").innerHTML=navList1;
-									var ul1pro=document.getElementById("ul1").getElementsByClassName("p_bar");
-									for (var i=0;i<ul1pro.length;i++) {
-										ul1pro[i].getElementsByTagName("span")[0].style.width=ul1pro[i].getElementsByTagName("span")[0].className+"%";
+				                	if(xhr.response.code=="101"){
+					                	data = xhr.response.body;
+					                	for (var i=0;i<data.length;i++) {
+					                		if(data[i].loanPeriodType=="M"){
+					                			var perido=parseInt(data[i].loanPeriod);
+					                			var time="个月"
+					                		}else{
+					                			var perido=parseInt(data[i].loanPeriod)/30;
+					                			var time="天"
+					                		}
+					                		var repayModeArr=["空","等额本息","到期一次性还本付息"];
+	      									var loanStatusArr=["空","等待放标","筹款中","满标","还款中","还款结束"]
+											navList1+='<li class="mui-table-view-cell" id="'+data[i].loanId+'"><nobr><p>'+data[i].title+
+														'</p></nobr><div class="box check0"><h2>'+data[i].loanRate+
+														'</h2><h4>%</h4><span>年化利率</span></div><div class="box check1"><h2>'+data[i].loanPeriod+
+														'</h2><h4>'+time+'</h4><span>还款期限</span></div><div class="box check2"><h2>'+parseInt(data[i].loanAmt)/10000+
+														'</h2><h4>万</h4><span>借款金额</span></div><div class="p_bar"><span class="'+data[i].loanProgress+'"></span></div><h5>'+data[i].loanProgress+
+														'%</h5><div class="info"><h3>'+data[i].loanLevel+
+														'</h3><h3  class="liW">'+repayModeArr[data[i].repayMode]+'</h3><h3>'+loanStatusArr[data[i].loanStatus]+'</h3></div><div class="cla cla'+data[i].loanType+'"></div></li>'
+										} 
+										document.getElementById("ul1").innerHTML=navList1;
+										var ul1pro=document.getElementById("ul1").getElementsByClassName("p_bar");
+										for (var i=0;i<ul1pro.length;i++) {
+											ul1pro[i].getElementsByTagName("span")[0].style.width=ul1pro[i].getElementsByTagName("span")[0].className+"%";
+										}
+										bindEvent();
+									}else{
+										alert("错误代码"+xhr.response.code);
 									}
-									bindEvent();
-									
 				                } else {
 				                	alert( "打开页面失败："+xhr.status );
 				                }
@@ -431,12 +553,12 @@
 					xhr.send();
 				}
 					
-					function creditList(pageNo,pageSize,arr1,arr2) {
+					function creditList(pageNo,pageSize,arr1,arr2) { 
 					var array = [pageNo,pageSize,2,ts,rn];
 					array=array.concat(arr1);
 					var cVal=getcval(array);
 					var url=""+rooturl+"/credit/creditTransList.bl?pageNo="+pageNo+arr2+"&pageSize="+pageSize+"&loanStatus="+2+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
-					console.log(url);
+					console.log(url); 
 					if ( xhr ) {
 						alert( "xhr请求已创建" );
 						return;
@@ -451,23 +573,35 @@
 				                	
 				                	
 				                	for (var i=0;i<data.length;i++) {
+				                		console.log(data[i].loanPeriodType)
 				                		if(data[i].loanPeriodType=="M"){
-				                			var perido=parseInt(data[i].loanPeriod);
+				                			var time="个月";
 				                		}else{
-				                			var perido=parseInt(data[i].loanPeriod)/30;
+				                			var time="天";
 				                		}
 				                		var repayModeArr=["空","等额本息","到期一次性还本付息"];
       									var loanStatusArr=["空","等待放标","筹款中","满标","还款中","还款结束"]
 										navList2+='<li class="mui-table-view-cell" id="'+data[i].creditId+'"><nobr><p>'+data[i].title+
 													'</p></nobr><div class="box check0"><h2>'+data[i].loanRate+
-													'</h2><h4>%</h4><span>年化利率</span></div><div class="box check1"><h2>'+perido.toFixed(1)+
-													'</h2><h4>个月</h4><span>还款期限</span></div><div class="box check2"><h2>'+parseInt(data[i].transAmt)/10000+
-													'</h2><h4>万</h4><span>转让金额</span></div><div class="p_bar"><span class="'+data[i].discountRate+'"></span></div><h5>'+data[i].discountRate+
-													'%</h5><div class="info"><h3>'+data[i].loanLevel+
-													'</h3><h3  class="liW">'+repayModeArr[data[i].repayMode]+'</h3><h3>'+loanStatusArr[data[i].loanStatus]+'</h3></div><div class="cla cla'+data[i].loanType+'"></div></li>'
+													'</h2><h4>%</h4><span>年化利率</span></div><div class="box check1"><h2>'+data[i].loanPeriod+
+													'</h2><h4>'+time+'</h4><span>剩余期限</span></div><div class="box check2"><h2>'+data[i].discountRate+
+													'%</h2><h4></h4><span>折扣率</span></div>'+
+													'<div class="info"><h3>'+loanStatusArr[data[i].loanType]+ 
+													'</h3><h3  class="liW">'+repayModeArr[data[i].repayMode]+'</h3><h3>'+data[i].realAmt+'元</h3></div><div class="cla cla'+data[i].loanType+'"></div></li>'
 				                	}
-									
+									document.getElementById("ul2").innerHTML=navList2;
+									var ul2pro=document.getElementById("ul2").getElementsByClassName("p_bar");
+									for (var i=0;i<ul2pro.length;i++) {
+										ul2pro[i].getElementsByTagName("span")[0].style.width=ul2pro[i].getElementsByTagName("span")[0].className+"%";
+									}
 									bindEvent(); 
+									document.getElementsByClassName("help")[0].addEventListener("tap",function(){
+										mui.openWindow({
+											url:"projectHelp.html",
+											id:"projectHelp"
+											
+										})
+									})
 				                } else {
 				                	alert( "打开页面失败："+xhr.status );
 				                }
@@ -483,10 +617,13 @@
 					
 					function bindEvent(){
 						var ul1 = document.getElementById("ul1").getElementsByTagName("li");
+						var ul2 = document.getElementById("ul2").getElementsByTagName("li");
 						for (var i=0;i<ul1.length;i++) {
 							hrefEvent(ul1,i,"loan");
 						}
-						
+						for (var i=0;i<ul2.length;i++) {
+							hrefEvent2(ul2,i,"credit");
+						}
 					}
 					function hrefEvent(cla,i,page){
 						cla[i].addEventListener("tap",function(){
@@ -495,6 +632,17 @@
 							mui.openWindow({
 								url:"project.html",
 								id:"project"
+								
+							})
+						})
+					}
+					function hrefEvent2(cla,i,page){
+						cla[i].addEventListener("tap",function(){
+							window.localStorage.pageId=page;
+							window.localStorage.projectID=cla[i].id;
+							mui.openWindow({
+								url:"project2.html",
+								id:"project2"
 								
 							})
 						})

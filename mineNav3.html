@@ -66,14 +66,18 @@
 			            case 4:
 			                if ( xhr.status == 200 ) {
 			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	var data = xhr.response.body;
-			                	if(data==""){
-			                		alert("请先选择银行卡");
-			                	}else{
-			                		document.getElementsByClassName("bankH")[0].getElementsByTagName("h2")[0].innerHTML = data[0].bankName;
-			                		gateBusiId = "QP";
-			                		bankCode=data[0].bankCode;
-			                	}
+			                	if(xhr.response.code=="101"){
+				                	var data = xhr.response.body;
+				                	if(data==""){
+				                		alert("请先选择银行卡");
+				                	}else{
+				                		document.getElementsByClassName("bankH")[0].getElementsByTagName("h2")[0].innerHTML = data[0].bankName;
+				                		gateBusiId = "QP";
+				                		bankCode=data[0].bankCode;
+				                	}
+				                }else{
+				                	alert("错误代码"+xhr.response.code);
+				                }
 			                } else {
 			                	alert( "打开页面失败："+xhr.status );
 			                }

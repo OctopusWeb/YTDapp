@@ -28,20 +28,28 @@
 			            case 4:
 			                if ( xhr.status == 200 ) {
 			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	var data = xhr.response.body;
-			                	var navList=""
-			                	navList="<ul><li class='selected'><h1>交易类型</h1><h2>交易金额</h2><h3>交易时间</h3></li><li>"
-			                	if(data!=""){
-			                		for (var i=0;i<data.length;i++) {
-			                			if(data[i].tradeType==choosed||choosed==""){
-			                				navList+='<h1>'+data[i].tradeType+'</h1><h2>'+data[i].tradeAmt+'</h2><h3>'+data[i].tradeTime+'</h3>';
-			                			}
+			                	if(xhr.response.code=="101"){
+				                	var data = xhr.response.body;
+				                	var navList=""
+				                	if(data!=""){
+				                		navList="<ul><li class='selected'><h1>交易类型</h1><h2>交易金额</h2><h3>交易时间</h3></li><li>"
+				                		for (var i=0;i<data.length;i++) {
+				                			if(data[i].tradeType==choosed||choosed==""){
+				                				navList+='<h1>'+data[i].tradeType+'</h1><h2>'+data[i].tradeAmt+'</h2><h3>'+data[i].tradeTime+'</h3>';
+				                			}
+					                	}
+				                		navList+='</ul>'
+				                	}else{
+				                		if(navList==""){
+				                			navList='<img src="images/nodata.png"/>'
+				                		}
 				                	}
-			                		navList+='</ul>'
-			                	}
-			                	document.getElementsByClassName("content")[0].innerHTML=navList;
+				                	document.getElementsByClassName("content")[0].innerHTML=navList;
+				                }else{
+				                	alert("错误代码"+xhr.response.code);
+				                }
 			                } else {
-			                	alert( "打开页面失败："+xhr.status );
+				                document.getElementsByClassName("content")[0].innerHTML='<img src="images/noweb.png"/>';
 			                }
 			                break;
 			            default :
@@ -94,6 +102,7 @@
 		.blackBack ul{width: 150px;background: #49494b;height: auto;float: right;margin-top: 50px;border-radius: 5px;margin-right: 10px;}
 		.blackBack ul li{width: 100%;float: left;height: 50px;}
     	.blackBack ul li h1{width: 80%;float: left;margin-left: 10%;font-size: 16px;color: #fff;text-align: center;line-height: 45px;border-bottom: 1px #646466 solid;}
+    	.mui-content img{float: left;width: 100%;}
     </style>
 </head>
 <body>

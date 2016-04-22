@@ -33,33 +33,44 @@
 					            case 4:
 					                if ( xhr.status == 200 ) {
 					                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-					                	var data = xhr.response.body;
-					                	var navList=""
-					                	if(data!=""){
-					                		if(Reds=="availableReds"){
-					                			for (var i=0;i<data.redList.length;i++) {
-							                		navList+='<li class="success"><div class="bagLeft"><h1>'+data.redList[i].redName+
-							                		'</h1><h2>￥'+data.redList[i].redAmt+
-							                		'</h2></div><div class="bagRight"><h3>编号：'+data.redList[i].redId+
-							                		'</h3><h4>单笔投资满'+parseInt(data.redList[i].redUseUpLimit)*100+
-							                		'元可使用</h4><h4>（一月标除外）</h4><h5>失效日期：'+data.redList[i].redLimitDts+
-							                		'</h5><h5>红包来源:'+data.redList[i].redSource+'</h5></div></li>';
-							                	} 
-					                		}else{
-					                			for (var i=0;i<data.length;i++) {
-							                		navList+='<li class="bad"><div class="bagLeft"><h1>'+data[i].redName+
-							                		'</h1><h2>￥'+data[i].redAmt+
-							                		'</h2></div><div class="bagRight"><h3>编号：'+data[i].redId+
-							                		'</h3><h4>单笔投资满'+parseInt(data[i].redUseUpLimit)*100+
-							                		'元可使用</h4><h4>（一月标除外）</h4><h5>失效日期：'+data[i].redLimitDts+
-							                		'</h5><h5>红包来源:'+data[i].redSource+'</h5></div></li>';
-							                	}
-					                		}
-					                		
-					                	}
-					                	document.getElementsByClassName("content")[0].innerHTML=navList;
+					                	if(xhr.response.code=="101"){
+						                	var data = xhr.response.body;
+						                	var navList=""
+						                	if(data!=""){
+						                		if(Reds=="availableReds"){
+						                			if(data.redList!=""){
+						                				for (var i=0;i<data.redList.length;i++) {
+									                		navList+='<li class="success"><div class="bagLeft"><h1>'+data.redList[i].redName+
+									                		'</h1><h2>￥'+data.redList[i].redAmt+
+									                		'</h2></div><div class="bagRight"><h3>编号：'+data.redList[i].redId+
+									                		'</h3><h4>单笔投资满'+parseInt(data.redList[i].redUseUpLimit)*100+
+									                		'元可使用</h4><h4>（一月标除外）</h4><h5>失效日期：'+data.redList[i].redLimitDts+
+									                		'</h5><h5>红包来源:'+data.redList[i].redSource+'</h5></div></li>';
+									                	} 
+						                			}else{
+						                				navList='<img src="images/nodata.png"/>'
+						                			}
+						                			
+						                		}else{
+						                			for (var i=0;i<data.length;i++) {
+								                		navList+='<li class="bad"><div class="bagLeft"><h1>'+data[i].redName+
+								                		'</h1><h2>￥'+data[i].redAmt+
+								                		'</h2></div><div class="bagRight"><h3>编号：'+data[i].redId+
+								                		'</h3><h4>单笔投资满'+parseInt(data[i].redUseUpLimit)*100+
+								                		'元可使用</h4><h4>（一月标除外）</h4><h5>失效日期：'+data[i].redLimitDts+
+								                		'</h5><h5>红包来源:'+data[i].redSource+'</h5></div></li>';
+								                	}
+						                		}
+						                		
+						                	}else{
+						                		navList='<img src="images/nodata.png"/>'
+						                	}
+						                	document.getElementsByClassName("content")[0].innerHTML=navList;
+						                }else{
+						                	alert("错误代码"+xhr.response.code);
+						                }
 					                } else {
-					                	alert( "打开页面失败："+xhr.status );
+					                	document.getElementsByClassName("content")[0].innerHTML='<img src="images/noweb.png"/>';
 					                }
 					                break;
 					            default :
@@ -92,12 +103,12 @@
     	.mui-bar a,.mui-bar .mui-title,.mui-bar{color: #fff;}
     	
     	.mui-content{width: 100%;float: left;overflow: hidden;}
-    	.mui-content .nav{width: 100%;float: left;background: #fff;}
+    	.mui-content .nav{width: 100%;background: #fff;position: fixed;}
     	.mui-content .nav li{float: left;width: 50%;}
     	.mui-content .nav li h1{line-height: 30px;height: 30px;font-size: 14px;width: 100%;text-align: center;border-right: 1px #ccc solid;}
 		.mui-content .nav .selected h1{color: #DD524D;}
 		
-		.mui-content .content{width: 100%;float: left;}
+		.mui-content .content{width: 100%;float: left;margin-top: 30px;}
 		.mui-content .content li{width: 90%;float: left;margin-top: 20px;margin-left: 5%;height: 90px;}
 		.mui-content .content li .bagLeft{width: 30%;background: #2fabe0;float: left;height: 90px;}
 		.mui-content .content .bad .bagLeft{background: #DD524D;}
@@ -107,6 +118,7 @@
 		.mui-content .content li h3{color: #555;font-size: 12px;width: 100%;text-align: right;padding-right: 20px;}
 		.mui-content .content li h4{color: #2fabe0;font-size: 12px;width: 100%;text-align: left;padding-left: 10px;}
 		.mui-content .content li h5{color: #555;font-size: 12px;width: 100%;text-align: left;padding-left: 10px;}
+		.mui-content img{float: left;width: 100%;}
 </style>
 <body>
 	<header class="mui-bar mui-bar-nav">
@@ -120,7 +132,6 @@
 	    	<li id="historyReds"><h1>历史红包</h1></li>
 	    </ul>
 	    <ul class="content">
-	    	
 	    </ul>
 	</div>
 </body>

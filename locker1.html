@@ -27,9 +27,11 @@
 				margin: 50px auto;
 				background-color: #fff;
 			}
-			#alert {
+			#alerts {
+				position: absolute;
+				bottom: 10%;
 				text-align: center;
-				padding: 20px 10px;
+				width:100%;
 				color: #fff;
 			}
 			*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
@@ -56,7 +58,7 @@
 				<h1 id="name">你好</h1>
 			</div>
 			<div id='holder' class="mui-locker" data-locker-options='{"ringColor":"rgba(210,210,210,1)","fillColor":"#ffffff","pointColor":"rgba(0,136,204,1)","lineColor":"rgba(0,136,204,1)"}' data-locker-width='300' data-locker-height='300'></div>
-			<div id='alert'>请输入手势密码</div>
+			<div id='alerts'>请输入手势密码</div>
 <!--			<p>忘记手势密码</p><span>使用其他账号登录</span>-->
 		</div>
 
@@ -78,9 +80,9 @@
 					}
 				});
 				var holder = doc.querySelector('#holder'),
-					alert = doc.querySelector('#alert'),
+					alerts = doc.querySelector('#alerts'),
 					record = [];
-				//处理事件
+				var wrong=0;				//处理事件
 				holder.addEventListener('done', function(event) {
 					var rs = event.detail;
 					record.push(rs.points.join(''));
@@ -89,10 +91,21 @@
 						plus.webview.close(ws);
 					}else{
 						record = []
-						alert.innerText = '手势密码不正确';
+						alerts.innerText = '手势密码不正确';
+						wrong++;
+						if(wrong==5){
+							window.localStorage.userNm="";
+			  				window.localStorage.mobileNo = "";
+			  				window.localStorage.record="";
+			  				alert("为了您的资金安全，请您重新登录")
+			  				mui.openWindow({
+			  					url:"reg.html",
+			  					id:"reg",
+				      			createNew:true
+			  				})
+						}
 						rs.sender.clear();
 					}
-					console.log(record);
 				});
 			}(mui, document));
 		</script>

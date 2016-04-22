@@ -35,45 +35,54 @@
 			                if ( xhr.status == 200 ) {
 			                	
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	if(UseRed=="N"){
-			                		var red="";
-			                	}else{
-			                		var red ='<li><h1>可选红包:'+
-								'</h1><button type="button" class="mui-btn mui-btn-danger bag">选择红包</button><h3>'+localStorage["redTotal"]+
-								'</h3></li>'
-			                	}
-			                	
-			                	var mineList='<li><h1>剩余金额:</h1><h2>￥'+xhr.response.body.investableAmt+'</h2></li><li><h1>可用余额:</h1>'+
-			                	'<button type="button" class="mui-btn mui-btn-success" id="pay">充值</button><h2>'+
-			                	xhr.response.body.avlBalance+'</h2></li><li><h1>投资金额(元):</h1><input type="number" min="100" placeholder="最低投资金额'+startInvestAmt+'元" id="input"/></li>'+
-								'<li class="select"><h1>预计收入:</h1><h4>￥'+120000.00+'</h4></li>'+red;
-								
-								document.getElementsByClassName("money_much")[0].innerHTML=mineList;
-								document.getElementsByTagName("input")[0].oninput=function(){
-						      		var money = document.getElementsByTagName("input")[0].value;
-					      			if(money==""){
-					      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].className="select"
-					      			}else{
-					      				if(parseInt(money)>=parseInt(xhr.response.body.investableAmt)){
-					      					document.getElementsByTagName("input")[0].value=parseInt(xhr.response.body.investableAmt);
-					      				}
-					      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].className=""
-					      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].getElementsByTagName("h4")[0].innerHTML="￥"+parseInt(money)/10
-					      			}
-					      		}
-								document.getElementById("pay").addEventListener("tap",function(){
-					      		mui.openWindow({
-					      					url:"mineNav3.html",
-					      					id:"mineNav3"
-					      				})
-					      		})
-					      		document.getElementsByClassName("bag")[0].addEventListener("tap",function(){
-					      			mui.openWindow({
-					      					url:"mineNav21.html",
-					      					id:"mineNav21"
-					      				})
-					      		})
-								
+			                	if(xhr.response.code=="101"){
+				                	if(UseRed=="N"){
+				                		var red="";
+				                	}else{
+				                		if(localStorage["redLen"]=="未选择"){
+				                			var bagLen='0'
+				                		}else{
+				                			var bagLen=parseInt(localStorage["redLen"].length/15);
+				                		}
+				                		var red ='<li><h1>可选红包:'+
+									'</h1><button type="button" class="mui-btn mui-btn-danger bag">选择红包</button><h3>'+bagLen+
+									'</h3></li>'
+				                	}
+				                	
+				                	var mineList='<li><h1>剩余金额:</h1><h2>￥'+xhr.response.body.investableAmt+'</h2></li><li><h1>可用余额:</h1>'+
+				                	'<button type="button" class="mui-btn mui-btn-success" id="pay">充值</button><h2>'+
+				                	xhr.response.body.avlBalance+'</h2></li><li><h1>投资金额(元):</h1><input type="number" min="100" placeholder="最低投资金额'+startInvestAmt+'元" id="input"/></li>'+
+									'<li class="select"><h1>预计收入:</h1><h4>￥'+120000.00+'</h4></li>'+red;
+									
+									document.getElementsByClassName("money_much")[0].innerHTML=mineList;
+									document.getElementsByTagName("input")[0].oninput=function(){
+							      		var money = document.getElementsByTagName("input")[0].value;
+						      			if(money==""){
+						      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].className="select"
+						      			}else{
+						      				if(parseInt(money)>=parseInt(xhr.response.body.investableAmt)){
+						      					document.getElementsByTagName("input")[0].value=parseInt(xhr.response.body.investableAmt);
+						      				}
+						      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].className=""
+						      				document.getElementsByClassName("money_much")[0].getElementsByTagName("li")[3].getElementsByTagName("h4")[0].innerHTML="￥"+parseInt(money)/10
+						      			}
+						      		}
+									document.getElementById("pay").addEventListener("tap",function(){
+						      		mui.openWindow({
+						      					url:"mineNav3.html",
+						      					id:"mineNav3"
+						      				})
+						      		})
+						      		document.getElementsByClassName("bag")[0].addEventListener("tap",function(){
+						      			mui.openWindow({
+						      					url:"mineNav21.html",
+						      					id:"mineNav21",
+		      									createNew:true
+						      				})
+						      		})
+								}else{
+									alert("错误代码"+xhr.response.code);
+								}
 			                } else { 
 			                	alert( "打开页面失败："+xhr.status );
 			                }
@@ -132,7 +141,7 @@
       			var day;
       			var repayModeArr=["空","等额本息","到期一次性还本付息"];
       			startInvestAmt = data.startInvestAmt;
-      			data.loanPeriodType=="M"?day="月":dy="天";
+      			data.loanPeriodType=="M"?day="个月":day="天";
       			var way='<li><h1>借款金额:</h1><h2>￥'+data.loanAmt+'</h2></li><li><h1>年化利率:</h1><h2>'+
       			data.loanRate+'%</h2></li><li><h1>还款期限:</h1><h2>'+data.loanPeriod+day+'</h2></li><li><h1>还款方式:</h1><h2>'+repayModeArr[data.repayMode]+'</h2></li>'
       			document.getElementsByClassName("money_way")[0].innerHTML=way;
@@ -150,7 +159,8 @@
       				window.localStorage.projectMoney=document.getElementsByTagName("input")[0].value
       				mui.openWindow({
       					url:"projectPayH5.html",
-      					id:"projectPayH5"
+      					id:"projectPayH5",
+	      				createNew:true
       				})
       			}
       		})

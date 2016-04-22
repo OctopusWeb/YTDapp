@@ -12,11 +12,11 @@
       	mui.plusReady(function() {
       		document.getElementsByTagName("img")[0].addEventListener("tap",function(){
       			plus.os.name=="Android"?window.localStorage.platform="Android":window.localStorage.platform="IOS";
-      			alert(localStorage["platform"]);
       			window.localStorage.userNm="";
       			window.localStorage.mobileNo = "";
       			window.localStorage.record="";
       			window.localStorage.redTotal="";
+      			window.localStorage.redLen="未选择";
       			mui.openWindow({
       				url:"index.html",
       				id:"index"

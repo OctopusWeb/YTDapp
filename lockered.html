@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>手势锁屏</title>
+		<title>手势锁屏示例</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -30,14 +30,14 @@
 			#alert {
 				position: absolute;
 				bottom: 10%;
-				text-align: center;
 				width:100%;
+				text-align: center;
 				color: #fff;
 			}
 			*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
 	    	body{width: 100%;background: #dd524d;}
 	    	.mui-bar{background: #dd524d;height: 50px;box-shadow: none;}
-	    	.head{width: 100%;height: 50px;float: left;position: relative;}
+	    	.head{width: 100%;height: 130px;float: left;position: relative;}
 	    	.head img{width: 70px;height: 70px;position: absolute;border-radius: 50%;left: 50%;margin-left: -35px;top: 50%;
 	    			margin-top: -35px;border: 2px #fff solid;}
 	    	.head h1{width: 100%;position: absolute;text-align: center;bottom: 0;color: #fff;font-size: 14px;}
@@ -47,44 +47,88 @@
     		#holder{background: #DD524D;border: none;}
     		p{width: 100%;position: absolute;color: #fff;bottom: 0;padding-left: 5%;}
     		span{width: 100%;position: absolute;color: #fff;bottom: 0;padding-right: 5%;text-align: right;font-size: 14px;line-height: 40px;}
+			#tiaoguo{width: 40px;height: 20px;position: absolute;right: 10px;top: 35px;}
+			#tiaoguo img{width: 100%;height: auto;float: left;}
+			.selected{display: none;}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">修改手势解锁</h1>
+			<h1 class="mui-title">手势解锁</h1>
 		</header>
 		<div class="mui-content">
 			<div class="head">
-				
+				<div id="tiaoguo"></div>
+				<img src="images/icon/87.png"/>
+				<h1 id="name">你好</h1>
 			</div>
 			<div id='holder' class="mui-locker" data-locker-options='{"ringColor":"rgba(210,210,210,1)","fillColor":"#ffffff","pointColor":"rgba(0,136,204,1)","lineColor":"rgba(0,136,204,1)"}' data-locker-width='300' data-locker-height='300'></div>
-			
-			<div id='alert'>请输入手势密码</div>
-<!--			<p>忘记手势密码</p><span>使用其他账号登录</span>
--->		</div>
+
+			<div id='alert'>请输入手势密码，请重新输入</div>
+<!--			<p>忘记手势密码</p><span>使用其他账号登录</span>-->
+		</div>
 
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.locker.js"></script>
 		<script>
-			(function($, doc) { 
+		
+			(function($, doc) {
+
 				$.init();
+				document.getElementById("name").innerHTML="你好,"+localStorage["userNm"];
+				document.getElementById("tiaoguo").addEventListener("tap",function(){
+					window.localStorage.record=''
+					mui.openWindow({
+						url:"mine.html",
+						id:"mine",
+	      				createNew:true
+					})
+				})
+				
+				function onPlusReady() {
+				document.addEventListener( "resume", onAppReume, false );
+				}
+				function onAppReume() {
+					if(localStorage["userNm"]!="" && localStorage["mobileNo"]!=""){
+						mui.openWindow({
+							url:"locker1.html",
+							id:"locker1"
+						})
+					}
+				}
 				var holder = doc.querySelector('#holder'),
 					alert = doc.querySelector('#alert'),
 					record = [];
-				//处理事件			
+				//处理事件
 				holder.addEventListener('done', function(event) {
 					var rs = event.detail;
+					if (rs.points.length < 4) {
+						alert.innerText = '设定的手势太简单了';
+						record = [];
+						rs.sender.clear();
+						return;
+					}
+					console.log(rs.points.join(''));
 					record.push(rs.points.join(''));
-					if(record==localStorage["record"]){
-						mui.openWindow({
-							url:"lockered.html",
-							id:"lockered"
-						})
-					}else{
-						record = []
-						alert.innerText = '手势密码不正确';
+					if (record.length >= 2) {
+						if (record[0] == record[1]) {
+							window.localStorage.record=record[0];
+							onPlusReady();
+							window.localStorage.lockerd="true";
+							mui.openWindow({
+								url:"mine.html",
+								id:"mine"
+							})
+						} else {
+							alert.innerText = '两次手势设定不一致'; 
+						}
+						rs.sender.clear();
+						record = [];
+					} else {
+						alert.innerText = '请确认手势设定';
+						rs.sender.clear();
 					}
 				});
 			}(mui, document));

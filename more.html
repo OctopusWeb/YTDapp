@@ -42,25 +42,28 @@
 			            case 4:
 			                if ( xhr.status == 200 ) {
 			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	var data = xhr.response.body;
-			                	var latestVersion=data.latestVersion;
-			                	var pro = document.getElementsByClassName("mui-content")[0].getElementsByTagName("li")[3];
-			                	var nowVersion = pro.getElementsByTagName("h3")[0].innerHTML;
-			                	pro.addEventListener("tap",function(){
-			                		if(latestVersion!=nowVersion){
-				                		alert("最新版本为"+latestVersion+"您可前往下载");
-				                		location.href=data.downLink
-	//			                		mui.openWindow({
-	//				      					url:"platform.html",
-	//				      					id:"platform",
-	//			      						createNew:true,
-	//			      						extras:{
-	//									        prourl:data.downLink
-	//									    }
-	//				      				})
-				                	}
-			                	})
-			                	
+			                	if(xhr.response.code=="101"){
+				                	var data = xhr.response.body;
+				                	var latestVersion=data.latestVersion;
+				                	var pro = document.getElementsByClassName("mui-content")[0].getElementsByTagName("li")[3];
+				                	var nowVersion = pro.getElementsByTagName("h3")[0].innerHTML;
+				                	pro.addEventListener("tap",function(){
+				                		if(latestVersion!=nowVersion){
+					                		alert("最新版本为"+latestVersion+"您可前往下载");
+					                		location.href=data.downLink
+		//			                		mui.openWindow({
+		//				      					url:"platform.html",
+		//				      					id:"platform",
+		//			      						createNew:true,
+		//			      						extras:{
+		//									        prourl:data.downLink
+		//									    }
+		//				      				})
+					                	}
+				                	})
+			                	}else{
+			                		alert("错误代码"+xhr.response.code);
+			                	}
 			                } else {
 			                	alert( "打开页面失败："+xhr.status );
 			                }

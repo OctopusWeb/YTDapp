@@ -30,8 +30,12 @@
 				                alert( "xhr请求已"+rn+"完成"+ts);
 				                if ( xhr.status == 200 ) {
 				                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-				                	var data = xhr.response.body;
-				                	document.getElementById("ifram").src=data.url;				                	
+				                	if(xhr.response.code=="101"){
+					                	var data = xhr.response.body;
+					                	document.getElementById("ifram").src=data.url;
+					                }else{
+					                	alert("错误代码"+xhr.response.code);
+					                }
 				                } else {
 				                	alert( "打开页面失败："+xhr.status );
 				                }

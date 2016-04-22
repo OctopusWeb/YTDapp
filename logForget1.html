@@ -53,11 +53,15 @@
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
 			                	document.getElementsByClassName("back")[0].className="back backHide";
-			                	alert(xhr.response.body.statusMessage);
-			                	mui.openWindow({
-				  					url:"reg.html",
-				  					id:"reg"
-				  				});
+			                	if(xhr.response.code=="101"){
+				                	alert(xhr.response.body.statusMessage);
+				                	mui.openWindow({
+					  					url:"reg.html",
+					  					id:"reg"
+					  				});
+				  				}else{
+				  					alert("错误代码"+xhr.response.code);
+				  				}
 			                } else {
 			                	alert( xhr.response.statusMessage);
 			                }

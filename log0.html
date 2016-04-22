@@ -21,11 +21,18 @@
       			document.getElementById("next").addEventListener("tap",function(){
 	      			var num = document.getElementById("num").value;
 	      			var message = document.getElementById("message").value;
+	      			document.getElementById("num").value="";
+	      			document.getElementById("message").value=""
 	      			if(message!=""){
 	      				if(num!=""){
 	      					if(message.length==6){
-	      						document.getElementsByClassName("back")[0].className="back"
-	      						verifyMessage(num,message);
+	      						if(document.getElementsByClassName("check")[0].checked){
+	      							document.getElementsByClassName("back")[0].className="back"
+	      							verifyMessage(num,message);
+	      						}else{
+	      							alert("请阅读并同意《网站服务协议》")
+	      						}
+	      						
 	      					}
 	      				}else{alert("您输入的手机号为空")}
 	      			}else{alert("您输入的验证码为空")}
@@ -85,10 +92,14 @@
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code ,xhr.response.cVal,xhr.response.body);
-			                	document.getElementsByClassName("back")[0].className="back backHide";
-			                	window.localStorage.mobileNo=num;
-			                	alert(localStorage["mobileNo"]);
-			                	alert(xhr.response.body.statusMessage)
+			                	if(xhr.response.code=="101"){
+				                	document.getElementsByClassName("back")[0].className="back backHide";
+				                	window.localStorage.mobileNo=num;
+				                	alert(localStorage["mobileNo"]);
+				                	alert(xhr.response.body.statusMessage)
+			                	}else{
+			                		alert("错误代码"+xhr.response.code);
+			                	}
 			                } else {
 			                	alert( xhr.response.statusMessage);
 			                }
@@ -191,7 +202,7 @@
 	    <input type="text" placeholder="请输入短信验证码" id="message"/>
 	    <button type="button" class="mui-btn mui-btn-danger" id="zhengma">获取验证码</button>
 	    <button type="button" class="mui-btn mui-btn-outlined" id="zhengma1">获取验证码</button>
-	    <input type="checkbox" name="agreen" class="check"/><p>我已经阅读并同意</p><span>《网站服务协议》</span>
+	    <input type="checkbox" name="agreen" class="check" checked="checked"/><p>我已经阅读并同意</p><span>《网站服务协议》</span>
 	    <h5></h5>
 	    <button type="button" class="mui-btn mui-btn-danger" id="next">下一步</button>
 	</div>

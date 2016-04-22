@@ -14,10 +14,28 @@
       		mui.plusReady(function(){
       		var mobileNo = localStorage["mobileNo"];
       		var userNm = localStorage["userNm"];
+      		var old_back = mui.back;
+				mui.back = function(){
+					if(localStorage["mobileNo"]==""||localStorage["userNm"]==""){
+						mui.openWindow({
+		  					url:"reg.html",
+		  					id:"reg",
+			      			createNew:true
+		  				})
+					}else{
+						mui.openWindow({
+		  					url:"mine.html",
+		  					id:"mine",
+			      			createNew:true
+		  				})
+					}
+					
+				}
       		console.log(mobileNo+userNm);
 			mineInfo();
       		if(mobileNo==""||userNm==""){
-				document.getElementsByClassName("mui-btn-danger")[0].style.display="none"
+				document.getElementsByClassName("mui-btn-danger")[0].style.display="none";
+
       		}else{
       			document.getElementsByClassName("mui-btn-danger")[0].style.display="block"
       		}
@@ -28,8 +46,9 @@
   				document.getElementsByClassName("mui-btn-danger")[0].style.display="none";
   				alert("您已成功注销账户");
   				mui.openWindow({
-  					url:"reg.html",
-  					id:"reg"
+  					url:"index.html",
+  					id:"index",
+	      			createNew:true
   				})
   			})
       		function mineInfo() { 
@@ -47,28 +66,32 @@
 			                console.log( "xhr请求已"+rn+"完成"+ts);
 			                if ( xhr.status == 200 ) {
 			                	chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	var data = xhr.response.body;
-			                	if(data.huifuUserNm==""){
-			                		document.getElementsByClassName("liGroup")[3].getElementsByTagName("h2")[0].innerText="未开通";
-			                		document.getElementsByClassName("liGroup")[3].addEventListener("tap",function(){
-			                			mui.openWindow({
-						  					url:"nav3H5.html",
-						  					id:"nav3H5"
-						  				})
-			                		})
-			                	}else{document.getElementsByClassName("liGroup")[3].getElementsByTagName("h2")[0].innerText="已开通";}
-			                	
-			                	if(data.bindBankCardYn=="Y"){
-			                		document.getElementsByClassName("liGroup")[4].getElementsByTagName("h2")[0].innerText="已绑定";
-			                	}else{
-			                		document.getElementsByClassName("liGroup")[4].getElementsByTagName("h2")[0].innerText="未绑定";
-				                	document.getElementsByClassName("liGroup")[4].addEventListener("tap",function(){
+			                	if(xhr.response.code=="101"){
+				                	var data = xhr.response.body;
+				                	if(data.huifuUserNm==""){
+				                		document.getElementsByClassName("liGroup")[3].getElementsByTagName("h2")[0].innerText="未开通";
+				                		document.getElementsByClassName("liGroup")[3].addEventListener("tap",function(){
 				                			mui.openWindow({
-							  					url:"mineNav3.html",
-							  					id:"mineNav3"
+							  					url:"nav3H5.html",
+							  					id:"nav3H5"
 							  				})
 				                		})
-			                	}
+				                	}else{document.getElementsByClassName("liGroup")[3].getElementsByTagName("h2")[0].innerText="已开通";}
+				                	
+				                	if(data.bindBankCardYn=="Y"){
+				                		document.getElementsByClassName("liGroup")[4].getElementsByTagName("h2")[0].innerText="已绑定";
+				                	}else{
+				                		document.getElementsByClassName("liGroup")[4].getElementsByTagName("h2")[0].innerText="未绑定";
+					                	document.getElementsByClassName("liGroup")[4].addEventListener("tap",function(){
+					                			mui.openWindow({
+								  					url:"mineNav3.html",
+								  					id:"mineNav3"
+								  				})
+					                		})
+				                	}
+				                }else{
+				                	alert("错误代码"+xhr.response.code);
+				                }
 			                } else {
 			                	alert( xhr.response.statusMessage); 
 			                }
@@ -84,17 +107,17 @@
       		
       		document.getElementById("name").innerText=localStorage["userNm"];
       		document.getElementById("passWord").addEventListener("tap",function(){
-      			if(localStorage["record"]==""){
-      				mui.openWindow({
-	  					url:"locker.html",
-	  					id:"locker"
-	  				})
-      			}else{
+//    			if(localStorage["record"]==""){
+//    				mui.openWindow({
+//	  					url:"locker.html",
+//	  					id:"locker"
+//	  				})
+//    			}else{
       				mui.openWindow({
 	  					url:"logForget.html",
 	  					id:"logForget"
 	  				})
-      			}
+//    			}
       			
       		})
       		var realNameAuthYn=localStorage["realNameAuthYn"];
@@ -103,12 +126,25 @@
       		}else{
       			document.getElementById("realNameAuthYn").innerText="未认证";
       		}
+      		if(localStorage["record"]==""){
+  				document.getElementsByClassName("liGroup3")[0].getElementsByTagName("h1")[0].innerHTML="请设置手势密码"
+  			}else{
+  				document.getElementsByClassName("liGroup3")[0].getElementsByTagName("h1")[0].innerHTML="修改手势密码"
+  			}
       		var liGroup = document.getElementsByClassName("liGroup");
       		liGroup[6].addEventListener("tap",function(){
-      			mui.openWindow({
-  					url:"lockerChange.html",
-  					id:"lockerChange"
-  				})
+      			if(localStorage["record"]==""){
+      				mui.openWindow({
+	  					url:"locker.html",
+	  					id:"locker"
+	  				})
+      			}else{
+      				mui.openWindow({
+	  					url:"lockerChange.html",
+	  					id:"lockerChange"
+	  				})
+      			}
+      			
       		})
       	});
       	});

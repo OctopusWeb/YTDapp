@@ -64,13 +64,147 @@
       			addEvent(i);
       		}
       		function addEvent(i){
+      			
       			nav[i].addEventListener("tap",function(){
-      				mui.openWindow({
-      					url:navHref[i]+".html",
-      					id:navHref[i]
-      				})
+      				if(i=="2"){
+	      				ifBank();
+	      			}else{
+	      				mui.openWindow({
+	      					url:navHref[i]+".html",
+	      					id:navHref[i],
+		      				createNew:true
+	      				})
+	      			}
+      				
       			})
       		}
+      		function ifBank() {
+				var array = [localStorage["userNm"],localStorage["mobileNo"],ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/user/userBindCard.bl?userName="+localStorage["userNm"]+"&mobileNo="+localStorage["mobileNo"]+
+				"&cVal="+cVal+"&ts="+ts+"&rn="+rn; 
+				console.log(url);
+				if ( xhr ) {
+					alert( "xhr请求已创建" );
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	if(data.url==""){
+			                		alert(data.errorMsg);
+			                		if(data.errorMsg=="您未开通汇付天下账号,请先开通"){
+			                			mui.openWindow({
+						  					url:"nav3H5.html",
+						  					id:"nav3H5"
+						  				});
+			                		}else{
+			                			mui.openWindow({
+						  					url:"mineNav3.html",
+						  					id:"mineNav3"
+						  				});
+			                		}
+			                	}else{
+			                		document.getElementsByClassName("bankList")[0].className = "bankList"
+			                	}
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+      		function withBank() {
+				var array = [localStorage["userNm"],localStorage["mobileNo"],ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/user/bankCardList.bl?userName="+localStorage["userNm"]+"&mobileNo="+localStorage["mobileNo"]+
+				"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				console.log(url);
+				if ( xhr ) {
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	if(data==""){
+			                		alert("请先选择银行卡");
+			                	}else{
+			                		document.getElementsByClassName("bankH")[0].getElementsByTagName("h2")[0].innerHTML = data[0].bankName;
+			                		gateBusiId = "QP";
+			                		bankCode=data[0].bankCode;
+			                	}
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
+			
+			
+			
+			function chooseBank() {
+				var array = [ts,rn];
+				var cVal=getcval(array);
+				var url=""+rooturl+"/bankList.bl?"+"cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				console.log(url);
+				if ( xhr ) {
+					alert( "xhr请求已创建" );
+					return;
+				}
+				var xhr = new plus.net.XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+			        switch ( xhr.readyState ) {
+			            case 4:
+			                if ( xhr.status == 200 ) {
+			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+			                	var data = xhr.response.body;
+			                	var indexUl='<h1>选择支付方式</h1><p>X</p> '
+			                	document.getElementsByClassName("bankList")[0].className = "bankList";
+			                	for (var i=0;i<data.length;i++) {
+			                		indexUl+='<div class="bankName" id="'+data[i].bankCode+'"><img src="images/'+data[i].bankCode+'.png"/><h6>'
+			                		+data[i].bankName+'</h6></div>'
+			                	}
+			                	indexUl+='<div class="info"><span>其他银行卡充值请登录www.baidu.com使用网银操作</span><span>感谢您对我们的支持，如有问题请致电400-000-0000</span></div><h3>确定</h3>'
+			                	document.getElementsByClassName("bankList")[0].innerHTML=indexUl;
+			                	for (var i=0;i<bankName.length;i++) {
+									addEvent(bankName,i)
+								}
+			                	document.getElementsByClassName("bankList")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
+									var bank = document.getElementsByClassName("selected")[0].getElementsByTagName("h6")[0].innerHTML;
+									document.getElementsByClassName("bankH")[0].getElementsByTagName("h2")[0].innerText=bank;
+									document.getElementsByClassName("bankList")[0].className = "bankList bankHide";
+								})
+			                } else {
+			                	alert( "打开页面失败："+xhr.status );
+			                }
+			                break;
+			            default :
+			                break;
+			        }
+				}
+				xhr.open( "GET", url );
+				xhr.responseType="json";
+				xhr.send();
+			}
       		document.getElementById("withdraw").addEventListener("tap",function(){
       			var balance = document.getElementById("balance").innerHTML;
       			if(parseInt(balance)>0){

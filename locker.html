@@ -28,8 +28,10 @@
 				background-color: #fff;
 			}
 			#alert {
+				position: absolute;
+				bottom: 10%;
 				text-align: center;
-				padding: 20px 10px;
+				width:100%;
 				color: #fff;
 			}
 			*{margin: 0;padding: 0;font-family: "微软雅黑";font-weight: 400;list-style: none;}
@@ -45,8 +47,9 @@
     		#holder{background: #DD524D;border: none;}
     		p{width: 100%;position: absolute;color: #fff;bottom: 0;padding-left: 5%;}
     		span{width: 100%;position: absolute;color: #fff;bottom: 0;padding-right: 5%;text-align: right;font-size: 14px;line-height: 40px;}
-			#tiaoguo{width: 40px;height: 20px;background: #fff;position: absolute;right: 20px;top: 5px;}
-			#tiaoguo h2{color: #DD524D;font-size: 14px;width: 100%;text-align: center;line-height: 14px;}
+			#tiaoguo{width: 40px;height: 20px;position: absolute;right: 10px;top: 35px;}
+			#tiaoguo img{width: 100%;height: auto;float: left;}
+			.selected{display: none;}
 		</style>
 	</head>
 
@@ -57,8 +60,8 @@
 		</header>
 		<div class="mui-content">
 			<div class="head">
-				<div id="tiaoguo"><h2>跳过</h2></div>
-				<img src="images/icon/87.png"/>
+				<div id="tiaoguo"><img src="images/go.png" alt="" /></div>
+				<img src="images/icon/87.png" id="heads"/>
 				<h1 id="name">你好</h1>
 			</div>
 			<div id='holder' class="mui-locker" data-locker-options='{"ringColor":"rgba(210,210,210,1)","fillColor":"#ffffff","pointColor":"rgba(0,136,204,1)","lineColor":"rgba(0,136,204,1)"}' data-locker-width='300' data-locker-height='300'></div>
@@ -70,26 +73,35 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.locker.js"></script>
 		<script>
-		
+			window.onload=function(){
+				if(localStorage["headPic"]==""){
+				}else{
+					document.getElementById("heads").src=localStorage["headPic"];
+				}
+			}
 			(function($, doc) {
 
 				$.init();
 				document.getElementById("name").innerHTML="你好,"+localStorage["userNm"];
 				document.getElementById("tiaoguo").addEventListener("tap",function(){
+					window.localStorage.record=''
 					mui.openWindow({
 						url:"mine.html",
 						id:"mine",
 	      				createNew:true
 					})
 				})
+				
 				function onPlusReady() {
 				document.addEventListener( "resume", onAppReume, false );
 				}
 				function onAppReume() {
-					mui.openWindow({
-						url:"locker1.html",
-						id:"locker1"
-					})
+					if(localStorage["userNm"]!="" && localStorage["mobileNo"]!=""){
+						mui.openWindow({
+							url:"locker1.html",
+							id:"locker1"
+						})
+					}
 				}
 				var holder = doc.querySelector('#holder'),
 					alert = doc.querySelector('#alert'),
@@ -109,6 +121,7 @@
 						if (record[0] == record[1]) {
 							window.localStorage.record=record[0];
 							onPlusReady();
+							window.localStorage.lockerd="true";
 							mui.openWindow({
 								url:"mine.html",
 								id:"mine"

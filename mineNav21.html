@@ -31,24 +31,70 @@
 					            case 4:
 					                if ( xhr.status == 200 ) {
 					                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-					                	var data = xhr.response.body;
-					                	var navList=""
-					                	if(data!=""){
-					                		if(Reds=="availableReds"){
-					                			for (var i=0;i<data.redList.length;i++) {
-							                		navList+='<li class="success"><div class="bagLeft"><h1>'+data.redList[i].redName+
-							                		'</h1><h2>￥'+data.redList[i].redAmt+
-							                		'</h2></div><div class="bagRight"><h3>编号：'+data.redList[i].redId+
-							                		'</h3><h4>单笔投资满'+parseInt(data.redList[i].redUseUpLimit)*100+
-							                		'元可使用</h4><h4>（一月标除外）</h4><h5>失效日期：'+data.redList[i].redLimitDts+
-							                		'</h5><h5>红包来源:'+data.redList[i].redSource+'</h5></div></li>';
-							                	} 
+					                	if(xhr.response.code=="101"){
+						                	var data = xhr.response.body;
+						                	var navList=""
+						                	if(data!=""){
+						                		if(Reds=="availableReds"){
+						                			if(data.redList!=""){
+							                			for (var i=0;i<data.redList.length;i++) {
+									                		navList+='<li class="success" id="'+data.redList[i].redId+'"><div class="bagLeft"><h1>'+data.redList[i].redName+
+									                		'</h1><h2>￥'+data.redList[i].redAmt+
+									                		'</h2></div><div class="bagRight"><h3>编号：'+data.redList[i].redId+
+									                		'</h3><h4>单笔投资满'+parseInt(data.redList[i].redUseUpLimit)*100+
+									                		'元可使用</h4><h4>（一月标除外）</h4><h5>失效日期：'+data.redList[i].redLimitDts+
+									                		'</h5><h5>红包来源:'+data.redList[i].redSource+'</h5></div></li>';
+									                	} 
+									                }else{
+									                	navList='<img src="images/nodata.png"/>'
+									                }
+								                	
+						                		}
+					                		}else{
+					                			alert("错误代码"+xhr.response.code);
 					                		}
+					                	}
+					                	
+					                	function addEvent(){
+					                		var bag=document.getElementsByClassName("success");
+					                		for(var i=0;i<bag.length;i++){
+					                			addCladd(bag[i]);
+					                		}
+					                	}
+					                	function addCladd(cla){
+					                		cla.addEventListener("tap",function(){
+					                			if(cla.className=="success"){
+						                			cla.className="success successd";
+						                		}else{
+						                			cla.className="success";
+						                		}
+					                		})
+					                		
 					                		
 					                	}
 					                	document.getElementsByClassName("content")[0].innerHTML=navList;
+					                	addEvent();
+					                	document.getElementsByTagName("h6")[0].addEventListener("tap",function(){
+					                		var redidArr=[];
+					                		var redAmt=0;
+					                		var successd=document.getElementsByClassName("successd");
+					                		for(var i=0;i<successd.length;i++){
+					                			redidArr.push(successd[i].id)
+					                			var redA=successd[i].getElementsByTagName("h2")[0].innerHTML
+					                			redAmt+=parseInt(redA.substr(1));
+					                			console.log(successd[i].id);
+					                		}
+					                		window.localStorage.redLen=redidArr; 
+					                		window.localStorage.redAmt=redAmt;
+					                		console.log(redAmt);
+					                		mui.openWindow({
+						      					url:"projectPay.html",
+						      					id:"projectPay",
+	      										createNew:true	
+						      				})
+					                	})
 					                } else {
-					                	alert( "打开页面失败："+xhr.status );
+					                	document.getElementsByClassName("content")[0].innerHTML='<img src="images/noweb.png"/>';
 					                }
 					                break;
 					            default :
@@ -85,6 +131,7 @@
 		.mui-content .content li h4{color: #2fabe0;font-size: 12px;width: 100%;text-align: left;padding-left: 10px;}
 		.mui-content .content li h5{color: #555;font-size: 12px;width: 100%;text-align: left;padding-left: 10px;}
 		h6{width: 100%;height: 50px;color: #fff;line-height: 50px;background: #DD524D;position: fixed;bottom: -10px;font-size: 16px;text-align: center;}
+		.successd{border: 2px #DD524D solid;overflow: hidden;}
 </style>
 <body>
 	<header class="mui-bar mui-bar-nav">

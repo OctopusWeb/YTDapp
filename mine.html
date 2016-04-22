@@ -60,8 +60,12 @@
       			})
       		}
       		document.getElementsByClassName("mui-bar")[0].getElementsByTagName("h2")[0].addEventListener("tap",function(){
-      			setTimeout(xhrCreate,0);
-				function xhrCreate() {
+      			xhrCreate();
+      		})
+      		document.getElementsByClassName("mui-bar")[0].getElementsByTagName("span")[1].addEventListener("tap",function(){
+      			xhrCreate();
+      		})
+      		function xhrCreate() {
 					var array = [localStorage["userNm"],localStorage["mobileNo"],ts,rn];
 					var cVal=getcval(array);
 					var url=""+rooturl+"/user/daySign.bl?userName="+localStorage["userNm"]+"&mobileNo="+
@@ -106,7 +110,6 @@
 					xhr.responseType="json";
 					xhr.send();
 				}
-      		})
       	});
       	});
 	})(mui);

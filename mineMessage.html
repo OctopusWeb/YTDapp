@@ -12,12 +12,19 @@
       	(function($) {
       	mui.plusReady(function() {
       		var choosed="";
-      		addMessage()
-			function addMessage() { 
+      		addMessage("")
+			function addMessage(num) {
+				
 				var array = [1,100,localStorage["userNm"],localStorage["mobileNo"],ts,rn];
 				var cVal=getcval(array);
 				var url=""+rooturl+"/message/messageList.bl?userName="+localStorage["userNm"]+"&mobileNo="+
 				localStorage["mobileNo"]+"&pageNo="+1+"&pageSize="+100+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+				if(num==""){
+					
+				}else{
+					array=array.push(num);
+					url=url+"&tradeType="+num;
+				}
 				console.log(url);
 				if ( xhr ) {
 					return;
@@ -28,22 +35,28 @@
 			            case 4:
 			                if ( xhr.status == 200 ) {
 			                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
-			                	var data = xhr.response.body.messageList;
-			                	console.log(data);
-			                	var navList=""
-			                	if(data!=""){
-			                		for (var i=0;i<data.length;i++) {
-			                			if(data[i].messageType==choosed || choosed==""){
-			                				navList+='<li class="mui-table-view-cell mui-collapse">'+
-											'<a class="mui-navigate-right" href="#"><h3>'+data[i].messageType+
-											'</h3><h6>'+data[i].messageTime+'</h6></a><div class="mui-collapse-content">'+
-											'<h4>'+data[i].messageTitle+'</h4><p>'+data[i].messageContent+'</p></div></li>'
-			                			}
-				                	}
-			                	}
-			                	document.getElementsByClassName("mui-table-view")[0].innerHTML=navList;
+			                	if(xhr.response.code=="101"){
+			                		var data = xhr.response.body.messageList;
+			                		console.log(data);
+			                		if(data==""){
+				                		document.getElementsByClassName("mui-table-view")[0].innerHTML='<img src="images/nodata.png"/>';
+				                	}else{
+					                	var navList=""
+					                	if(data!=""){
+					                		for (var i=0;i<data.length;i++) {
+				                				navList+='<li class="mui-table-view-cell mui-collapse">'+
+												'<a class="mui-navigate-right" href="#"><h3>'+data[i].messageType+
+												'</h3><h6>'+data[i].messageTime+'</h6></a><div class="mui-collapse-content">'+
+												'<h4>'+data[i].messageTitle+'</h4><p>'+data[i].messageContent+'</p></div></li>'
+						                	}
+					                	}
+					                	document.getElementsByClassName("mui-table-view")[0].innerHTML=navList;
+					                }
+				                }else{
+				                	alert("错误代码"+xhr.response.code);
+				                }
 			                } else {
-			                	alert( "打开页面失败："+xhr.status );
+				                	document.getElementsByClassName("mui-table-view")[0].innerHTML='<img src="images/noweb.png"/>';
 			                }
 			                break;
 			            default :
@@ -70,9 +83,8 @@
       		}
       		function choose(num){
       			blackLi[num].addEventListener("tap",function(){
-      				choosed = blackLi[num].getElementsByTagName("h1")[0].innerText;
-      				choosed=="全部消息"?choosed="":choosed=choosed;
-      				addMessage();
+      				choosed = blackLi[num].getElementsByTagName("h1")[0].className;
+      				addMessage(choosed);
       			})
       		}
       	});
@@ -96,6 +108,7 @@
    		.mui-content h3{float: left;font-size: 16px;}
    		.mui-content .mui-navigate-right{background: #efeff4;}
    		.mui-content .mui-active .mui-navigate-right{background: #fafafa;}
+   		.mui-table-view img{float: left;width: 100%;}
     </style>
 </head>
 <body>
@@ -108,12 +121,14 @@
 	<div class="blackBack">
 		<ul>
 			<li><h1>全部消息</h1></li>
-			<li><h1>系统消息</h1></li>
-			<li><h1>投资消息</h1></li>
-			<li><h1>回款消息</h1></li>
-			<li><h1>提前还款</h1></li>
-			<li><h1>债权转让</h1></li>
-			<li><h1>充值提现</h1></li>
+			<li><h1 class="TRDTP01">充值记录</h1></li>
+			<li><h1 class="TRDTP02">投资记录</h1></li>
+			<li><h1 class="TRDTP03">借款记录</h1></li>
+			<li><h1 class="TRDTP04">提现记录</h1></li>
+			<li><h1 class="TRDTP05">生利宝记录</h1></li>
+			<li><h1 class="TRDTP06">回款记录</h1></li>
+			<li><h1 class="TRDTP07">体验金收益记录</h1></li>
+
 		</ul>
 	</div>
 	<div class="mui-content">

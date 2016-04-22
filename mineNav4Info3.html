@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <script type="text/javascript" src="js/md5.js" ></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <style type="text/css">
+    	*{margin: 0;padding: 0;list-style: none;font-weight: 400;font-family: "微软雅黑";}
+    	html,body{width: 100%;height: 100%;}
+    	.mui-bar{background: #DD524D;box-shadow: none;border-bottom:1px solid #ccc;}
+    	.mui-bar a,.mui-bar h1,.mui-bar h2{color: #fff;}
+    	.mui-content{width: 100%;height: 100%;}
+    	.mui-bar h2{font-size: 16px;line-height: 35px;float: right;}
+    	.nav1Info{width: 100%;float: left;background: #fff;margin-top: 10px;}
+    	.nav1Info h1{width: 100%;float: left;font-size: 16px;line-height: 40px;text-align: left;padding-left: 5%;border-bottom: 1px #ccc solid;}
+    	.nav1Info .infoGroup{width: 33.3%;float: left;height: 100px;position: relative;}
+    	.nav1Info .infoGroup h2{width: 100%;float: left;line-height: 30px;font-size: 14px;color: #5b5b5b;text-align: center;}
+    	.nav1Info .infoGroup h3{width: 50%;float: left;text-align: right;font-size: 18px;color: #D43B33;line-height: 30px;}
+    	.nav1Info .infoGroup h4{width: 50%;float: left;text-align: left;font-size: 14px;color: #D43B33;line-height: 30px;}
+    	.nav1Info .infoGroup h5{width: 70px;height:70px;margin: 10%;background: #fff;text-align: center;line-height: 70px;margin: 0 auto;
+    					border-radius: 50%;border: 2px #DD524D solid;margin-top: 10px;}
+    	.nav1Info span{width: 33.3%;float: left;font-size: 12px;text-align: center;border-top: 1px #ccc solid;line-height: 35px;color: #5b5b5b;}
+    	.nav1More{width: 100%;float: left;background: #fff;margin-top: 10px;}
+    	.nav1More h1{font-size: 14px;color: #5b5b5b;float: left;margin-left: 5%;line-height: 30px;width: 50%;}
+    	.nav1More h2{float: right;font-size: 14px;line-height: 30px;margin-right: 5px;}
+    	.nav1More span{float: right;line-height: 40px;font-size: 16px;margin-right: 5%;}
+    	.nav1More ul{float: left;width: 90%;margin-left: 5%;border-top: 1px #ccc solid;display: none;}
+    	.nav1More ul li{width: 100%;float: left;border-bottom: 1px #ccc solid;}
+    	
+    	.nav1Plan{width: 100%;float: left;margin-top: 10px;background: #fff;}
+    	.nav1Plan h1{width: 100%;float: left;padding-left: 5%;font-size: 14px;line-height: 30px;border-bottom: 1px #ccc solid;}
+    	.nav1Plan h2{float: left;font-size: 14px;float: left;line-height: 30px;margin-left: 5%;}
+    	.nav1Plan h3{float: left;font-size: 14px;float: left;line-height: 30px;margin-left: 30px;}
+    	.nav1Plan h4{float: left;font-size: 14px;float: left;line-height: 20px;color: #fff;background: #5b5b5b;width: 50px;text-align: center;margin-top: 10px;margin-left: 30px;}
+    	.nav1Plan h5{float: right;font-size: 14px;line-height: 30px;margin-right: 5%;}
+    	
+    	.infoGroup1 {width: 100%;float: left;background: #fff;margin-top: 10px;padding-bottom: 50px;}
+    	.infoGroup1 h1{width: 100%;line-height: 30px;border-bottom: 1px #ccc solid;padding-left: 5%;font-size: 14px;}
+    	.infoGroup1 ul{float: left;width: 100%;}
+    	.infoGroup1 li{float: left;width: 100%;border-bottom: 1px #ccc solid;}
+    	.infoGroup1 li h2{font-size:16px;float: left;line-height: 30px;margin-left: 5%;}
+    	.infoGroup1 li h3{font-size:16px;float: left;line-height: 30px;margin-left: 20px;}
+    	.infoGroup1 li h4{font-size:14px;float: right;line-height: 30px;margin-left: 20px;margin-right: 5%;}
+    	.foot{bottom: 0;background: #fff;border-top: 1px #ccc solid;}
+    	.foot h1{font-size: 16px;line-height: 35px;float: left;color: #b5b5b5;}
+    	.foot h2{font-size: 16px;line-height: 35px;float: left;color: #D43B33;}
+    	.foot button{float: right;}
+    	.bkSub{width: 100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;display: none;z-index: 1000;}
+    	.bkSub div{width: 80%;height: 200px;position: absolute;left: 10%;background: #fff;top: 50%;margin-top: -100px;border-radius: 10px;}
+    	.bkSub div h1{width: 100%;float: left;line-height: 40px;border-bottom: 1px #ccc solid;text-align: center;font-size: 16px;}
+    	.bkSub div h2{width: 90%;float: left;margin-left:5%;line-height: 20px;text-align: center;font-size: 16px;margin-top: 20px;}
+    	.bkSub div h3{width: 40%;float: left;line-height: 20px;text-align: center;font-size: 16px;background: #B5B5B5;line-height: 35px;color: #fff;margin-left: 5%;margin-top: 20px;}
+    	.bkSub div h4{width: 40%;float: left;line-height: 20px;text-align: center;font-size: 16px;background: #D43B33;line-height: 35px;color: #fff;margin-left: 5%;margin-top: 20px;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">债权转让</h1>
+	</header>
+	<div class="bkSub">
+		<div>
+			<h1>确认</h1>
+			<h2>债权转让取消处理需要24小时处理时间.请确认是否取消债权转让</h2>
+			<h3>取消</h3><h4>确认取消</h4>
+		</div>
+	</div>
+	<div class="mui-content">
+		
+	</div>
+	<div class="foot mui-bar">
+		<h1>债权价值:</h1><h2>255.00元</h2><button type="button" class="mui-btn mui-btn-danger" id="chuanchu">取消转出</button>
+	</div>
+</body>
+	<script type="text/javascript" charset="utf-8">
+      	mui.init();
+		(function($) {
+			var old_back = mui.back;
+			mui.back = function(){
+			  mui.openWindow({
+	  				url:"mineNav4.html",
+	  				id:"mineNav4",
+	  				createNew:true
+	  			})
+			}
+	      	mui.plusReady(function() {
+	      		document.getElementById("chuanchu").addEventListener("tap",function(){
+	      			document.getElementsByClassName("bkSub")[0].style.display="block"
+	      		});
+	      		document.getElementsByClassName("bkSub")[0].getElementsByTagName("h3")[0].addEventListener("tap",function(){
+	      			document.getElementsByClassName("bkSub")[0].style.display="none"
+	      		})
+	      		document.getElementsByClassName("bkSub")[0].getElementsByTagName("h4")[0].addEventListener("tap",function(){
+	      			xhrCreate1()
+	      		})
+	      		xhrCreate();
+	      		function xhrCreate1() {
+					var mobileNo = localStorage["mobileNo"];
+		      		var userNm = localStorage["userNm"];
+		      		var creditId = localStorage["creditId"];
+					var array = [mobileNo,userNm,creditId,ts,rn];
+					var cVal=getcval(array);
+					var url=""+rooturl+"/user/applyCreditTransCancel.bl?userName="+userNm+"&mobileNo="+mobileNo+"&creditId="+creditId+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+					console.log(url);
+					if ( xhr ) {
+						return;
+					}
+					var xhr = new plus.net.XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+				        switch ( xhr.readyState ) {
+				            case 4:
+				                if ( xhr.status == 200 ) {
+				                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+				                	if(xhr.response.code=="101"){
+					                	var data = xhr.response.body;
+					                	if(xhr.response.code=="101"){
+					                		alert("业务办理成功");
+		      								document.getElementsByClassName("bkSub")[0].style.display="none"
+					                		mui.openWindow({
+							      				url:"mineNav4.html",
+							      				id:"mineNav4",
+		      									createNew:true
+							      			})
+					                	}else{
+					                		alert(data.errorMsg);
+					                	}
+					                }else{
+					                	alert("错误代码"+xhr.response.code);
+					                }
+				                } else {
+				                	alert( "打开页面失败："+xhr.status );
+				                }
+				                break;
+				            default :
+				                break;
+				        }
+					}
+					xhr.open( "GET", url );
+					xhr.responseType="json";
+					xhr.send();
+				}
+	      		
+				function xhrCreate() {
+					var mobileNo = localStorage["mobileNo"];
+		      		var userNm = localStorage["userNm"];
+		      		var creditId = localStorage["creditId"];
+					var array = [mobileNo,userNm,creditId,ts,rn];
+					var cVal=getcval(array);
+					var url=""+rooturl+"/user/creditTransDetail.bl?userName="+userNm+"&mobileNo="+mobileNo+"&creditId="+creditId+"&cVal="+cVal+"&ts="+ts+"&rn="+rn;
+					console.log(url)
+					if ( xhr ) {
+						return;
+					}
+					var xhr = new plus.net.XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+				        switch ( xhr.readyState ) {
+				            case 4:
+				                if ( xhr.status == 200 ) {
+				                	var mm=chake(xhr.response.code,xhr.response.cVal,xhr.response.body);
+				                	if(xhr.response.code=="101"){
+					                	var data = xhr.response.body;
+					                	if(data.isTransCancel=="Y"){
+					                		document.getElementById('chuanchu').style.background="#5c5c5c";
+					                		document.getElementById('chuanchu').innerHTML="正在取消"
+					                		document.getElementById("chuanchu").addEventListener("tap",function(){
+								      			document.getElementsByClassName("bkSub")[0].style.display="none"
+								      		});
+					                	}
+					                	var time="";
+					                	var loanStatusArr = ['','','筹款中','满标','还款中','还款结束'];
+					                	var loanTypeArr = ["","实地","实物抵押","机构"];
+					                	var transStatusArr = ["可转让","转让中","已转让"]
+					                	data.loanPeriodType=='M'?time="个月":time="天";
+					                	var Interest =  parseFloat(data.leftOriginAmt)+parseFloat(data.leftInterest)
+					                	var had =  parseFloat(data.hadAmt)+parseFloat(data.hadOriginAmt)
+					                	var index = '<div class="nav1Info"><h1>'+data.title+'</h1><div class="infoGroup"><h2>年化利率</h2>'+
+					                				'<h3>'+data.loanRate+'</h3><h4>%</h4></div><div class="infoGroup"><h2>投资周期</h2>'+
+													'<h3>'+data.loanPeriod+'</h3><h4>'+time+'</h4></div><div class="infoGroup">'+
+													'<h5>'+loanStatusArr[data.loanStatus]+'</h5></div>'+
+													'<span>'+transStatusArr[data.transStatus]+'</span><span>'+loanTypeArr[data.loanType]+'</span><span>'+data.investAmt+'</span></div>'+
+													'<div class="nav1More"><h1>待收本息</h1><span class="mui-icon mui-icon-arrowdown"></span><h2>'+
+													Interest+'元</h2><ul><li><h1>待收本金</h1><h2>'+
+													data.leftOriginAmt+'元</h2></li><li><h1>代收利息</h1><h2>'+
+													data.leftInterest+'元</h2></li><li><h1>投资时间</h1><h2>'+
+													data.investDate+'</h2></li><li><h1>还款结束</h1><h2>'+
+													data.repayEndDate+'</h2></li></ul></div><div class="nav1More">'+
+													'<h1>已收本息</h1><span class="mui-icon mui-icon-arrowdown"></span><h2>'+
+													had+'元</h2><ul>'+
+													'<li><h1>已收本金</h1><h2>'+data.hadAmt+'元</h2></li>'+
+													'<li><h1>已收利息</h1><h2>'+data.hadOriginAmt+'元</h2></li>'+
+													'<li><h1>下个还款日</h1><h2>'+data.nextRepayDate+'</h2></li></ul></div><div class="infoGroup1"><h1>还款时间表</h1><ul>';
+										for (var j=0;j<data.repayList.length;j++) {
+											index+='<li><h2>'+j+'</h2><h3>'+data.repayList[j].repayDate+'</h3><h4>'+data.repayList[j].repayAmt+'</h4></li>'
+										}
+										index+='</ul></div>';
+										document.getElementsByClassName("mui-content")[0].innerHTML=index;
+										document.getElementsByClassName("foot")[0].getElementsByTagName("h2")[0].innerHTML=data.creditValue;
+										var nav1More = document.getElementsByClassName("nav1More");
+										nav1More[0].addEventListener("tap",function(){
+											var ul1status =  nav1More[0].getElementsByTagName("ul")[0].style.display;
+											if(ul1status == "block"){
+												nav1More[0].getElementsByTagName("ul")[0].style.display="none";
+												nav1More[0].getElementsByTagName("span")[0].className="mui-icon mui-icon-arrowdown";
+											}else{
+												nav1More[0].getElementsByTagName("ul")[0].style.display="block";
+												nav1More[0].getElementsByTagName("span")[0].className="mui-icon mui-icon-arrowup";
+											}
+										});
+										nav1More[1].addEventListener("tap",function(){
+											var ul1status =  nav1More[1].getElementsByTagName("ul")[0].style.display;
+											if(ul1status == "block"){
+												nav1More[1].getElementsByTagName("ul")[0].style.display="none";
+												nav1More[1].getElementsByTagName("span")[0].className="mui-icon mui-icon-arrowdown";
+											}else{
+												nav1More[1].getElementsByTagName("ul")[0].style.display="block";
+												nav1More[1].getElementsByTagName("span")[0].className="mui-icon mui-icon-arrowup";
+											}
+										})
+									}else{
+										alert("错误代码"+xhr.response.code);
+									}
+				                } else {
+				                	alert( "打开页面失败："+xhr.status );
+				                }
+				                break;
+				            default :
+				                break;
+				        }
+					}
+					xhr.open( "GET", url );
+					xhr.responseType="json";
+					xhr.send();
+				}
+			});
+		})(mui);
+    </script>
+</html>
